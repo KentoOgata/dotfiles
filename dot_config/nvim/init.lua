@@ -12,7 +12,7 @@ require('rc.keymaps').setup()
 require('rc.options').setup()
 require('rc.lsp').setup()
 require('rc.filetype').setup()
-require('rc.terminal').setup 'fish'
+require('rc.terminal').setup(vim.env['SHELL'])
 require('rc.default-plugins').use {
   'rplugin',
   'man',
