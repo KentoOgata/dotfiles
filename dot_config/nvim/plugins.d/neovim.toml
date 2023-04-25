@@ -1,0 +1,207 @@
+[[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+lazy = true
+
+[[plugins]]
+repo = 'hrsh7th/nvim-gtd'
+lazy = true
+on_map = '<Plug>(gtd:'
+hook_add = '''
+  nmap gfH <Plug>(gtd:splitleft)
+  nmap gfJ <Plug>(gtd:splitbelow)
+  nmap gfK <Plug>(gtd:splitabove)
+  nmap gfL <Plug>(gtd:splitright)
+'''
+lua_source = '''
+  require('gtd').setup {}
+
+  vim.keymap.set_table {
+    mode = 'n',
+    maps = {
+      {
+        '<Plug>(gtd:edit)',
+        function()
+          require('gtd').exec { command = 'edit' }
+        end,
+      },
+      {
+        '<Plug>(gtd:splitleft)',
+        function()
+          local splitright = vim.go.splitright
+          vim.go.splitright = false
+          require('gtd').exec({
+            command = 'vsplit',
+          }, {
+            on_event = function(event)
+              if event == require('gtd').Event.Finish then
+                vim.go.splitright = splitright
+              end
+            end,
+          })
+        end,
+      },
+      {
+        '<Plug>(gtd:splitbelow)',
+        function()
+          local splitbelow = vim.go.splitbelow
+          vim.go.splitbelow = true
+          require('gtd').exec({
+            command = 'split',
+          }, {
+            on_event = function(event)
+              if event == require('gtd').Event.Finish then
+                vim.go.splitbelow = splitbelow
+              end
+            end,
+          })
+        end,
+      },
+      {
+        '<Plug>(gtd:splitabove)',
+        function()
+          local splitbelow = vim.go.splitbelow
+          vim.go.splitbelow = false
+          require('gtd').exec({
+            command = 'split',
+          }, {
+            on_event = function(event)
+              if event == require('gtd').Event.Finish then
+                vim.go.splitbelow = splitbelow
+              end
+            end,
+          })
+        end,
+      },
+      {
+        '<Plug>(gtd:splitright)',
+        function()
+          local splitright = vim.go.splitright
+          vim.go.splitright = true
+          require('gtd').exec({
+            command = 'vsplit',
+          }, {
+            on_event = function(event)
+              if event == require('gtd').Event.Finish then
+                vim.go.splitright = splitright
+              end
+            end,
+          })
+        end,
+      },
+    },
+  }
+'''
+
+[[plugins]]
+repo = 'hrsh7th/nvim-pasta'
+lazy = true
+on_lua = 'pasta'
+hook_add = '''
+  nmap p <Cmd>lua require('pasta.mappings').p<CR>
+  nmap P <Cmd>lua require('pasta.mappings').P<CR>
+'''
+lua_source = '''
+  require('pasta').setup {
+    converters = {
+      require('pasta.converters').indentation,
+    },
+    paste_mode = true,
+    prevent_diagnostics = false,
+    next_key = vim.api.nvim_replace_termcodes('<C-p>', true, true, true),
+    prev_key = vim.api.nvim_replace_termcodes('<C-n>', true, true, true),
+  }
+'''
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
+lazy = true
+on_event = ['BufReadPost', 'BufNewFile']
+lua_source = '''
+  local parser_dir = ('%s/treesitter'):format(vim.fn.stdpath 'data')
+  vim.opt.runtimepath:append(parser_dir)
+
+  -- Add ex parsers
+  local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
+  parser_config.xml = {
+    install_info = {
+      url = 'https://github.com/dorgnarg/tree-sitter-xml.git',
+      files = { 'src/parser.c' },
+      branch = 'main',
+      generate_requires_npm = false,
+      requires_generate_from_grammar = true,
+    },
+    filetype = 'xml',
+  }
+
+  -- parser_config.ps1 = {
+  --   install_info = {
+  --     url = 'https://github.com/PowerShell/tree-sitter-PowerShell',
+  --     files = { 'src/scanner.c' },
+  --     branch = 'master',
+  --     generate_requires_npm = true,
+  --     requires_generate_from_grammar = true,
+  --   },
+  --   filetype = 'ps1',
+  -- }
+
+  require('nvim-treesitter.configs').setup {
+    ensure_installed = {},
+    auto_install = true,
+    parser_install_dir = parser_dir,
+    highlight = {
+      enable = true,
+      disable = {
+        'vim',
+      },
+    },
+    indent = {
+      enable = true,
+      disable = {
+        'yaml',
+      },
+    },
+  }
+'''
+
+[[plugins]]
+repo = 'tkmpypy/chowcho.nvim'
+lazy = true
+on_lua = 'chowcho'
+lua_add = '''
+  -- ORIGINAL: https://zenn.dev/kawarimidoll/articles/daa39da5838567
+
+  -- <C-w>xと<C-w><C-x>を同時に設定する
+  local win_keymap_set = function(key, callback)
+    vim.keymap.set({ 'n' }, '<C-w>' .. key, callback)
+    vim.keymap.set({ 'n' }, '<C-w><C-' .. key .. '>', callback)
+  end
+
+  win_keymap_set('w', function()
+    local wins = 0
+
+    -- 全ウィンドウをループ
+    for i = 1, vim.fn.winnr '$' do
+      local win_id = vim.fn.win_getid(i)
+      local conf = vim.api.nvim_win_get_config(win_id)
+
+      -- focusableなウィンドウをカウント
+      if conf.focusable then
+        wins = wins + 1
+
+        -- ウィンドウ数が3以上ならchowchoを起動
+        if wins > 2 then
+          require('chowcho').run()
+          return
+        end
+      end
+    end
+
+    -- ウィンドウが少なければ標準の<C-w><C-w>を実行
+    vim.cmd.wincmd 'w'
+  end)
+'''
+
+[[plugins]]
+repo = 'hrsh7th/nvim-cmp'
+lazy = true
+on_event = ['InsertEnter', 'CmdlineEnter']

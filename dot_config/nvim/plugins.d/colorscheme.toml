@@ -1,0 +1,8 @@
+[[plugins]]
+repo = 'rose-pine/neovim'
+name = 'rose-pine'
+lazy = false
+hook_add = '''
+set background=dark
+colorscheme rose-pine
+'''

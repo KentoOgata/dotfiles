@@ -1,0 +1,149 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+lazy = false
+
+[[plugins]]
+repo = 'lambdalisue/fern.vim'
+lazy = true
+on_cmd = 'Fern'
+hook_add = '''
+nmap <space>e <Cmd>execute 'Fern' (&l:buftype->empty() ? '%:h' : '.')<CR>
+'''
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
+lazy = true
+on_event = ['InsertEnter', 'CmdlineEnter']
+hook_source = '''
+call plugin_configurations#lexima()
+'''
+
+[[plugins]]
+repo = 'haya14busa/vim-edgemotion'
+lazy = true
+on_map = '<Plug>(edgemotion-'
+hook_add = '''
+  Keymap nxo <C-j> <Plug>(edgemotion-j)
+  Keymap nxo <C-k> <Plug>(edgemotion-k)
+'''
+
+[[plugins]]
+repo = 'hrsh7th/vim-eft'
+lazy = true
+on_map = '<Plug>(eft-'
+hook_add = '''
+  Keymap nxo f <Plug>(eft-f)
+  Keymap nxo F <Plug>(eft-F)
+  Keymap xo  t <Plug>(eft-t)
+  Keymap xo  T <Plug>(eft-T)
+  Keymap nxo ; <Plug>(eft-repeat)
+  let g:eft_ignorecase = v:true
+'''
+
+[[plugins]]
+repo = 'hrsh7th/vim-searchx'
+lazy = true
+on_func = 'searchx#'
+hook_add = '''
+  Keymap nx / <Cmd>call searchx#start(#{ dir: 1 })<CR>
+  Keymap nx ? <Cmd>call searchx#start(#{ dir: 0 })<CR>
+'''
+hook_source = '''
+  let g:searchx = #{
+        \ auto_accept: v:true,
+        \ scrolloff: &scrolloff,
+        \ scrolltime: 15,
+        \ nohlsearch: #{
+        \   jump: v:true,
+        \ },
+        \ markers: split('ASDFGHJKLQWERTYUIOPZXCVBNM', '.\zs'),
+        \ }
+
+  const g:MigemoPrompt = '(Migemo):'
+  function! g:searchx.convert(input) abort
+    if a:input[: g:MigemoPrompt->len() - 1] ==# g:MigemoPrompt
+      const input = a:input[g:MigemoPrompt->len() :]
+      return input->len() < 2
+            \ ? input
+            \ : kensaku#query(input)
+    else
+      return a:input->substitute('%s', '.\{-}', 'g')
+    endif
+  endfunction
+
+  function! g:ToggleMigemoSearch() abort
+    const cmdtype = getcmdtype()
+    if cmdtype ==# '@'
+      const cmdline = getcmdline()
+      if cmdline =~# $'^{g:MigemoPrompt}'
+        call setcmdline(cmdline[g:MigemoPrompt->len() :])
+      else
+        call setcmdline(g:MigemoPrompt .. cmdline)
+      endif
+    endif
+  endfunction
+  cmap <C-j> <Cmd>call g:ToggleMigemoSearch()<CR>
+'''
+
+[[plugins]]
+repo = 'haya14busa/vim-asterisk'
+lazy = true
+on_map = '<Plug>(asterisk-'
+hook_add = '''
+  Keymap nxo *  <Plug>(asterisk-*)
+  Keymap nxo #  <Plug>(asterisk-#)
+  Keymap nxo g* <Plug>(asterisk-g*)
+  Keymap nxo g# <Plug>(asterisk-g#)
+'''
+
+[[plugins]]
+repo = 'andymass/vim-matchup'
+lazy = true
+on_map = '<Plug>(matchup-%)'
+hook_add = '''
+  let g:loaded_matchit = v:true
+  let g:loaded_matchparen = v:true
+  let g:matchup_matchparen_offscreen = #{
+        \ method: 'status_manual',
+        \ }
+  Keymap nxo % <Plug>(matchup-%)
+'''
+hook_post_source = '''
+iunmap <C-g>%
+'''
+
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+lazy = false
+
+[[plugins]]
+repo = 'lambdalisue/kensaku.vim'
+lazy = false
+depends = 'denops.vim'
+
+[[plugins]]
+repo = 'machakann/vim-highlightedyank'
+lazy = true
+on_map = '<Plug>(highlightedyank)'
+hook_add = '''
+  Keymap nxo y <Plug>(highlightedyank)
+  let g:highlightedyank_highlight_duration = 200
+'''
+
+[[plugins]]
+repo = 'machakann/vim-sandwich'
+lazy = true
+on_map = { nx = '<Plug>(sandwich-', xo = '<Plug>(textobj-sandwich-' }
+hook_add = '''
+  Keymap nx s   <Nop>
+  Keymap nx sa  <Plug>(sandwich-add)
+  Keymap nx sd  <Plug>(sandwich-delete)
+  Keymap nx sdb <Plug>(sandwich-delete-auto)
+  Keymap nx sr  <Plug>(sandwich-replace)
+  Keymap nx srb <Plug>(sandwich-replace-auto)
+
+  Keymap xo ib <Plug>(textobj-sandwich-auto-i)
+  Keymap xo ab <Plug>(textobj-sandwich-auto-a)
+'''
+
+# vim:ft=toml expandtab tabstop=2 shiftwidth=2
