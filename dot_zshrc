@@ -1,11 +1,6 @@
-alias ls="exa --icons"
-alias emacs='emacs -nw'
-
 bindkey -e
-
 autoload -U compinit
 compinit
-
 zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 
 LOAD_ENHANCD="source '$(ghq list -p -e 'enhancd')/init.sh'";
@@ -38,5 +33,14 @@ if [[ -n $ZENO_LOADED ]]; then
   bindkey '^x^z' zeno-toggle-auto-snippet
 fi
 
-eval "$(starship init zsh)"
-neofetch
+if which exa &> /dev/null; then
+  alias ls="exa --icons"
+fi
+alias emacs='emacs -nw'
+
+if which starship &> /dev/null; then
+  eval "$(starship init zsh)"
+fi
+if which neofetch &> /dev/null; then
+  neofetch
+fi
