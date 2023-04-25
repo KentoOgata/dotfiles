@@ -1,6 +1,8 @@
 ---@type dein.Plugins
 local plugins = {}
 
+math.randomseed(os.time())
+
 --- @param options table
 local function pick(options)
   return options[math.random(#options)]
