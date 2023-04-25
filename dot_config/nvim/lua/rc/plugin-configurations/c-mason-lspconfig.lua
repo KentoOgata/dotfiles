@@ -141,7 +141,6 @@ require('mason-lspconfig').setup_handlers {
     }
   end,
   ['tsserver'] = function()
-    vim.fn['dein#source'] 'nvim-cmp'
     require('lspconfig').tsserver.setup {
       capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
       root_dir = require('lspconfig.util').root_pattern { 'tsconfig.json', 'jsconfig.json', 'package.json' },
