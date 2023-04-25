@@ -1,0 +1,51 @@
+[ftplugin]
+vim = '''
+setl expandtab tabstop=2 shiftwidth=2
+nnoremap <buffer> K K
+'''
+help = '''
+nnoremap <buffer> K K
+'''
+toml = '''
+setl expandtab tabstop=2 shiftwidth=2
+'''
+json = '''
+setl expandtab tabstop=2 shiftwidth=2
+'''
+cs = '''
+setl expandtab tabstop=4 shiftwidth=4
+'''
+razor = '''
+setl expandtab tabstop=4 shiftwidth=4
+'''
+c = '''
+nnoremap <buffer> K K
+'''
+cpp = '''
+nnoremap <buffer> K K
+'''
+sh = '''
+nnoremap <buffer> K K
+'''
+bash = '''
+nnoremap <buffer> K K
+'''
+zsh = '''
+nnoremap <buffer> K K
+'''
+fish = '''
+nnoremap <buffer> K K
+'''
+
+[[plugins]]
+repo = 'vim-jp/syntax-vim-ex'
+on_ft = 'vim'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
+[[plugins]]
+repo = 'jlcrochet/vim-razor'
+on_ft = 'razor'
+merge_ftdetect = true

@@ -1,0 +1,2 @@
+\(\S\+\).import$
+	import { {{_cursor_}} } from {{$1}};

@@ -1,0 +1,314 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+hook_add = '''
+autocmd VimRc FileType toml autocmd BufWinEnter <buffer> call dein#toml#syntax()
+
+call dein#options(#{
+\   auto_recache: v:true,
+\ })
+'''
+
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
+
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
+merged = false
+hook_add = '''
+set helplang=ja,en
+'''
+
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+
+[[plugins]]
+repo = 'cocopon/iceberg.vim'
+
+[[plugins]]
+repo = 'catppuccin/vim'
+name = 'catppuccin'
+
+[[plugins]]
+repo = 'Shougo/ddc.vim'
+hook_add = '''
+def s:SetupDdc(): void
+  # :autocmd {event} ++once
+  # で{event}にInsertEnter,CmdlineEnterのように複数のイベントを指定すると
+  # ++onceで一発で消えてくれないので二回目以降の読み込みをブロックする
+  if get(g:, 'did_ddc_setup', v:false)
+    return
+  endif
+  g:did_ddc_setup = v:true
+
+  ddc#custom#patch_global({
+    ui: 'pum',
+    sources: [
+      'around',
+    ],
+    cmdlineSources: {
+      ':': [ 'cmdline' ],
+      '=': [ 'input' ],
+    },
+    sourceOptions: {
+      _: {
+        ignoreCase: true,
+        minAutoCompleteLength: 2,
+        matchers: [ 'matcher_fuzzy' ],
+        sorters: [ 'sorter_fuzzy' ],
+        converters: [ 'converter_remove_overlap', 'converter_fuzzy' ],
+      }
+    },
+    autoCompleteEvents: [ 'TextChangedI', 'CmdlineChanged' ],
+  })
+  ddc#enable()
+  # 手動補完を起動するためのコマンド
+  # <expr> マッピングに与えて動く値でなくてはならない
+  g:InvokeManualCompleteKeys = "\<Cmd>call ddc#map#manual_complete()\<CR>"
+enddef
+autocmd VimRc InsertEnter,CmdlineEnter * ++once call <SID>SetupDdc()
+autocmd VimRc CmdlineEnter * call ddc#enable_cmdline_completion()
+'''
+
+[[plugins]]
+repo = 'Shougo/ddc-source-cmdline'
+
+[[plugins]]
+repo = 'Shougo/ddc-source-input'
+
+[[plugins]]
+repo = 'Shougo/ddc-source-around'
+
+[[plugins]]
+repo = 'tani/ddc-fuzzy'
+
+[[plugins]]
+repo = 'Shougo/ddc-ui-pum'
+
+[[plugins]]
+repo = 'Shougo/ddc-filter-matcher_head'
+
+[[plugins]]
+repo = 'Shougo/ddc-converter_remove_overlap'
+
+[[plugins]]
+repo = 'Shougo/pum.vim'
+hook_add = '''
+" lexima.vimの自動マッピングと衝突してしまうため、InsertEnterする度にマッピングを実行する
+def s:MapPumVim(): void
+  inoremap <expr> <CR> pum#visible() ? "\<Cmd>if !pum#entered()\<Bar>call pum#map#select_relative(1)\<Bar>endif\<Bar>call pum#map#confirm()\<CR>" : lexima#expand('<LT>CR>', 'i')
+  inoremap <expr> <C-n> pum#visible() ? "\<Cmd>call pum#map#insert_relative(1)\<CR>" : (g:InvokeManualCompleteKeys ?? "\<C-n>")
+  inoremap <expr> <C-p> pum#visible() ? "\<Cmd>call pum#map#insert_relative(-1)\<CR>" : (g:InvokeManualCompleteKeys ?? "\<C-p>")
+enddef
+autocmd VimRc InsertEnter * call <SID>MapPumVim()
+
+set wildcharm=<Tab>
+cnoremap <expr> <Tab> pum#visible() ? "\<Cmd>call pum#map#insert_relative(1)\<CR>" : (g:InvokeManualCompleteKeys ?? "\<Tab>")
+cnoremap <expr> <S-Tab> pum#visible() ? "\<Cmd>call pum#map#insert_relative(-1)\<CR>" : (g:InvokeManualCompleteKeys ?? "\<S-Tab>")
+
+" insertモードでは自動選択する
+autocmd VimRc InsertEnter * if &g:completeopt !~# 'noinsert'|setglobal completeopt+=noinsert|endif
+" cmdlineでは自動選択しない
+autocmd VimRc CmdlineEnter * if &g:completeopt =~# 'noinsert'|setglobal completeopt-=noinsert|endif
+'''
+
+[[plugins]]
+repo = 'Shougo/ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-ui-ff'
+hook_add = '''
+def s:SetupDduFf(): void
+  ddu#custom#patch_global({
+    ui: 'ff',
+    uiParams: {
+      ff: {
+        autoResize: true,
+        filterSplitDirection: 'bot',
+        split: 'horizontal',
+        displaySourceName: 'no',
+        startFilter: true,
+      }
+    },
+    sourceOptions: {
+      _: {
+        ignoreCase: true,
+        matchers: ['matcher_fzf'],
+      },
+      line: {
+        matchers: ['matcher_substring'],
+      },
+      rg: {
+        matchers: ['matcher_substring'],
+      },
+    },
+    kindOptions: {
+      file: {
+        defaultAction: 'open',
+      },
+      word: {
+        defaultAction: 'append',
+      },
+      help: {
+        defaultAction: 'open',
+      },
+    },
+    filterParams: {
+      _: {
+        highlightMatched: 'Search',
+      },
+    },
+  })
+
+  def g:DduFfResume(): void
+    ddu#start({
+      resume: true,
+      uiParams: {
+        ff: {
+          startFilter: false,
+        },
+      },
+    })
+  enddef
+  nmap <Plug>(ddu:ff:resume) <Cmd>call g:DduFfResume()<CR>
+
+  def g:DduFfFiles(dir: string): void
+    ddu#start({
+      uiParams: {
+        ff: { startFilter: true },
+      },
+      sources: [{ name: 'file_external' }],
+      sourceParams: {
+        file_external: {
+          cmd: ['fd', '.', '-t', 'file', '-E', '.git', '-E', '__pycache__', '-E', 'node_modules'],
+          path: dir,
+        },
+      },
+    })
+  enddef
+  nmap <Plug>(ddu:ff:file) <Cmd>call g:DduFfFiles(getcwd())<CR>
+  nmap <Plug>(ddu:ff:config) <Cmd>call g:DduFfFiles($DOTFILES)<CR>
+
+  def g:DduFfRg(): void
+    ddu#start({
+      resume: false,
+      uiParams: {
+        ff: {
+          startFilter: false,
+        },
+      },
+      sources: [{ name: 'rg' }],
+      sourceParams: {
+        rg: { input: input('Rg> ') },
+      },
+    })
+  enddef
+  nmap <Plug>(ddu:ff:rg) <Cmd>call g:DduFfRg()<CR>
+
+  def g:DduFfLine(): void
+    ddu#start({
+      resume: false,
+      uiParams: {
+        ff: {
+          startFilter: true,
+        },
+      },
+      sources: [{ name: 'line' }],
+    })
+  enddef
+  nmap <Plug>(ddu:ff:line) <Cmd>call g:DduFfLine()<CR>
+
+  def g:DduFfBuffers(): void
+    ddu#start({
+      resume: false,
+      uiParams: {
+        ff: {
+          startFilter: true,
+        },
+      },
+      sources: [{ name: 'buffer' }],
+    })
+  enddef
+  nmap <Plug>(ddu:ff:buffer) <Cmd>call g:DduFfBuffers()<CR>
+
+  def g:DduFfHelpTags(): void
+    ddu#start({
+      resume: false,
+      uiParams: {
+        startFilter: true,
+      },
+      sources: [{ name: 'help' }],
+    })
+  enddef
+  nmap <Plug>(ddu:ff:help) <Cmd>call g:DduFfHelpTags()<CR>
+
+  def g:DduFfPlugins(): void
+    ddu#start({
+      resume: false,
+      uiParams: {
+        startFilter: true,
+      },
+      sources: [{ name: 'dein' }],
+    })
+  enddef
+  nmap <Plug>(ddu:ff:plugins) <Cmd>call g:DduFfPlugins()<CR>
+enddef
+
+" <Plug>(ddu:ff:で始まるマッピングのどれかを実行したときに
+" マッピング先を定義して実行する(deinのon_mapみたいな)
+nmap <Plug>(ddu:ff: :execute 'nunmap <Plug>(ddu:ff:'<CR><Cmd>call <SID>SetupDduFf()<CR><Plug>(ddu:ff:
+
+nmap <Space>fh <Plug>(ddu:ff:help)
+nmap <Space>fc <Plug>(ddu:ff:config)
+nmap <Space>fw <Plug>(ddu:ff:rg)
+nmap <Space>fs <Plug>(ddu:ff:line)
+nmap <Space>ff <Plug>(ddu:ff:file)
+nmap <Space>fb <Plug>(ddu:ff:buffer)
+nmap <Space>fn <Plug>(ddu:ff:resume)
+nmap <Space>fp <Plug>(ddu:ff:plugins)
+'''
+[plugins.ftplugin]
+ddu-ff-filter = '''
+inoremap <buffer> <CR> <Esc><Cmd>call ddu#ui#ff#do_action('closeFilterWindow')<CR>
+nnoremap <buffer> <CR> <Cmd>call ddu#ui#ff#do_action('closeFilterWindow')<CR>
+'''
+ddu-ff = '''
+nnoremap <buffer> i <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
+nnoremap <buffer> <CR> <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+nnoremap <buffer> q <Cmd>close<CR>
+'''
+
+[[plugins]]
+repo = 'Shougo/ddu-source-rg'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-file_external'
+
+[[plugins]]
+repo = 'shun/ddu-source-buffer'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-line'
+
+[[plugins]]
+repo = 'matsui54/ddu-source-help'
+
+[[plugins]]
+repo = 'yuki-yano/ddu-filter-fzf'
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-matcher_substring'
+
+[[plugins]]
+repo = 'Shougo/ddu-kind-file'
+
+[[plugins]]
+repo = 'Shougo/ddu-kind-word'
+
+[[plugins]]
+repo = 'lambdalisue/gin.vim'
+hook_add = '''
+nmap <space>aa <Cmd>GinStatus<CR>
+nmap <space>ab <Cmd>GinBranch<CR>
+'''
+
+# vim:foldmarker=def\ ,enddef foldmethod=marker foldenable foldlevel=0

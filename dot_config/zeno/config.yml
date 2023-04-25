@@ -1,0 +1,16 @@
+snippets:
+  - name: git status
+    keyword: gs
+    snippet: git status --short --branch
+  - name: git commit message
+    keyword: gcim
+    snippet: git commit -m '{{commit_message}}'
+  - name: dotnet build
+    keyword: db
+    snippet: dotnet build --nologo --no-restore
+  - name: ghq cd
+    keyword: gcd
+    snippet: cd "$(ghq list --full-path '{{query}}'| fzf)"
+  - name: dotnet test
+    keyword: dt
+    snippet: dotnet test --nologo --no-restore

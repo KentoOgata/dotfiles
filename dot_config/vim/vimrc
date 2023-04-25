@@ -1,0 +1,130 @@
+vim9script
+# {{{ defaults.vim
+# runtime! defaults.vimすると遅い
+set nocompatible
+set backspace=indent,eol,start
+set history=200
+set ruler
+set showcmd
+set wildmenu
+set ttimeout
+set ttimeoutlen=100
+set display=truncate
+set scrolloff=5
+set nrformats-=octal
+map Q gq
+sunmap Q
+set nolangremap
+# }}}
+
+augroup VimRc
+  autocmd!
+augroup END
+
+g:stdpath = {
+  config: {
+    vim: expand('$XDG_CONFIG_HOME/vim'),
+    dein: expand('$XDG_CONFIG_HOME/vim/dein.d')
+  },
+  cache: {
+    dein: expand('$XDG_CACHE_HOME/dein'),
+  },
+}
+
+$MYVIMRC = expand('<sfile>')
+$VIMRUNTIME = expand('$XDG_DATA_HOME/vim/vim90')
+set rtp=$VIMRUNTIME
+set helpfile=$VIMRUNTIME/doc/help.txt
+execute($'set runtimepath^={g:stdpath.config.vim}')
+execute($'set runtimepath+={g:stdpath.config.vim}/after')
+
+set belloff=all
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+set nowrap
+set encoding=utf-8
+set fileencodings=utf-8,cp932
+set fileformats=unix,dos,mac
+set hidden
+set noswapfile
+
+# ORIGINAL SOURCE: https://github.com/yuki-yano/dotfiles/blob/main/.vimrc
+def DefKeymap(force_map: bool, args: list<string>): void
+  const modes = args[0]
+  const mapargs = join(args[1 :], ' ')
+  const cmd = (force_map || mapargs =~? '<Plug>') ? 'map' : 'noremap'
+  for mode in split(modes, '.\zs')
+    if index(split('nvsxoilct', '.\zs'), mode) < 0
+      echoerr 'Invalid mode is detected: ' .. mode
+      continue
+    endif
+    execute mode .. cmd mapargs
+  endfor
+enddef
+command -nargs=+ -bang Keymap call <SID>DefKeymap('<bang>' ==# '!', [<f-args>])
+
+nnoremap <expr> a (len(getline('.')) ==# 0) ? '"_cc' : 'a'
+nnoremap <expr> i (len(getline('.')) ==# 0) ? '"_cc' : 'i'
+inoremap <C-l> <Del>
+nnoremap <C-l> <Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-l><CR>
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
+inoremap <C-f> <C-g>U<Right>
+inoremap <C-b> <C-g>U<Left>
+nnoremap K <Nop>
+def CmdlineSpaceExpand(): string
+  const cmdtype = getcmdtype()
+  if '/' ==# cmdtype || '?' ==# cmdtype
+    return '.\{-}'
+  endif
+  return ' '
+enddef
+cnoremap <expr> <space> <SID>CmdlineSpaceExpand()
+
+# {{{ load dein.vim
+const deinRepo = $'{g:stdpath.cache.dein}/repos/github.com/Shougo/dein.vim'
+if &runtimepath !~# '/dein.vim'
+  execute($'set runtimepath^={deinRepo}')
+endif
+
+try
+  import autoload 'dein.vim'
+catch
+  system($'git clone https://github.com/Shougo/dein.vim.git {deinRepo}')
+  execute($'helptags {deinRepo}/doc')
+  import autoload 'dein.vim'
+endtry
+# }}}
+
+# {{{ setup user plugins
+if dein#min#load_state(g:stdpath.cache.dein)
+  const toml = {
+    nolazy: g:stdpath.config.dein .. '/nolazy.toml',
+    lazy:   g:stdpath.config.dein .. '/lazy.toml',
+    ft:     g:stdpath.config.dein .. '/ft.toml',
+  }
+
+  dein#begin(g:stdpath.cache.dein, [ toml.lazy, toml.nolazy ])
+
+  dein#load_toml(toml.nolazy, { lazy: v:false })
+  dein#load_toml(toml.lazy, { lazy: v:true })
+  dein#load_toml(toml.ft, { lazy: v:true })
+
+  dein#end()
+
+  if dein#check_install()
+    dein#install()
+  endif
+
+  dein#save_state()
+endif
+# }}}
+
+syntax enable
+filetype plugin indent on
+set bg=dark
+colorscheme iceberg
+
+# vim:set expandtab shiftwidth=2 softtabstop=2 tabstop=2 foldenable foldmethod=marker foldlevel=0:

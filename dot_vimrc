@@ -1,0 +1,9 @@
+if strlen(expand('$XDG_CONFIG_HOME')) > 0
+  const s:vimfiles = expand('$XDG_CONFIG_HOME') .. '/vim'
+  const s:vimrc = s:vimfiles .. '/vimrc'
+
+  if filereadable(s:vimrc)
+    exec printf('source %s', s:vimfiles .. '/vimrc')
+    finish
+  endif
+endif

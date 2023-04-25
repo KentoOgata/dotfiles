@@ -1,0 +1,11 @@
+{
+  "fn": {
+    "prefix": "fn",
+    "body": [
+      "function! $1($2) abort",
+      "\t$0",
+      "endfunction"
+    ],
+    "description": "function"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "statement-lambda": {
+    "prefix": "fn",
+    "body": [
+      "$1 =>",
+      "{",
+      "\t$0",
+      "}"
+    ]
+  },
+  "Creates a foreach statement": {
+    "prefix": "foreach",
+    "body": [
+      "foreach (var ${2} in ${1})",
+      "{",
+      "\t$0",
+      "}"
+    ],
+    "description": "Creates a foreach statement"
+  },
+  "Creates an if statement": {
+    "prefix": "if",
+    "body": [
+      "if (${1})",
+      "{",
+      "\t$0",
+      "}"
+    ],
+    "description": "Creates an if statement"
+  }
+}

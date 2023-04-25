@@ -1,0 +1,262 @@
+[[plugins]]
+repo = 'cohama/lexima.vim'
+on_event = 'InsertEnter'
+hook_source = '''
+def s:LeximaSetup(): void
+  lexima#add_rule({char: '<Tab>', at: "\\%#'", leave: "'"})
+  lexima#add_rule({char: '<Tab>', at: '\%#"', leave: '"'})
+  lexima#add_rule({char: '<Tab>', at: '\%#\s*}', leave: '}'})
+  lexima#add_rule({char: '<Tab>', at: '\%#\s*)', leave: ')'})
+  lexima#add_rule({char: '<Tab>', at: '\%#\s*]', leave: ']'})
+  lexima#add_rule({filetype: ['cs', 'razor'], char: '<', at: '[a-zA-Z0-9_]\%#', input_after: '>'})
+  lexima#add_rule({filetype: ['cs', 'razor'], char: '<BS>', at: '<\%#>', delete: '>'})
+  lexima#add_rule({filetype: ['cs', 'razor'], char: '<Tab>', at: '<[a-zA-Z0-9<>\_,?]\+\%#>', leave: '>'})
+  lexima#add_rule({filetype: ['cs', 'razor'], char: '$', input: '$"', input_after: '"'})
+  lexima#add_rule({filetype: ['cs', 'razor'], char: ';', at: '\%(get\|set\|init\)\%( => [^;]\+\)*\%#', input: ';'})
+  lexima#add_rule({filetype: ['cs', 'razor'], char: ';', at: '\%#.\+', input: '<End>;'})
+  lexima#add_rule({filetype: ['cs', 'razor'], char: 'g', at: '{\s*\%#\s*}', input: 'get', input_after: ';' })
+  lexima#add_rule({filetype: ['cs', 'razor'], char: '<space>', at: '{\s*get\%#;\s*}', input_after: ' => ' })
+enddef
+call <SID>LeximaSetup()
+'''
+
+[[plugins]]
+repo = 'lambdalisue/gina.vim'
+on_cmd = 'Gina'
+hook_add = '''
+nmap <space>ah <Cmd>Gina log --graph<CR>
+nmap <space>ac <Cmd>Gina commit -v<CR>
+nmap <space>aC <Cmd>Gina commit --amend -v<CR>
+'''
+
+[[plugins]]
+repo = 'machakann/vim-sandwich'
+on_map = { nxo = '<Plug>(sandwich-', xo = '<Plug>(textobj-sandwich-' }
+hook_add = '''
+let g:sandwich_no_default_key_mappings = v:true
+
+Keymap nx  s  <Nop>
+Keymap nxo sa <Plug>(sandwich-add)
+Keymap nx  sd <Plug>(sandwich-delete)
+Keymap nx  sr <Plug>(sandwich-replace)
+nmap sdb <Plug>(sandwich-delete-auto)
+nmap srb <Plug>(sandwich-replace-auto)
+
+Keymap xo ib <Plug>(textobj-sandwich-auto-i)
+Keymap xo ab <Plug>(textobj-sandwich-auto-a)
+Keymap xo is <Plug>(textobj-sandwich-query-i)
+Keymap xo as <Plug>(textobj-sandwich-query-a)
+'''
+
+[[plugins]]
+repo = 'hrsh7th/vim-eft'
+on_map = { nxo = '<Plug>(eft-' }
+hook_add = '''
+let g:eft_ignorecase = v:true
+Keymap nxo f <Plug>(eft-f)
+Keymap nxo F <Plug>(eft-F)
+Keymap nx  ; <Plug>(eft-repeat)
+Keymap xo  t <Plug>(eft-t)
+Keymap xo  T <Plug>(eft-T)
+'''
+
+[[plugins]]
+repo = 'haya14busa/vim-edgemotion'
+on_map = { nxo = '<Plug>(edgemotion-' }
+hook_add = '''
+Keymap nxo <C-j> <Plug>(edgemotion-j)
+Keymap nxo <C-k> <Plug>(edgemotion-k)
+'''
+
+[[plugins]]
+repo = 'haya14busa/vim-asterisk'
+on_map = { nxo = '<Plug>(asterisk-' }
+hook_add = '''
+Keymap nxo *   <Plug>(asterisk-z*)
+Keymap nxo g*  <Plug>(asterisk-gz*)
+Keymap nxo #   <Plug>(asterisk-z#)
+Keymap nxo g#  <Plug>(asterisk-gz#)
+'''
+
+[[plugins]]
+repo = 'lambdalisue/nerdfont.vim'
+
+[[plugins]]
+repo = 'lambdalisue/fern.vim'
+on_cmd = 'Fern'
+hook_add = '''
+def s:FernExecute(): void
+  const isNormalFileBuffer = &l:buftype ==# ''
+  if isNormalFileBuffer
+    Fern %:h -reveal=%
+  else
+    execute($'Fern {getcwd(winnr())}')
+  endif
+enddef
+nmap <space>e <Cmd>call <SID>FernExecute()<CR>
+'''
+hook_source = '''
+let g:fern#hide_cursor = v:true
+let g:fern#keepalt_on_edit = v:true
+let g:fern#keepjumps_on_edit = v:false
+let g:fern#default_hidden = v:true
+'''
+
+[[plugins]]
+repo = 'lambdalisue/fern-renderer-nerdfont.vim'
+on_source = 'fern.vim'
+depends = 'nerdfont.vim'
+hook_source = '''
+let g:fern#renderer = 'nerdfont'
+let g:fern#renderer#nerdfont#root_symbol = '*'
+let g:fern#renderer#nerdfont#indent_markers = v:true
+'''
+
+[[plugins]]
+repo = 'lambdalisue/fern-git-status.vim'
+on_source = 'fern.vim'
+hook_source = '''
+call fern_git_status#init()
+'''
+
+[[plugins]]
+repo = 'lambdalisue/fern-hijack.vim'
+on_if = 'isdirectory(expand("<afile>"))'
+# fern-hijackの中でFernコマンドを実行しているので指定しなくても
+# fern.vimはロードされる(fern.vimの設定でon_cmdに書いてるから)けど、一応指定する
+depends = 'fern.vim'
+hook_add = '''
+" これを使うならnetrwを読み込む意味はないので無効化する
+let g:loaded_netrwFileHandlers = v:true
+let g:loaded_netrwPlugins = v:true
+let g:loaded_netrwSettings = v:true
+'''
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+on_event = ['BufNewFile', 'BufReadPost', 'WinNew']
+hook_add = '''
+def SetupLightline(): void
+  g:lightline = {
+    active: {
+      left: [
+        [ 'mode', 'paste' ],
+        [ 'readonly', 'filename', 'modified' ],
+      ],
+      right: [
+        [ 'lineinfo' ],
+        [ 'percent' ],
+        [ 'fileformat', 'fileencoding', 'filetype' ],
+      ],
+    },
+    inactive: {
+      left: [ [ 'filename' ] ],
+      right: [],
+    },
+  }
+enddef
+call SetupLightline()
+'''
+hook_source = '''
+set laststatus=2
+def g:LightlineApplyColorScheme(theme: string): void
+  g:lightline = get(g:, 'lightline', {})
+  g:lightline.colorscheme = theme
+enddef
+autocmd VimRc ColorScheme * call g:LightlineApplyColorScheme(expand('<amatch>'))
+call g:LightlineApplyColorScheme(g:colors_name)
+'''
+
+[[plugins]]
+repo = 'mhinz/vim-signify'
+on_event = [ 'BufReadPost', 'BufNewFile' ]
+hook_add = '''
+set signcolumn=yes
+nmap <space>hp <Cmd>SignifyHunkDiff<CR>
+nmap <space>hu <Cmd>SignifyHunkUndo<CR>
+let g:signify_sign_add               = '+'
+let g:signify_sign_delete            = '_'
+let g:signify_sign_delete_first_line = '‾'
+let g:signify_sign_change            = '~'
+let g:signify_sign_change_delete     = g:signify_sign_change . g:signify_sign_delete_first_line
+'''
+
+[[plugins]]
+repo = 'vim-skk/skkeleton'
+# denopsプラグインだけど、plugin/ディレクトリが存在するので遅延ロードする
+on_map = { ic = '<Plug>(skkeleton-enable)' }
+# 辞書の読み込みなどを待機しない
+denops_wait = false
+hook_add = '''
+imap <C-j> <Plug>(skkeleton-enable)
+cmap <C-j> <Plug>(skkeleton-enable)
+
+" denops_wait = falseに設定しているので、deinのhook_sourceではなく
+" DenopsPluginPostによって設定を実行する
+def s:SetupSkkeleton(): void
+  skkeleton#config({
+    eggLikeNewline: true,
+    globalJisyo: expand('$XDG_DATA_HOME/skk/SKK-JISYO.L'),
+    userJisyo: expand('$XDG_DATA_HOME/skk/user-jisyo'),
+    completionRankFile: expand('$XDG_DATA_HOME/skk/rank.json'),
+    immediatelyCancel: false,
+  })
+enddef
+autocmd VimRc User DenopsPluginPost:skkeleton ++once call <SID>SetupSkkeleton()
+'''
+
+[[plugins]]
+repo = 'itchyny/vim-cursorword'
+on_event = 'CursorMoved'
+
+[[plugins]]
+repo = 'tyru/caw.vim'
+on_map = { nx = '<Plug>(caw:' }
+hook_add = '''
+let g:caw_no_default_keymappings = v:true
+Keymap nx gc <Plug>(caw:prefix)
+nmap <Plug>(caw:prefix)c <Plug>(caw:hatpos:toggle:operator)
+xmap <Plug>(caw:prefix)c <Plug>(caw:hatpos:toggle)
+Keymap nx <Plug>(caw:prefix)i  <Plug>(caw:hatpos:comment)
+Keymap nx <Plug>(caw:prefix)ui <Plug>(caw:hatpos:uncomment)
+Keymap nx <Plug>(caw:prefix)I  <Plug>(caw:zeropos:comment)
+Keymap nx <Plug>(caw:prefix)uI <Plug>(caw:zeropos:uncomment)
+Keymap nx <Plug>(caw:prefix)a  <Plug>(caw:dollarpos:comment)
+Keymap nx <Plug>(caw:prefix)ua <Plug>(caw:dollarpos:uncomment)
+Keymap nx <Plug>(caw:prefix)w  <Plug>(caw:wrap:comment)
+Keymap nx <Plug>(caw:prefix)uw <Plug>(caw:wrap:uncomment)
+Keymap nx <Plug>(caw:prefix)b  <Plug>(caw:box:comment)
+Keymap nx <Plug>(caw:prefix)o  <Plug>(caw:jump:comment-next)
+Keymap nx <Plug>(caw:prefix)O  <Plug>(caw:jump:comment-prev)
+'''
+
+[[plugins]]
+repo = 'rhysd/git-messenger.vim'
+on_map = '<Plug>(git-messenger)'
+hook_add = '''
+let g:git_messenger_no_default_mappings = v:true
+nmap <space>mp <Plug>(git-messenger)
+'''
+
+[[plugins]]
+repo = 'prabirshrestha/vim-lsp'
+on_event = 'BufReadPost'
+hook_source = '''
+def s:OnLspAttach(): void
+  setl omnifunc=lsp#complete
+  setl signcolumn=yes
+  setl tagfunc=lsp#tagfunc
+  nmap <buffer> gd <Plug>(lsp-definition)
+  nmap <buffer> mr <Plug>(lsp-rename)
+  nmap <buffer> gi <Plug>(lsp-implementation)
+  nmap <buffer> gr <Plug>(lsp-references)
+  nmap <buffer> K <Plug>(lsp-hover)
+enddef
+autocmd VimRc User lsp_buffer_enabled call <SID>OnLspAttach()
+'''
+
+[[plugins]]
+repo = 'mattn/vim-lsp-settings'
+on_source = 'vim-lsp'
+
+# vim:foldmarker=def\ ,enddef foldmethod=marker foldenable foldlevel=0
