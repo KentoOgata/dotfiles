@@ -1,3 +1,32 @@
+#!/bin/zsh
+
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_STATE_HOME="$HOME/.local/state"
+
+export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$XDG_DATA_HOME/nvim/bin:$PATH"
+export PATH="$XDG_DATA_HOME/vim/bin:$PATH"
+export EDITOR='nvim'
+export MANPAGER='nvim +Man!'
+export GOPATH="$HOME/go"
+export PATH="$GOPATH/bin:$PATH"
+export DENO_INSTALL="$HOME/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.ghcup/bin:$PATH"
+export PATH="$HOME/.cabal/bin:$PATH"
+
+# MacOSではhomebrewのパスを追加する
+if [[ "$(uname &> /dev/null)" -eq 'Darwin' ]]; then
+  export PATH="/opt/homebrew/bin:${PATH}"
+fi
+
+export LESSCHARSET='utf-8'
+export LANG='ja_JP.utf8'
+
 export ZENO_ENABLE_SOCK=1
 export ZENO_GIT_CAT="bat --color-always"
 export ZENO_GIT_TREE="exa --tree"
