@@ -429,7 +429,7 @@ plugins['yuki-yano/fzf-preview.vim'] = {
           {
             '<Plug>(ff-vimrc)',
             function()
-              vim.cmd.FzfPreviewDirectoryFiles { vim.env['DOTFILES'] }
+              vim.cmd.FzfPreviewDirectoryFiles { ('%s/chezmoi'):format(vim.env.XDG_DATA_HOME) }
             end,
           },
         },
@@ -460,7 +460,7 @@ plugins['ibhagwan/fzf-lua'] = {
             '<Plug>(ff-vimrc)',
             function()
               require('fzf-lua').files {
-                cwd = vim.env['DOTFILES'],
+                cwd = ('%s/chezmoi'):format(vim.env.XDG_DATA_HOME),
               }
             end,
           },

@@ -186,7 +186,7 @@ def s:SetupDduFf(): void
     })
   enddef
   nmap <Plug>(ddu:ff:file) <Cmd>call g:DduFfFiles(getcwd())<CR>
-  nmap <Plug>(ddu:ff:config) <Cmd>call g:DduFfFiles($DOTFILES)<CR>
+  nmap <Plug>(ddu:ff:config) <Cmd>call g:DduFfFiles($'{$XDG_DATA_HOME}/chezmoi')<CR>
 
   def g:DduFfRg(): void
     ddu#start({

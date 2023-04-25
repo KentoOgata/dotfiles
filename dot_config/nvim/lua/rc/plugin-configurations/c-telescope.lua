@@ -32,6 +32,6 @@ vim.keymap.set('n', '<Plug>(telescope-buffer)', function()
 end)
 vim.keymap.set('n', '<Plug>(telescope-vimrc)', function()
   telescope_actions.find_files {
-    cwd = vim.env['DOTFILES'],
+    cwd = ('%s/chezmoi'):format(vim.env.XDG_DATA_HOME),
   }
 end)

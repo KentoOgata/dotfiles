@@ -22,6 +22,4 @@ export PATH="$HOME/.cabal/bin:$PATH"
 export LESSCHARSET='utf-8'
 export LANG='ja_JP.utf8'
 
-export DOTFILES="$HOME/repos/github.com/kento-ogata/dotfiles"
-
 [[ -f "$HOME/.bashrc" ]] && . "$HOME/.bashrc"

@@ -241,7 +241,7 @@ plugins['Shougo/ddu-ui-ff'] = {
             name = 'file_external',
             params = {
               cmd = fd,
-              path = vim.env['DOTFILES'],
+              path = ('%s/chezmoi'):format(vim.env['XDG_DATA_HOME']),
             },
           },
         },
