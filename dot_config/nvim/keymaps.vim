@@ -1,6 +1,10 @@
 " sh,vim,help,c以外の多くのftでは不要
 nnoremap K <Nop>
-autocmd VimRc FileType bash,zsh,sh,vim,help,c,cpp nnoremap <buffer> K K
+call nvim_create_autocmd('FileType', #{
+      \ pattern: ['bash', 'zsh', 'sh', 'vim', 'help', 'c', 'cpp'],
+      \ group: 'VimRc',
+      \ command: 'nnoremap <buffer> K K',
+      \ })
 
 " <A-,>でinit.vimを開く
 nnoremap <expr> <A-,> executable('chezmoi')
