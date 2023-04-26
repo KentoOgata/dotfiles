@@ -3,6 +3,10 @@
 let $MYVIMRC = $MYVIMRC ?? expand('<sfile>:p')
 const s:here = $MYVIMRC->fnamemodify(':h')
 
+augroup VimRc
+  autocmd!
+augroup END
+
 let g:dein#inline_vimrcs = [
       \ s:here .. '/commands.vim',
       \ s:here .. '/options.vim',
