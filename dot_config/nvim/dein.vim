@@ -1,4 +1,4 @@
-const s:deincache = ($XDG_CACHE_HOME ?? expand('~/.cache')) .. '/dein'
+const s:deincache = stdpath('cache') .. '/dein'
 
 function! s:deinsetup() abort
   call dein#options(#{
