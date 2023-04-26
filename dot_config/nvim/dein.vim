@@ -37,7 +37,7 @@ execute $'set runtimepath^={s:deinrtp}'
 try
   call s:deinsetup()
 catch /^Vim\%((\a\+)\)\=:E117:/
-  call system([
+  echom system([
         \ 'git',
         \ 'clone',
         \ 'https://github.com/Shougo/dein.vim.git',
