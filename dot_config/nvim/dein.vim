@@ -1,5 +1,4 @@
-const s:deincache = $XDG_CACHE_HOME ?? expand('~/.cache')
-const s:deinrtp = s:deincache .. '/repos/github.com/Shougo/dein.vim'
+const s:deincache = ($XDG_CACHE_HOME ?? expand('~/.cache')) .. '/dein'
 
 function! s:deinsetup() abort
   call dein#options(#{
@@ -11,10 +10,6 @@ function! s:deinsetup() abort
         \ })
   if dein#min#load_state(s:deincache)
     const here = stdpath('config')
-    let g:dein#inline_vimrcs = [
-          \ $'{here}/commands.vim',
-          \ $'{here}/options.vim',
-          \ ]
     call dein#begin(s:deincache)
     const configdir = $'{here}/plugins.d'
     call map(
@@ -33,6 +28,7 @@ function! s:deinsetup() abort
   endif
 endfunction
 
+const s:deinrtp = s:deincache .. '/repos/github.com/Shougo/dein.vim'
 execute $'set runtimepath^={s:deinrtp}'
 try
   call s:deinsetup()
