@@ -1,0 +1,25 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+command_timeout = 100
+add_newline = false
+format = "$all"
+
+# NOTE:
+#   emojiの表示にtmuxとNeovimのterminal emulatorとWezTermのそれぞれが対応できてない所為で感動的な描画崩れが起きる。
+#   Windows Terminal単体なら発生しない。流石のMicrosoft
+[os]
+disabled = true
+
+[username]
+disabled = false
+show_always = true
+format = "[$user]($style) at "
+
+[hostname]
+disabled = false
+ssh_only = false
+format = "[$ssh_symbol$hostname]($style) "
+
+[shell]
+disabled = false
+fish_indicator = "fish"
