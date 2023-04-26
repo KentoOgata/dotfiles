@@ -14,3 +14,9 @@ snippets:
   - name: dotnet test
     keyword: dt
     snippet: dotnet test --nologo --no-restore
+  - name: chezmoi edit
+    keyword: ced
+    snippet: chezmoi edit
+  - name: chezmoi cd
+    keyword: ccd
+    snippet: chezmoi cd
