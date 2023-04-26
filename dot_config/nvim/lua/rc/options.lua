@@ -67,16 +67,6 @@ return {
       set 'grepformat' { '%f:%l:%m', '%f:%l%m', '%f  %l%m' }
     end
 
-    vim.autocmd.create('OptionSet', {
-      group = vim.augroup.GetOrAdd 'VimRc',
-      pattern = 'bufhidden',
-      desc = 'Set nobuflisted if bufhidden is wipe or delete',
-      callback = function(ctx)
-        local bufhidden = vim.v.option_new
-        vim.bo[ctx.buf].buflisted = not ('wipe' == bufhidden or 'delete' == bufhidden)
-      end,
-    })
-
     vim.autocmd.create('BufWinEnter', {
       group = vim.augroup.GetOrAdd 'VimRc',
       desc = '`set wrap` when the buffer is markdown',
