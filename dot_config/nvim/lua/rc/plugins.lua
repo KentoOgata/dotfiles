@@ -996,7 +996,7 @@ plugins['wgwoods/vim-systemd-syntax'] = {
 }
 
 plugins['alker0/chezmoi.vim'] = {
-  on_path = { 'dot_.\\+', '.\\+.tmpl' },
+  lazy = false,
 }
 
 plugins['lambdalisue/fern.vim'] = {
