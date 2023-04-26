@@ -32,7 +32,7 @@ const s:deinrtp = s:deincache .. '/repos/github.com/Shougo/dein.vim'
 execute $'set runtimepath^={s:deinrtp}'
 try
   call s:deinsetup()
-catch /^Vim\%((\a\+)\)\=:E117:/
+catch /^\%(Vim\%((\a\+)\)\=:\)\{,1}E117:/
   echom system([
         \ 'git',
         \ 'clone',
