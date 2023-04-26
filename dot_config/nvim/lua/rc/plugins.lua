@@ -1251,6 +1251,11 @@ plugins['tiagovla/scope.nvim'] = {
   end,
 }
 
+plugins['yuki-yano/ai-review.nvim'] = {
+  depends = { 'denops.vim', 'nui.nvim' },
+  on_cmd = 'AiReview',
+}
+
 plugins = vim.tbl_extend('error', plugins, require 'rc.ddu-vim', require 'rc.colorscheme-plugins')
 
 require('dein_').startup(plugins)
