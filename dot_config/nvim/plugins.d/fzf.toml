@@ -23,6 +23,10 @@ on_cmd = [
   'FzfPreviewProjectMruFiles',
   'FzfPreviewProjectFiles',
 ]
+hook_add = '''
+  nmap <space>fz <Cmd>FzfPreviewMruFiles<CR>
+  nmap <space>af <Cmd>FzfPreviewGitActions<CR>
+'''
 
 [[plugins]]
 repo = 'ibhagwan/fzf-lua'

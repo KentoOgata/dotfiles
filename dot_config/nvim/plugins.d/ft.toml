@@ -1,0 +1,70 @@
+[ftplugin]
+lua = '''
+  setl expandtab
+  setl tabstop=2
+  setl shiftwidth=2
+'''
+vim = '''
+  setl expandtab
+  setl tabstop=2
+  setl shiftwidth=2
+'''
+toml = '''
+  setl expandtab
+  setl tabstop=2
+  setl shiftwidth=2
+
+  setl foldmethod=expr
+  setl foldexpr=<SID>fold_expr(v:lnum)
+
+  function! s:fold_expr(lnum) abort
+    return getline(a:lnum) =~# '^\s\+\S'
+  endfunction
+'''
+
+[[plugins]]
+repo = 'nvim-orgmode/orgmode'
+merge_ftdetect = true
+on_ft = 'org'
+hook_post_update = '''
+  if &runtimepath !~# '/nvim-treesitter'
+    call dein#source('nvim-treesitter')
+  endif
+  lua require('orgmode').setup_ts_grammar()
+  TSUpdate
+'''
+lua_source = '''
+  require('orgmode').setup_ts_grammar()
+
+  require('orgmode').setup {
+    mappings = {
+      disable_all = true,
+    },
+  }
+
+  local function setupCmpSource()
+    local ok, cmp = pcall(require, 'cmp')
+    if not ok then
+      local dein = require 'dein'
+      if dein.is_available 'nvim-cmp' then
+        dein.source 'nvim-cmp'
+      else
+        return
+      end
+      cmp = require 'cmp'
+    end
+
+    cmp.setup.filetype('org', {
+      sources = {
+        { name = 'orgmode' },
+        { name = 'buffer' },
+      },
+    })
+  end
+  setupCmpSource()
+'''
+
+[[plugins]]
+repo = 'jlcrochet/vim-razor'
+merge_ftdetect = true
+on_ft = 'razor'

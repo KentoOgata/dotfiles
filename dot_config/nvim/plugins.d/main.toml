@@ -131,4 +131,401 @@ hook_add = '''
   Keymap xo ab <Plug>(textobj-sandwich-auto-a)
 '''
 
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+lazy = false
+
+[[plugins]]
+repo = 'kana/vim-textobj-entire'
+lazy = true
+depends = 'vim-textobj-user'
+on_map = { xo = '<Plug>(textobj-entire-' }
+hook_add = '''
+  Keymap xo ie <Plug>(textobj-entire-i)
+  Keymap xo ae <Plug>(textobj-entire-a)
+'''
+
+[[plugins]]
+repo = 'kana/vim-operator-user'
+lazy = false
+
+[[plugins]]
+repo = 'kana/vim-operator-replace'
+lazy = true
+depends = 'vim-operator-user'
+on_map = { nx = '<Plug>(operator-replace)' }
+hook_add = '''
+  Keymap nx r <Plug>(operator-replace)
+'''
+
+[[plugins]]
+# repo = 'tyru/caw.vim'
+repo = 'KentoOgata/caw.vim'
+rev = 'fix/treesitter-hl_map-removed'
+depends = 'vim-operator-user'
+on_map = { nx = '<Plug>(caw:' }
+hook_add = '''
+  let g:caw_no_default_keymappings = 1
+
+  Keymap nx gc <Plug>(caw:prefix)
+  Keymap nx <Plug>(caw:prefix)i   <Plug>(caw:hatpos:comment)
+  Keymap nx <Plug>(caw:prefix)I   <Plug>(caw:zeropos:comment)
+  Keymap nx <Plug>(caw:prefix)uI  <Plug>(caw:zeropos:uncomment)
+  Keymap nx <Plug>(caw:prefix)a   <Plug>(caw:dollarpos:comment)
+  Keymap nx <Plug>(caw:prefix)ua  <Plug>(caw:dollarpos:uncomment)
+  Keymap nx <Plug>(caw:prefix)w   <Plug>(caw:wrap:comment)
+  Keymap nx <Plug>(caw:prefix)uw  <Plug>(caw:wrap:uncomment)
+  Keymap nx <Plug>(caw:prefix)b   <Plug>(caw:box:comment)
+  Keymap nx <Plug>(caw:prefix)o   <Plug>(caw:jump:comment-next)
+  Keymap nx <Plug>(caw:prefix)O   <Plug>(caw:jump:comment-prev)
+  nmap <Plug>(caw:prefix)c <Plug>(caw:wrap:toggle:operator)
+  xmap <Plug>(caw:prefix)c <Plug>(caw:hatpos:toggle)
+'''
+
+[[plugins]]
+repo = 'machakann/vim-swap'
+lazy = true
+on_map = { nxo = '<Plug>(swap-' }
+hook_add = '''
+  nmap g< <Plug>(swap-prev)
+  nmap g> <Plug>(swap-next)
+  nmap gs <Plug>(swap-interactive)
+  Keymap xo is <Plug>(swap-textobject-i)
+  Keymap xo as <Plug>(swap-textobject-a)
+'''
+
+[[plugins]]
+repo  = 'vim-skk/skkeleton'
+depends = 'denops.vim'
+lazy = true
+# 辞書の読み込みを待機しない
+denops_wait = false
+on_map = { ic = '<Plug>(skkeleton-enable)' }
+hook_add = '''
+  Keymap ic <C-j> <Plug>(skkeleton-enable)
+'''
+lua_source = '''
+  vim.api.nvim_create_autocmd('User', {
+    group = 'VimRc',
+    once = true,
+    pattern = 'DenopsPluginPost:skkeleton',
+    callback = function()
+      ---@type string
+      local skkDataDir
+      if 1 == vim.fn.has 'win32' then
+        skkDataDir = vim.env['APPDATA'] .. '\\skk\\'
+      else
+        skkDataDir = ('%s/skk/'):format(vim.env['XDG_DATA_HOME'])
+      end
+      local dictPath = skkDataDir .. 'SKK-JISYO.L'
+
+      if 0 == vim.fn.filereadable(dictPath) then
+        local dictUrl = 'https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.L'
+        os.execute('curl -fsSLo ' .. dictPath .. ' --create-dirs ' .. dictUrl)
+      end
+
+      vim.fn['skkeleton_azik#setup'] {
+        keys = {
+          katakana = '[',
+        },
+      }
+      vim.fn['skkeleton#register_keymap']('henkan', 'p', 'purgeCandidate')
+      vim.fn['skkeleton#config'] {
+        eggLikeNewline = true,
+        globalJisyo = dictPath,
+        userJisyo = skkDataDir .. 'user-jisyo',
+        completionRankFile = skkDataDir .. 'rank.json',
+        kanaTable = 'azik',
+        immediatelyCancel = false,
+        registerConvertResult = true,
+      }
+    end,
+  })
+'''
+
+[[plugins]]
+repo = 'thinca/vim-qfreplace'
+lazy = true
+on_cmd = 'Qfreplace'
+
+[[plugins]]
+repo = 'itchyny/vim-qfedit'
+lazy = true
+on_ft = 'qf'
+
+[[plugins]]
+repo = 'alker0/chezmoi.vim'
+lazy = false
+
+[[plugins]]
+repo = 'vim-jp/vital.vim'
+on_cmd = 'Vitalize'
+on_func = 'vital#vital#'
+
+[[plugins]]
+repo = 'tweekmonster/helpful.vim'
+on_cmd = 'HelpfulVersion'
+
+[[plugins]]
+repo = 'tyru/capture.vim'
+on_cmd = 'Capture'
+
+[[plugins]]
+repo = 'lukas-reineke/indent-blankline.nvim'
+on_event = ['BufNewFile', 'BufReadPost']
+hook_add = '''
+  let g:indentLine_fileTypeExclude = [
+        \ 'lspinfo',
+        \ 'packer',
+        \ 'checkhealth',
+        \ 'help',
+        \ 'man',
+        \ 'fern',
+        \ ]
+'''
+
+[[plugins]]
+repo = 'stevearc/dressing.nvim'
+depends = 'nui.nvim'
+on_event = 'CursorMoved'
+lua_source = '''
+  require('dressing').setup {
+    input = {
+      enabled = true,
+      default_prompt = 'Input:',
+      prompt_align = 'left',
+      insert_only = true,
+      start_in_insert = true,
+      anchor = 'SW',
+      border = 'single',
+      relative = 'cursor',
+      prefer_width = 40,
+      width = nil,
+      max_width = { 140, 0.9 },
+      min_width = { 20, 0.2 },
+      buf_options = {},
+      win_options = {
+        winblend = 10,
+        wrap = false,
+      },
+      mappings = {
+        n = {
+          ['q'] = 'Close',
+          ['<Esc>'] = 'Close',
+          ['<CR>'] = 'Confirm',
+        },
+        i = {
+          ['<C-c>'] = 'Close',
+          ['<CR>'] = 'Confirm',
+          ['<C-p>'] = 'HistoryPrev',
+          ['<C-n>'] = 'HistoryNext',
+        },
+      },
+    },
+    select = {
+      enabled = true,
+      backend = { 'fzf_lua', 'telescope', 'nui', 'builtin' },
+      trim_prompt = true,
+      telescope = nil,
+      builtin = {
+        anchor = 'NW',
+        border = 'single',
+        relative = 'editor',
+        buf_options = {},
+        win_options = {
+          winblend = 10,
+        },
+        width = nil,
+        max_width = { 140, 0.8 },
+        min_width = { 40, 0.2 },
+        height = nil,
+        max_height = 0.9,
+        min_height = { 10, 0.2 },
+        mappings = {
+          ['<Esc>'] = 'Close',
+          ['<C-c>'] = 'Close',
+          ['<CR>'] = 'Confirm',
+        },
+      },
+    },
+  }
+'''
+
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
+lazy = true
+merged = false
+hook_add = '''
+set helplang=ja,en
+'''
+
+[[plugins]]
+repo = 'yuki-yano/ai-review.nvim'
+depends = ['denops.vim', 'nui.nvim']
+on_cmd = 'AiReview'
+
+[[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+lazy = true
+
+[[plugins]]
+repo = 'hrsh7th/nvim-gtd'
+lazy = true
+on_map = '<Plug>(gtd:'
+hook_add = '''
+  nmap gfH <Plug>(gtd:splitleft)
+  nmap gfJ <Plug>(gtd:splitbelow)
+  nmap gfK <Plug>(gtd:splitabove)
+  nmap gfL <Plug>(gtd:splitright)
+'''
+lua_source = '''
+  require('gtd').setup {}
+
+  vim.keymap.set_table {
+    mode = 'n',
+    maps = {
+      {
+        '<Plug>(gtd:edit)',
+        function()
+          require('gtd').exec { command = 'edit' }
+        end,
+      },
+      {
+        '<Plug>(gtd:splitleft)',
+        function()
+          local splitright = vim.go.splitright
+          vim.go.splitright = false
+          require('gtd').exec({
+            command = 'vsplit',
+          }, {
+            on_event = function(event)
+              if event == require('gtd').Event.Finish then
+                vim.go.splitright = splitright
+              end
+            end,
+          })
+        end,
+      },
+      {
+        '<Plug>(gtd:splitbelow)',
+        function()
+          local splitbelow = vim.go.splitbelow
+          vim.go.splitbelow = true
+          require('gtd').exec({
+            command = 'split',
+          }, {
+            on_event = function(event)
+              if event == require('gtd').Event.Finish then
+                vim.go.splitbelow = splitbelow
+              end
+            end,
+          })
+        end,
+      },
+      {
+        '<Plug>(gtd:splitabove)',
+        function()
+          local splitbelow = vim.go.splitbelow
+          vim.go.splitbelow = false
+          require('gtd').exec({
+            command = 'split',
+          }, {
+            on_event = function(event)
+              if event == require('gtd').Event.Finish then
+                vim.go.splitbelow = splitbelow
+              end
+            end,
+          })
+        end,
+      },
+      {
+        '<Plug>(gtd:splitright)',
+        function()
+          local splitright = vim.go.splitright
+          vim.go.splitright = true
+          require('gtd').exec({
+            command = 'vsplit',
+          }, {
+            on_event = function(event)
+              if event == require('gtd').Event.Finish then
+                vim.go.splitright = splitright
+              end
+            end,
+          })
+        end,
+      },
+    },
+  }
+'''
+
+[[plugins]]
+repo = 'hrsh7th/nvim-pasta'
+lazy = true
+on_lua = 'pasta'
+hook_add = '''
+  nmap p <Cmd>lua require('pasta.mappings').p()<CR>
+  nmap P <Cmd>lua require('pasta.mappings').P()<CR>
+'''
+lua_source = '''
+  require('pasta').setup {
+    converters = {
+      require('pasta.converters').indentation,
+    },
+    paste_mode = true,
+    prevent_diagnostics = false,
+    next_key = vim.api.nvim_replace_termcodes('<C-p>', true, true, true),
+    prev_key = vim.api.nvim_replace_termcodes('<C-n>', true, true, true),
+  }
+'''
+
+[[plugins]]
+repo = 'tkmpypy/chowcho.nvim'
+lazy = true
+on_lua = 'chowcho'
+lua_add = '''
+  -- ORIGINAL: https://zenn.dev/kawarimidoll/articles/daa39da5838567
+
+  -- <C-w>xと<C-w><C-x>を同時に設定する
+  local win_keymap_set = function(key, callback)
+    vim.keymap.set({ 'n' }, '<C-w>' .. key, callback)
+    vim.keymap.set({ 'n' }, '<C-w><C-' .. key .. '>', callback)
+  end
+
+  win_keymap_set('w', function()
+    local wins = 0
+
+    -- 全ウィンドウをループ
+    for i = 1, vim.fn.winnr '$' do
+      local win_id = vim.fn.win_getid(i)
+      local conf = vim.api.nvim_win_get_config(win_id)
+
+      -- focusableなウィンドウをカウント
+      if conf.focusable then
+        wins = wins + 1
+
+        -- ウィンドウ数が3以上ならchowchoを起動
+        if wins > 2 then
+          require('chowcho').run()
+          return
+        end
+      end
+    end
+
+    -- ウィンドウが少なければ標準の<C-w><C-w>を実行
+    vim.cmd.wincmd 'w'
+  end)
+'''
+
+[[plugins]]
+repo = 'nvim-tree/nvim-web-devicons'
+lazy = true
+
+[[plugins]]
+repo = 'MunifTanjim/nui.nvim'
+lazy = true
+
+[[plugins]]
+repo = 'onsails/lspkind-nvim'
+lazy = true
+
 # vim:ft=toml expandtab tabstop=2 shiftwidth=2

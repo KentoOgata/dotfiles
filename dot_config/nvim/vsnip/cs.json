@@ -27,5 +27,11 @@
       "}"
     ],
     "description": "Creates an if statement"
+  },
+  "Throw NotImplementedException": {
+    "prefix": "notimplemented",
+    "body": [
+      "throw new NotImplementedException($1)$0"
+    ],
   }
 }
