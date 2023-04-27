@@ -1,0 +1,42 @@
+[[plugins]]
+repo = 'Shougo/ddc.vim'
+lazy = false
+depends = 'denops.vim'
+lua_add = '''
+  vim.api.nvim_create_autocmd('User', {
+    group = 'VimRc',
+    once = true,
+    pattern = 'DenopsPluginPost:skkeleton',
+    callback = function()
+      vim.fn['ddc#custom#patch_global'] {
+        ui = 'pum',
+        sources = {
+          'skkeleton',
+        },
+        sourceOptions = {
+          skkeleton = {
+            mark = 'skk',
+            matchers = { 'skkeleton' },
+            sorters = {},
+            isVolatile = true,
+          },
+        },
+      }
+      vim.fn['ddc#enable']()
+    end
+  })
+'''
+
+[[plugins]]
+repo = 'Shougo/ddc-ui-pum'
+lazy = false
+depends = 'pum.vim'
+
+[[plugins]]
+repo = 'Shougo/pum.vim'
+lazy = false
+# キーマップはnvim-cmpで解決するのでここでは設定しない
+hook_add = '''
+  set completeopt+=noinsert
+  autocmd VimRc SourcePost pum.vim ++once call pum#set_option('border', 'rounded')
+'''
