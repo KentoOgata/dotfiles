@@ -151,5 +151,9 @@ lua_add = '''
 '''
 
 [[plugins]]
+repo = 'nvim-tree/nvim-web-devicons'
+lazy = true
+
+[[plugins]]
 repo = 'onsails/lspkind-nvim'
 lazy = true
