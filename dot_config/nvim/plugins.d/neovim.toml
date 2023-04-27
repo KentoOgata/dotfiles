@@ -151,6 +151,5 @@ lua_add = '''
 '''
 
 [[plugins]]
-repo = 'hrsh7th/nvim-cmp'
+repo = 'onsails/lspkind-nvim'
 lazy = true
-on_event = ['InsertEnter', 'CmdlineEnter']
