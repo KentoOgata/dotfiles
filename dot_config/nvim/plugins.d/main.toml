@@ -3,14 +3,6 @@ repo = 'Shougo/dein.vim'
 lazy = false
 
 [[plugins]]
-repo = 'cohama/lexima.vim'
-lazy = true
-on_event = ['InsertEnter', 'CmdlineEnter']
-hook_source = '''
-call plugin_configurations#lexima()
-'''
-
-[[plugins]]
 repo = 'haya14busa/vim-edgemotion'
 lazy = true
 on_map = '<Plug>(edgemotion-'

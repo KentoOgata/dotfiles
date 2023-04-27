@@ -1,0 +1,7 @@
+[[plugins]]
+repo = 'cohama/lexima.vim'
+lazy = true
+on_event = ['InsertEnter', 'CmdlineEnter']
+hook_source = '''
+call plugin_configurations#lexima()
+'''
