@@ -97,8 +97,8 @@ repo = 'hrsh7th/nvim-pasta'
 lazy = true
 on_lua = 'pasta'
 hook_add = '''
-  nmap p <Cmd>lua require('pasta.mappings').p<CR>
-  nmap P <Cmd>lua require('pasta.mappings').P<CR>
+  nmap p <Cmd>lua require('pasta.mappings').p()<CR>
+  nmap P <Cmd>lua require('pasta.mappings').P()<CR>
 '''
 lua_source = '''
   require('pasta').setup {
