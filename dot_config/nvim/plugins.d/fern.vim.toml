@@ -1,0 +1,73 @@
+[[plugins]]
+repo = 'lambdalisue/fern.vim'
+lazy = true
+on_cmd = 'Fern'
+hook_add = '''
+  nmap <space>e <Cmd>execute 'Fern' (&l:buftype->empty() ? '%:h' : '.')<CR>
+'''
+hook_source = '''
+  let g:fern#hide_cursor = v:true
+  let g:fern#keepalt_on_edit = v:false
+  let g:fern#keepjumps_on_edit = v:false
+  let g:fern#default_hidden = v:true
+  let g:fern#disable_default_mappings = v:true
+'''
+[plugins.ftplugin]
+fern = '''
+  nmap <buffer><nowait><silent> <space> <Plug>(fern-action-mark:toggle)
+  nmap <buffer><nowait><silent> <C-l>   <Plug>(fern-action-reload:all)
+  nmap <buffer><nowait><silent> h       <Plug>(fern-action-collapse)
+  nmap <buffer><nowait><silent> <C-h>   <Plug>(fern-action-leave)
+  nmap <buffer><nowait><silent> <Enter> <Plug>(fern-action-open)
+  nmap <buffer><nowait><silent> y       <Plug>(fern-action-yank:path)
+  nmap <buffer><nowait><silent> <C-c>   <Plug>(fern-action-cancel)
+  nmap <buffer><nowait><silent> N       <Plug>(fern-action-new-file)
+  nmap <buffer><nowait><silent> K       <Plug>(fern-action-new-dir)
+  nmap <buffer><nowait><silent> d       <Plug>(fern-action-trash)
+  nmap <buffer><nowait><silent> gr      <Plug>(fern-action-grep)
+  nmap <buffer><nowait><silent> r       <Plug>(fern-action-rename)
+  nmap <buffer><nowait><silent><expr> l
+        \ fern#smart#leaf('<Plug>(fern-action-open)', '<Plug>(fern-action-expand)')
+'''
+
+[[plugins]]
+repo = 'lambdalisue/fern-renderer-nerdfont.vim'
+lazy = true
+depends = ['nerdfont.vim', 'glyph-palette.vim']
+on_source = 'fern.vim'
+hook_source = '''
+  let g:fern#renderer = 'nerdfont'
+  let g:fern#renderer#nerdfont#indent_markers = v:true
+'''
+[plugins.ftplugin]
+fern = '''
+  call glyph_palette#apply()
+'''
+
+[[plugins]]
+repo = 'yuki-yano/fern-preview.vim'
+lazy = true
+on_source = 'fern.vim'
+[plugins.ftplugin]
+fern = '''
+  nmap <buffer> p     <Plug>(fern-action-preview:toggle)
+  nmap <buffer> <C-p> <Plug>(fern-action-preview:auto:toggle)
+  nmap <buffer> <C-d> <Plug>(fern-action-preview:scroll:down:half)
+  nmap <buffer> <C-u> <Plug>(fern-action-preview:scroll:up:half)
+'''
+
+[[plugins]]
+repo = 'lambdalisue/fern-git-status.vim'
+lazy = true
+on_source = 'fern.vim'
+hook_source = '''
+  call fern_git_status#init()
+'''
+
+[[plugins]]
+repo = 'lambdalisue/glyph-palette.vim'
+lazy = true
+
+[[plugins]]
+repo = 'lambdalisue/nerdfont.vim'
+lazy = false

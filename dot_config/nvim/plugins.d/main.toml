@@ -3,14 +3,6 @@ repo = 'Shougo/dein.vim'
 lazy = false
 
 [[plugins]]
-repo = 'lambdalisue/fern.vim'
-lazy = true
-on_cmd = 'Fern'
-hook_add = '''
-nmap <space>e <Cmd>execute 'Fern' (&l:buftype->empty() ? '%:h' : '.')<CR>
-'''
-
-[[plugins]]
 repo = 'cohama/lexima.vim'
 lazy = true
 on_event = ['InsertEnter', 'CmdlineEnter']
