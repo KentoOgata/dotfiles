@@ -1,0 +1,13 @@
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+lazy = true
+if = "executable('node')"
+on_cmd = 'CocCommand'
+rev = 'release'
+hook_add = '''
+  let g:coc_global_extensions = [
+        \ 'coc-fzf-preview',
+        \ ]
+  let g:coc_data_home = $'{stdpath('data')}/coc'
+  autocmd VimRc User CocNvimInit ++once CocDisable
+'''
