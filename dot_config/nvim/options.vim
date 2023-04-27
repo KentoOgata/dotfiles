@@ -21,3 +21,8 @@ set inccommand=split
 set secure
 set fileencodings=utf-8,cp932
 set fileformats=unix,dos,mac
+
+if executable('rg')
+  set grepprg=rg\ --vimgrep\ --ignore-case
+  set grepformat=%f:%l:%m,%f:%l%m,%f\ \ %l%m
+endif
