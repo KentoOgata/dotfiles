@@ -82,7 +82,8 @@ hook_source = '''
       endif
     endif
   endfunction
-  cmap <C-j> <Cmd>call g:ToggleMigemoSearch()<CR>
+  autocmd VimRc User SearchxEnter cmap <buffer> <C-j> <Cmd>call g:ToggleMigemoSearch()<CR>
+  autocmd VimRc User SearchxLeave cunmap <buffer> <C-j>
 '''
 
 [[plugins]]
