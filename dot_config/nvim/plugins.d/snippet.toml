@@ -5,3 +5,13 @@ on_event = ['InsertEnter', 'CmdlineEnter']
 hook_source = '''
 call plugin_configurations#lexima()
 '''
+
+[[plugins]]
+repo = 'hrsh7th/vim-vsnip'
+hook_add = '''
+  let g:vsnip_snippet_dir = $'{stdpath('config')}/vsnip'
+  let g:vsnip_filetypes = #{
+        \ javascriptreact: ['javascript'],
+        \ typescriptreact: ['typescript'],
+        \ }
+'''
