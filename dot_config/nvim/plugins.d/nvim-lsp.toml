@@ -1,0 +1,389 @@
+lua_add = '''
+  vim.api.nvim_create_autocmd('LspAttach', {
+    group = 'VimRc',
+    callback = function(context)
+      vim.keymap.set(
+        'i',
+        '<C-h>',
+        vim.lsp.buf.signature_help,
+        { buffer = context.buf, desc = 'textDocument/signatureHelp' }
+      )
+
+      vim.keymap.set_table {
+        mode = 'n',
+        opts = {
+          buffer = context.buf,
+          remap = true,
+        },
+        maps = {
+          { 'K', vim.lsp.buf.hover, { desc = 'textDocument/hover' } },
+          { 'gd', vim.lsp.buf.definition, { desc = 'textDocument/definition' } },
+          { 'gD', vim.lsp.buf.type_definition, { desc = 'textDocument/typeDefinition' } },
+          { 'ma', vim.lsp.buf.code_action, { desc = 'textDocument/codeAction' } },
+          { 'mr', vim.lsp.buf.rename, { desc = 'textDocument/rename' } },
+          {
+            'mf',
+            function()
+              vim.lsp.buf.format {
+                async = true,
+                filter = function(client)
+                  -- I want to use csharpier instead of OmniSharp's document formatting feature.
+                  -- But capability request of documentFormattingProvider of OmniSharp seems not working.
+                  -- So use filter to don't send formatting request to OmniSharp.
+                  return not (client.name:match '^(omnisharp|csharp_ls|tsserver)$')
+                end,
+              }
+            end,
+            { desc = 'textDocument/formatting' },
+          },
+          { 'gi', '<Plug>(ff-lsp-implementations)', { desc = 'textDocument/implementation*' } },
+          { 'gr', '<Plug>(ff-lsp-references)', { desc = 'textDocument/references' } },
+          { '<Space>fF', '<Plug>(ff-lsp-workspace-symbols)' },
+          {
+            ']d',
+            function()
+              vim.diagnostic.goto_next { float = true }
+            end,
+            { desc = 'jump to next diagnostic' },
+          },
+          {
+            '[d',
+            function()
+              vim.diagnostic.goto_prev { float = true }
+            end,
+            { desc = 'jump to previous diagnostic' },
+          },
+        },
+      }
+
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        buffer = context.buf,
+        group = 'VimRc',
+        callback = function()
+          if vim.g.FormatOnSaveEnabled then
+            vim.lsp.buf.format { async = false }
+          end
+        end,
+      })
+      vim.g.FormatOnSaveEnabled = true
+
+      vim.api.nvim_create_user_command('FormatOnSaveEnable', function()
+        vim.g.FormatOnSaveEnabled = true
+      end, {})
+      vim.api.nvim_create_user_command('FormatOnSaveDisable', function()
+        vim.g.FormatOnSaveEnabled = false
+      end, {})
+    end,
+  })
+
+  vim.lsp.handlers['textDocument/signatureHelp'] = function(_, results, ctx, config)
+    local client = vim.lsp.get_client_by_id(ctx.client_id)
+    vim.lsp.handlers.signature_help(
+      _,
+      results,
+      ctx,
+      table.extend(config or {}, {
+        focusable = false,
+        border = 'rounded',
+        title = client.name,
+        noautocmd = true,
+      })
+    )
+  end
+
+  vim.lsp.handlers['textDocument/hover'] = function(_, results, ctx, config)
+    local client = vim.lsp.get_client_by_id(ctx.client_id)
+    vim.lsp.handlers.hover(
+      _,
+      results,
+      ctx,
+      table.extend(config or {}, {
+        focusable = false,
+        border = 'rounded',
+        title = client.name,
+        noautocmd = true,
+      })
+    )
+  end
+
+  vim.diagnostic.config {
+    virtual_text = false,
+    float = {
+      border = 'single',
+      title = 'diagnostics',
+      header = {},
+      prefix = function(diag, _, _)
+        ---@type string
+        local highlight
+        if diag.severity == vim.diagnostic.severity.ERROR then
+          highlight = 'LspDiagnosticsError'
+        elseif diag.severity == vim.diagnostic.severity.WARN then
+          highlight = 'LspDiagnosticsWarning'
+        elseif diag.severity == vim.diagnostic.severity.INFO then
+          highlight = 'LspDiagnosticsInformation'
+        elseif diag.severity == vim.diagnostic.severity.HINT then
+          highlight = 'LspDiagnosticsHint'
+        end
+
+        if diag.code ~= nil then
+          return ('%s[%s]: '):format(diag.source, diag.code), highlight
+        else
+          return ('%s: '):format(diag.source), highlight
+        end
+      end,
+      suffix = '',
+      -- source = 'always',
+    },
+  }
+
+  vim.fn.sign_define {
+    {
+      name = 'DiagnosticSignError',
+      text = ' ',
+      texthl = 'DiagnosticSignError',
+    },
+    {
+      name = 'DiagnosticSignWarn',
+      text = ' ',
+      texthl = 'DiagnosticSignWarn',
+    },
+    {
+      name = 'DiagnosticSignInfo',
+      text = ' ',
+      texthl = 'DiagnosticSignInfo',
+    },
+    {
+      name = 'DiagnosticSignHint',
+      text = ' ',
+      texthl = 'DiagnosticSignHint',
+    },
+  }
+'''
+
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+lazy = true
+on_event = 'FileType'
+lua_source = '''
+  local lspconfig = require 'lspconfig'
+
+  if 1 == vim.fn.executable 'haskell-language-server-wrapper' then
+    lspconfig.hls.setup {
+      filetypes = { 'haskell' },
+    }
+  end
+
+  if 1 == vim.fn.executable 'deno' then
+    lspconfig.denols.setup {
+      root_dir = require('lspconfig.util').root_pattern { 'deno.json', 'deno.jsonc', 'denops', 'tsnip' },
+      init_options = {
+        unstable = true,
+      },
+    }
+  end
+
+  if 1 == vim.fn.executable 'lua-language-server' then
+    lspconfig.lua_ls.setup {
+      settings = {
+        Lua = {
+          runtime = {
+            version = 'LuaJIT',
+          },
+          diagnostics = {
+            globals = { 'vim' },
+          },
+          workspace = {
+            checkThirdParty = false,
+            library = vim.api.nvim_get_runtime_file('', true),
+          },
+          telemetry = {
+            enable = false,
+          },
+          completion = {
+            autoRequire = false,
+          },
+          format = {
+            enable = not require('rc.util.fn').tap 'null-ls.nvim',
+          },
+        },
+      },
+    }
+  end
+
+  if 1 == vim.fn.executable 'omnisharp' then
+    lspconfig.omnisharp.setup {
+      on_attach = function(client)
+        -- OmniSharp's semantic token format is broken.
+        -- https://github.com/OmniSharp/omnisharp-roslyn/issues/2483
+        client.server_capabilities.semanticTokensProvider = {
+          full = vim.empty_dict(),
+          legend = {
+            tokenModifiers = { 'static_symbol' },
+            tokenTypes = {
+              'comment',
+              'excluded.code',
+              'identifier',
+              'keyword',
+              'keyword.control',
+              'number',
+              'operator',
+              'operator.overloaded',
+              'preproc',
+              'string',
+              'whitespace',
+              'text',
+              'static.symbol',
+              'preprocessor.text',
+              'punctuation',
+              'string.verbatim',
+              'string.escape',
+              'class',
+              'delegate.name',
+              'enum',
+              'interface',
+              'module.name',
+              'struct',
+              'typeParameter',
+              'field',
+              'enumMember',
+              'constant.name',
+              'variable',
+              'parameter',
+              'method',
+              'extension.method.name',
+              'property',
+              'event',
+              'namespace',
+              'label',
+              'tag.attribute',
+              'xml.doc.comment.attribute.quotes',
+              'xml.doc.comment.attribute.value',
+              'xml.doc.comment.cdata.section',
+              'comment',
+              'tag.delimiter',
+              'xml.doc.comment.entity.reference',
+              'tag',
+              'xml.doc.comment.processing.instruction',
+              'tag.text',
+              'xml.literal.attribute.name',
+              'xml.literal.attribute.quotes',
+              'xml.literal.attribute.value',
+              'xml.literal.cdata.section',
+              'xml.literal.comment',
+              'xml.literal.delimiter',
+              'xml.literal.embedded.expression',
+              'xml.literal.entity.reference',
+              'xml.literal.name',
+              'xml.literal.processing.instruction',
+              'xml.literal.text',
+              'regex.comment',
+              'regex.character.class',
+              'regex.anchor',
+              'regex.quantifier',
+              'regex.grouping',
+              'regex.alternation',
+              'regex.text',
+              'regex.self.escaped.character',
+              'regex.other.escape',
+            },
+          },
+          range = true,
+        }
+
+        -- OmniSharpはInitializeが終わらないとレスポンスを返さないので
+        -- キーマップが有効になるタイミングとかわからないとつらい
+        -- capabilitiesを渡す設定がbufferにカーソルがないと上手く動かないっぽいのもつらい
+        if not vim.g.OmniSharpStarted then
+          vim.cmd.highlight { 'link', '@lsp.type.tag.cs', '@tag' }
+          vim.cmd.highlight { 'link', '@lsp.type.tag.attribute', '@tag.attribute' }
+          vim.cmd.highlight { 'link', '@lsp.type.tag.delimiter.cs', '@tag.delimiter' }
+          vim.cmd.highlight { 'link', '@lsp.type.tag.text.cs', '@text' }
+
+          vim.notify('OmniSharp is active now.', vim.log.levels.INFO)
+          vim.g.OmniSharpStarted = true
+        end
+      end,
+      enable_editorconfig_support = true,
+      enable_roslyn_analyzers = false,
+      organize_imports_on_format = false,
+      enable_import_completion = false,
+    }
+  end
+
+  if 1 == vim.fn.executable 'typescript-language-server' then
+    lspconfig.tsserver.setup {
+      root_dir = require('lspconfig.util').root_pattern { 'tsconfig.json', 'jsconfig.json', 'package.json' },
+      single_file_support = false,
+    }
+  end
+
+  -- if 1 == vim.fn.executable 'csharp-ls' then
+  --   require('lspconfig').csharp_ls.setup {
+  --     -- slnだけに指定しないと近くのcsprojにマッチして
+  --     -- プロジェクト全体を対象にしたdefinition jumpとかができなくなる
+  --     root_dir = require('lspconfig.util').root_pattern { '*.sln' },
+  --   }
+  -- end
+
+  if 1 == vim.fn.executable 'yaml-language-server' then
+    lspconfig.yamlls.setup {
+      settings = {
+        yaml = {
+          keyOrdering = false,
+        },
+      },
+    }
+  end
+'''
+
+[[plugins]]
+repo = 'folke/neodev.nvim'
+lazy = true
+on_source = 'nvim-lspconfig'
+lua_source = '''
+  require('neodev').setup {
+    library = {
+      enabled = true,
+      runtime = true,
+      types = true,
+      plugins = true,
+    },
+    setup_jsonls = true,
+    lspconfig = true,
+  }
+'''
+
+[[plugins]]
+repo = 'williamboman/mason.nvim'
+lazy = true
+on_cmd = ['Mason', 'MasonInstall']
+lua_source = '''
+  -- ~/.cache/nvim/ が存在しないとエラーになる
+  local cache_dir = vim.fn.stdpath 'cache'
+  if 0 == vim.fn.isdirectory(cache_dir) then
+    os.execute(('mkdir %s'):format(cache_dir))
+  end
+  require('mason').setup()
+'''
+
+[[plugins]]
+repo = 'williamboman/mason-lspconfig.nvim'
+lazy = true
+depends = 'mason.nvim'
+on_source = 'nvim-lspconfig'
+lua_source = '''
+  require('mason-lspconfig').setup()
+'''
+
+[[plugins]]
+repo = 'j-hui/fidget.nvim'
+lazy = true
+on_event = 'LspAttach'
+lua_source = '''
+  require('fidget').setup {}
+'''
+
+[[plugins]]
+repo = 'folke/trouble.nvim'
+lazy = true
+depends = 'nvim-web-devicons'
