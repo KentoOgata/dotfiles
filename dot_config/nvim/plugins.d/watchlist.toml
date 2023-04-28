@@ -1,0 +1,64 @@
+[[plugins]]
+repo = 'Shougo/shougo-s-github'
+name = 'Shougo'
+lazy = true
+
+[[plugins]]
+repo = 'thinca/config'
+name = 'thinca'
+lazy = true
+
+[[plugins]]
+repo = 'monaqa/dotfiles'
+name = 'monaqa'
+lazy = true
+
+[[plugins]]
+repo = 'kuuote/dotvim'
+name = 'kuuote'
+lazy = true
+
+[[plugins]]
+repo = 'yutkat/dotfiles'
+name = 'yutkat'
+lazy = true
+
+[[plugins]]
+repo = 'yuki-yano/dotfiles'
+name = 'yuki-yano'
+lazy = true
+
+[[plugins]]
+repo = '4513ECHO/dotfiles'
+name = '4513ECHO'
+lazy = true
+
+[[plugins]]
+repo = 'kyoh86/dotfiles'
+name = 'kyoh86'
+lazy = true
+
+[[plugins]]
+repo = 'rebelot/dotfiles'
+name = 'rebelot'
+lazy = true
+
+[[plugins]]
+repo = 'lambdalisue/dotfiles'
+name = 'lambdalisue'
+lazy = true
+
+[[plugins]]
+repo = 'L3MON4D3/Dotfiles'
+name = 'L3MON4D3'
+lazy = true
+
+[[plugins]]
+repo = 'eihigh/dotfiles'
+name = 'eihigh'
+lazy = true
+
+[[plugins]]
+repo = 'neovim/neovim'
+path = '~/repos/github.com/neovim/neovim'
+lazy = true
