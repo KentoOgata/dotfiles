@@ -14,12 +14,12 @@ toml = '''
   setl tabstop=2
   setl shiftwidth=2
 
-  setl foldmethod=expr
-  setl foldexpr=<SID>fold_expr(v:lnum)
-
-  function! s:fold_expr(lnum) abort
-    return getline(a:lnum) =~# '^\s\+\S'
-  endfunction
+  " setl foldmethod=expr
+  " setl foldexpr=<SID>fold_expr(v:lnum)
+  " 
+  " function! s:fold_expr(lnum) abort
+  "   return getline(a:lnum) =~# '^\s\+\S'
+  " endfunction
 '''
 
 [[plugins]]
