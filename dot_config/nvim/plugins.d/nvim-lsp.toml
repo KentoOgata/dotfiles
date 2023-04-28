@@ -384,6 +384,23 @@ lua_source = '''
 '''
 
 [[plugins]]
+repo = 'jose-elias-alvarez/null-ls.nvim'
+lazy = true
+depends = 'plenary.nvim'
+on_event = ['BufReadPost', 'BufNewFile']
+lua_source = '''
+  local null_ls = require 'null-ls'
+  null_ls.setup {
+    sources = {
+      null_ls.builtins.formatting.stylua,
+      null_ls.builtins.formatting.csharpier,
+      null_ls.builtins.diagnostics.shellcheck,
+      null_ls.builtins.diagnostics.markdownlint,
+    },
+  }
+'''
+
+[[plugins]]
 repo = 'folke/trouble.nvim'
 lazy = true
 depends = 'nvim-web-devicons'
