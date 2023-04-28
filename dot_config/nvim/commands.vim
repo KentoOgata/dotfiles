@@ -12,3 +12,10 @@ function! s:DefKeymap(force_map, args) abort
   endfor
 endfunction
 command! -nargs=+ -bang Keymap call <SID>DefKeymap('<bang>' ==# '!', [<f-args>])
+
+function! s:OpenTerminal(command, shell) abort
+  execute a:command $'term://{&l:buftype->empty() && !bufname()->empty() ? "%:h" : getcwd()}//{a:shell}'
+endfunction
+command Shell call s:OpenTerminal('edit', $SHELL)
+command HShell call s:OpenTerminal('belowright split', $SHELL)
+command VShell call s:OpenTerminal('belowright vsplit', $SHELL)
