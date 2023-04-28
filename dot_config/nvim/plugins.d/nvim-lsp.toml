@@ -427,7 +427,7 @@ repo = 'SmiteshP/nvim-navic'
 lazy = false
 lua_add = '''
   vim.api.nvim_create_autocmd('LspAttach', {
-    group = vim.augroup.GetOrAdd 'VimRc',
+    group = 'VimRc',
     callback = function(ctx)
       local client = vim.lsp.get_client_by_id(ctx.data.client_id)
       if client.server_capabilities.documentSymbolProvider then
