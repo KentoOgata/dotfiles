@@ -649,4 +649,12 @@ hook_post_source = '''
   CccHighlighterEnable
 '''
 
+[[plugins]]
+repo = 'thinca/vim-themis'
+hook_add = '''
+  let $THEMIS_VIM = 'nvim'
+  let $THEMIS_HOME = $'{stdpath('cache')}/dein/repos/github.com/thinca/vim-themis'
+  let $PATH = $'{$PATH}:{$THEMIS_HOME}/bin'
+'''
+
 # vim:ft=toml expandtab tabstop=2 shiftwidth=2
