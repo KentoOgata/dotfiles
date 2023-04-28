@@ -21,6 +21,12 @@ toml = '''
   "   return getline(a:lnum) =~# '^\s\+\S'
   " endfunction
 '''
+cs = '''
+  compiler dotnet
+'''
+razor = '''
+  compiler dotnet
+'''
 
 [[plugins]]
 repo = 'nvim-orgmode/orgmode'
