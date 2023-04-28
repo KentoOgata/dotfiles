@@ -4,6 +4,17 @@ lazy = true
 merged = false
 build = 'go install'
 hook_add = '''
+  function s:openPluginPath(name) abort
+    const path = dein#get(a:name).path
+    execute 'edit' path
+  endfunction
+  " NOTE: なんかこれ実行するとfzf.vimが読み込まれるんだけど理由はよくわからない
+  command FzfPlugins call fzf#run(#{
+        \ source: call({ -> dein#get()->values()->map({ _, plugin -> plugin.name }) }, []),
+        \ sink: function('s:openPluginPath'),
+        \ })
+  nmap <space>fp <Cmd>FzfPlugins<CR>
+
   function s:openPath(path) abort
     exec 'edit' a:path
   endfunction
