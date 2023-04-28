@@ -203,7 +203,7 @@ lua_source = '''
             autoRequire = false,
           },
           format = {
-            enable = not require('rc.util.fn').tap 'null-ls.nvim',
+            enable = vim.bool_fn.executable 'stylua',
           },
         },
       },
