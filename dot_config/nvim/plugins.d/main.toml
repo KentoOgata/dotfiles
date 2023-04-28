@@ -616,4 +616,37 @@ lua_source = '''
 repo = 'lambdalisue/mr.vim'
 on_event = ['BufReadPre', 'BufNewFile']
 
+# カラーピッカー
+# バッファー上のカラーコードをハイライト(こっちがメインで入れてる)
+[[plugins]]
+repo = 'uga-rosa/ccc.nvim'
+on_cmd = ['CccPick', 'CccHighlighterEnable']
+on_map = { i = '<Plug>(ccc-insert)' }
+on_event = ['BufWinEnter']
+hook_add = '''
+  imap <C-v>c <Plug>(ccc-insert)
+'''
+lua_source = '''
+  require('ccc').setup {
+    highlighter = {
+      auto_enable = true,
+      lsp = true,
+    },
+  }
+
+  local auid = vim.autocmd.create('BufWinEnter', {
+    group = 'VimRc',
+    callback = function()
+      vim.cmd.CccHighlighterEnable()
+    end,
+  })
+
+  vim.api.nvim_create_user_command('CccDisableAutoHighlight', function()
+    vim.api.nvim_del_autocmd(auid)
+  end, {})
+'''
+hook_post_source = '''
+  CccHighlighterEnable
+'''
+
 # vim:ft=toml expandtab tabstop=2 shiftwidth=2
