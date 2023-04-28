@@ -3,6 +3,16 @@ repo = 'junegunn/fzf'
 lazy = true
 merged = false
 build = 'go install'
+hook_add = '''
+  function s:openPath(path) abort
+    exec 'edit' a:path
+  endfunction
+  command FzfMrw call fzf#run(#{
+        \ source: mr#mrw#list(),
+        \ sink: function('s:openPath')
+        \ })
+  nmap <space>fz <Cmd>FzfMrw<CR>
+'''
 
 [[plugins]]
 repo = 'junegunn/fzf.vim'
@@ -24,7 +34,6 @@ on_cmd = [
   'FzfPreviewProjectFiles',
 ]
 hook_add = '''
-  nmap <space>fz <Cmd>FzfPreviewMruFiles<CR>
   nmap <space>af <Cmd>FzfPreviewGitActions<CR>
 '''
 

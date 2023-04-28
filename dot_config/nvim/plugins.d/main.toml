@@ -611,4 +611,9 @@ lua_source = '''
     end,
   })
 '''
+
+[[plugins]]
+repo = 'lambdalisue/mr.vim'
+on_event = ['BufReadPre', 'BufNewFile']
+
 # vim:ft=toml expandtab tabstop=2 shiftwidth=2
