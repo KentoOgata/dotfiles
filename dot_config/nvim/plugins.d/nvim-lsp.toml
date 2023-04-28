@@ -400,6 +400,27 @@ lua_source = '''
   }
 '''
 
+# 使ってない変数を暗くハイライトしてくれる
+[[plugins]]
+repo = 'zbirenbaum/neodim'
+lazy = true
+on_event = 'LspAttach'
+lua_source = '''
+  require('neodim').setup {
+    alpha = 0.75,
+    blend_color = '#000000',
+    update_in_insert = {
+      enable = true,
+      delay = 100,
+    },
+    hide = {
+      virtual_text = true,
+      signs = true,
+      underline = true,
+    },
+  }
+'''
+
 [[plugins]]
 repo = 'folke/trouble.nvim'
 lazy = true
