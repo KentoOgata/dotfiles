@@ -30,6 +30,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'ibhagwan/fzf-lua'
+lazy = true
 if = "executable('fzf')"
 depends = ['nvim-web-devicons', 'nvim-treesitter']
 on_lua = 'fzf-lua'
