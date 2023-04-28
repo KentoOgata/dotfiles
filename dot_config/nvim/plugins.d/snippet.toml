@@ -47,6 +47,7 @@ stpl = '''
 
 [[plugins]]
 repo = 'hrsh7th/vim-vsnip'
+lazy = true
 hook_add = '''
   let g:vsnip_snippet_dir = $'{stdpath('config')}/vsnip'
   let g:vsnip_filetypes = #{

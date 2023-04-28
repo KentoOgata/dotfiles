@@ -103,8 +103,9 @@ lazy = false
 
 [[plugins]]
 repo = 'lambdalisue/kensaku.vim'
-lazy = false
+lazy = true
 depends = 'denops.vim'
+on_func = 'kensaku#query'
 
 [[plugins]]
 repo = 'machakann/vim-highlightedyank'
@@ -620,9 +621,10 @@ on_event = ['BufReadPre', 'BufNewFile']
 # バッファー上のカラーコードをハイライト(こっちがメインで入れてる)
 [[plugins]]
 repo = 'uga-rosa/ccc.nvim'
+lazy = true
 on_cmd = ['CccPick', 'CccHighlighterEnable']
 on_map = { i = '<Plug>(ccc-insert)' }
-on_event = ['BufWinEnter']
+on_event = ['BufReadPost', 'FileType']
 hook_add = '''
   imap <C-v>c <Plug>(ccc-insert)
 '''

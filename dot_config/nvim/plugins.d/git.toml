@@ -9,7 +9,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'lambdalisue/gin.vim'
-lazy = false
+lazy = true
 depends = 'denops.vim'
 hook_add = '''
   nmap <space>aa <Cmd>GinStatus<CR>
