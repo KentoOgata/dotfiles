@@ -421,6 +421,22 @@ lua_source = '''
   }
 '''
 
+# winbarに class->function->if みたいな現在のカーソル位置のコンテキストを表示する
+[[plugins]]
+repo = 'SmiteshP/nvim-navic'
+lazy = false
+lua_add = '''
+  vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.augroup.GetOrAdd 'VimRc',
+    callback = function(ctx)
+      local client = vim.lsp.get_client_by_id(ctx.data.client_id)
+      if client.server_capabilities.documentSymbolProvider then
+        require('nvim-navic').attach(client, ctx.buf)
+      end
+    end,
+  })
+'''
+
 [[plugins]]
 repo = 'folke/trouble.nvim'
 lazy = true
