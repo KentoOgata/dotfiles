@@ -436,8 +436,3 @@ lua_add = '''
     end,
   })
 '''
-
-[[plugins]]
-repo = 'folke/trouble.nvim'
-lazy = true
-depends = 'nvim-web-devicons'
