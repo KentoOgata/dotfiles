@@ -634,7 +634,7 @@ lua_source = '''
     },
   }
 
-  local auid = vim.autocmd.create('BufWinEnter', {
+  local auid = vim.api.nvim_create_autocmd('BufWinEnter', {
     group = 'VimRc',
     callback = function()
       vim.cmd.CccHighlighterEnable()
