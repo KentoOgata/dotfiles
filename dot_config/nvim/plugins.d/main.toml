@@ -170,6 +170,7 @@ hook_add = '''
 
   Keymap nx gc <Plug>(caw:prefix)
   Keymap nx <Plug>(caw:prefix)i   <Plug>(caw:hatpos:comment)
+  Keymap nx <Plug>(caw:prefix)ui  <Plug>(caw:hatpos:uncomment)
   Keymap nx <Plug>(caw:prefix)I   <Plug>(caw:zeropos:comment)
   Keymap nx <Plug>(caw:prefix)uI  <Plug>(caw:zeropos:uncomment)
   Keymap nx <Plug>(caw:prefix)a   <Plug>(caw:dollarpos:comment)
