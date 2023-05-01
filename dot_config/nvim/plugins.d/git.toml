@@ -21,6 +21,9 @@ hook_add = '''
 gin-branch = '''
   nmap <buffer> N <Plug>(gin-action-new)
 '''
+gin-diff = '''
+  setl nobuflisted
+'''
 
 [[plugins]]
 repo = 'lewis6991/gitsigns.nvim'
