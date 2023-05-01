@@ -72,10 +72,10 @@ lazy = true
 repo = 'lambdalisue/nerdfont.vim'
 lazy = false
 
-[[plugins]]
-repo = 'lambdalisue/fern-hijack.vim'
-on_if = "isdirectory(expand('<afile>'))"
-depends = 'fern.vim'
-hook_add = '''
-  let g:loaded_netrwPlugin = 1
-'''
+# [[plugins]]
+# repo = 'lambdalisue/fern-hijack.vim'
+# on_if = "isdirectory(expand('<afile>'))"
+# depends = 'fern.vim'
+# hook_add = '''
+#   let g:loaded_netrwPlugin = 1
+# '''
