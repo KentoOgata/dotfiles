@@ -23,6 +23,7 @@ set fileencodings=utf-8,cp932
 set fileformats=unix,dos,mac
 set colorcolumn=130
 set expandtab
+set nowrap
 
 if executable('rg')
   set grepprg=rg\ --vimgrep\ --ignore-case
