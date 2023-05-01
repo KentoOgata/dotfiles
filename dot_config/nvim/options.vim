@@ -11,7 +11,6 @@ set noswapfile
 set updatetime=30
 set number
 set relativenumber
-set nocursorline
 set termguicolors
 set cmdheight=1
 set laststatus=0
@@ -29,3 +28,22 @@ if executable('rg')
   set grepprg=rg\ --vimgrep\ --ignore-case
   set grepformat=%f:%l:%m,%f:%l%m,%f\ \ %l%m
 endif
+
+" set bg=light されたとき、cursorlineとcursorcolumnを有効にする
+" TUIだとカーソルの位置を見失うことが多いので
+autocmd VimRc OptionSet background
+      \ : if v:option_new ==# 'light'
+      \ |   set cursorline cursorcolumn
+      \ | else
+      \ |   set nocursorline nocursorcolumn
+      \ | endif
+
+" - VimEnterの起動より前にはOptionSetが発火しないのでcolorschemeの設定に
+"   合わせてVimEnter時に設定する
+" - 基本的にはcursorlineなどは要らないが、light themeのときは欲しい
+autocmd VimRc VimEnter * ++once
+      \ : if &background ==# 'light'
+      \ |   set cursorline cursorcolumn
+      \ | else
+      \ |   set nocursorline nocursorcolumn
+      \ | endif
