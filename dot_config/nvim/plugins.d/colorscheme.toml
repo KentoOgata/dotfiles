@@ -1,5 +1,9 @@
 hook_add = '''
+  " Vimが起動するとき、`g:themeSetups`に登録されているカラースキームから無作為に設定する
+  " 直下で定義しているautocmdも実行させたいのでnestedを指定する
   autocmd VimRc VimEnter * ++once ++nested execute 'colorscheme' g:Pick(keys(g:themeSetups))
+  " カラースキームが設定されたとき、`g:themeSetups`に名前が登録されていれば実行する。
+  " OptionSet background のautocmdを実行したいのでnestedを指定する
   autocmd VimRc ColorSchemePre * ++nested
         \ :if has_key(g:themeSetups, expand('<amatch>'))
         \ |  call g:themeSetups[expand('<amatch>')]()
@@ -61,6 +65,7 @@ hook_add = '''
       }
 EOF
   endfunction
+  " NOTE:
   " よくわからないけどファイル先頭のhook_addより先にこっちが実行されるっぽいので
   " ここで`g:themeSetups`を宣言しないとエラーになる
   let g:themeSetups = get(g:, 'themeSetups', {})
