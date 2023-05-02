@@ -37,13 +37,3 @@ autocmd VimRc OptionSet background
       \ | else
       \ |   set nocursorline nocursorcolumn
       \ | endif
-
-" - VimEnterの起動より前にはOptionSetが発火しないのでcolorschemeの設定に
-"   合わせてVimEnter時に設定する
-" - 基本的にはcursorlineなどは要らないが、light themeのときは欲しい
-autocmd VimRc VimEnter * ++once
-      \ : if &background ==# 'light'
-      \ |   set cursorline cursorcolumn
-      \ | else
-      \ |   set nocursorline nocursorcolumn
-      \ | endif
