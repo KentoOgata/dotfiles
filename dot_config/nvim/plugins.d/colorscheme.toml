@@ -315,7 +315,10 @@ hook_add = '''
 [[plugins]]
 repo = 'eihigh/vim-aomi-grayscale'
 hook_add = '''
-  let g:themeSetups['aomi-grayscale'] = {->v:null}
+  function s:SetupAomiGrayscaleTheme() abort dict
+    let &background = g:Pick(['dark', 'light'])
+  endfunction
+  let g:themeSetups['aomi-grayscale'] = function('s:SetupAomiGrayscaleTheme')
 '''
 
 [[plugins]]
