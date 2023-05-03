@@ -1,7 +1,7 @@
 " sh,vim,help,c以外の多くのftでは不要
 nnoremap K <Nop>
 call nvim_create_autocmd('FileType', #{
-      \ pattern: ['bash', 'zsh', 'sh', 'vim', 'help', 'c', 'cpp'],
+      \ pattern: ['bash', 'zsh', 'sh', 'vim', 'help', 'c', 'cpp', 'man'],
       \ group: 'VimRc',
       \ command: 'nnoremap <buffer> K K',
       \ })
