@@ -1,28 +1,43 @@
 #!/bin/zsh
 
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_STATE_HOME="$HOME/.local/state"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 
-export PATH="$HOME/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$XDG_DATA_HOME/nvim/bin:$PATH"
-export PATH="$XDG_DATA_HOME/vim/bin:$PATH"
-export EDITOR='nvim'
-export MANPAGER='nvim +Man!'
-export GOPATH="$HOME/go"
-export PATH="$GOPATH/bin:$PATH"
-export DENO_INSTALL="$HOME/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/.ghcup/bin:$PATH"
-export PATH="$HOME/.cabal/bin:$PATH"
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+
+typeset -fuz zkbd
+typeset -U path PATH manpath sudo_path
+typeset -xT SUDO_PATH sudo_path
+
+path=(
+        $HOME/bin(N-/)
+        $HOME/.local/bin(N-/)
+        $HOME/go/bin(N-/)
+        $HOME/.cargo/bin(N-/)
+        $HOME/.rustup/toolchains/*/bin(N-/)
+        $HOME/.deno/bin(N-/)
+        $HOME/.ghcup/bin(N-/)
+        $HOME/.cabal/bin(N-/)
+        $XDG_DATA_HOME/nvim/bin(N-/)
+        $path # $PATHと違って:区切りではない
+)
+export PATH
 
 # MacOSではhomebrewのパスを追加する
-if [[ "$(uname &> /dev/null)" -eq 'Darwin' ]]; then
-  export PATH="/opt/homebrew/bin:${PATH}"
+if [ "$(uname)" = 'Darwin' ]; then
+        export PATH="/opt/homebrew/bin:${PATH}"
 fi
+
+if which nvim &> /dev/null; then
+        export EDITOR='nvim'
+        export MANPAGER='nvim +Man!'
+else
+        export EDITOR='vim'
+        export MANPAGER='vim +MANPAGER --not-a-term -'
+fi
+export SYSTEMD_EDITOR=$EDITOR
 
 export LESSCHARSET='utf-8'
 export LANG='ja_JP.utf8'
