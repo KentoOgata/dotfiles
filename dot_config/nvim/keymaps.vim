@@ -1,3 +1,5 @@
+let g:mapleader = "\<Space>"
+
 " sh,vim,help,c以外の多くのftでは不要
 nnoremap K <Nop>
 call nvim_create_autocmd('FileType', #{
