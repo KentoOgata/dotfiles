@@ -36,9 +36,8 @@ lua_add = '''
             end,
             { desc = 'textDocument/formatting' },
           },
-          { 'gi', '<Plug>(ff-lsp-implementations)', { desc = 'textDocument/implementation*' } },
-          { 'gr', '<Plug>(ff-lsp-references)', { desc = 'textDocument/references' } },
-          { '<Space>fF', '<Plug>(ff-lsp-workspace-symbols)' },
+          { 'gi', '<Plug>(ff-lsp_implementations)', { desc = 'textDocument/implementation*' } },
+          { 'gr', '<Plug>(ff-lsp_references)', { desc = 'textDocument/references' } },
           {
             ']d',
             function()

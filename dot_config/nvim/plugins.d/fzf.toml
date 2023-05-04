@@ -56,17 +56,20 @@ depends = ['nvim-web-devicons', 'nvim-treesitter']
 on_lua = 'fzf-lua'
 on_cmd = 'FzfLua'
 lua_add = '''
-  vim.keymap.set('n', '<space>ff', function()
-    require('fzf-lua').files()
-  end)
-  vim.keymap.set('n', '<space>fc', function()
+  vim.keymap.set('n', '<Plug>(ff-files)', '<Cmd>FzfLua files<CR>')
+  vim.keymap.set('n', '<Plug>(ff-config_files)', function()
     require('fzf-lua').files {
       cwd = ('%s/chezmoi'):format(vim.env.XDG_DATA_HOME)
     }
   end)
-  vim.keymap.set('n', '<space>fh', function()
-    require('fzf-lua').help_tags()
-  end)
+  vim.keymap.set('n', '<Plug>(ff-grep)', '<Cmd>FzfLua grep<CR>')
+  vim.keymap.set('n', '<Plug>(ff-help_tags)', '<Cmd>FzfLua help_tags<CR>')
+  vim.keymap.set('n', '<Plug>(ff-buffers)', '<Cmd>FzfLua buffers<CR>')
+  vim.keymap.set('n', '<Plug>(ff-buffers)', '<Cmd>FzfLua buffers<CR>')
+  vim.keymap.set('n', '<Plug>(ff-lines)', '<Cmd>FzfLua lines<CR>')
+  vim.keymap.set('n', '<Plug>(ff-resume)', '<Cmd>FzfLua resume<CR>')
+  vim.keymap.set('n', '<Plug>(ff-lsp_references)', '<Cmd>FzfLua lsp_references<CR>')
+  vim.keymap.set('n', '<Plug>(ff-lsp_implementations)', '<Cmd>FzfLua lsp_implementations<CR>')
 '''
 lua_source = '''
   local actions = require 'fzf-lua.actions'
