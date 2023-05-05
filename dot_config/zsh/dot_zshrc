@@ -1,3 +1,5 @@
+source "${ZDOTDIR}/history.zsh"
+
 bindkey -e
 autoload -U compinit
 compinit
