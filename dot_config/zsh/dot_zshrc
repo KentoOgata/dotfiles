@@ -1,3 +1,4 @@
+source "${ZDOTDIR}/ensure-zinit.zsh"
 source "${ZDOTDIR}/history.zsh"
 
 bindkey -e
@@ -5,26 +6,16 @@ autoload -U compinit
 compinit
 zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 
-LOAD_ENHANCD="source '$(ghq list -p -e 'enhancd')/init.sh'";
-eval "$LOAD_ENHANCD" || \
-    ghq get 'github.com/b4b4r07/enhancd' && eval "$LOAD_ENHANCD";
+zinit load b4b4r07/enhancd
 export ENHANCD_FILTER='fzf'
 
-LOAD_FAST_SYNTAX_HIGHLIGHTING='source $(ghq list --full-path github.com/zdharma-continuum/fast-syntax-highlighting)/fast-syntax-highlighting.plugin.zsh'
-eval "$LOAD_FAST_SYNTAX_HIGHLIGHTING" || \
-  ghq get 'github.com/zdharma-continuum/fast-syntax-highlighting' && eval "$LOAD_FAST_SYNTAX_HIGHLIGHTING"
+zinit load zdharma-continuum/fast-syntax-highlighting
 
-# fast-theme free
-
-# source "$(ghq list --full-path catppuccin/zsh)/themes/catppuccin_frappe-zsh-syntax-highlighting.zsh" || \
-#     ghq get 'github.com/catppuccin/zsh-syntax-highlighting' && source "$(ghq list --full-path catppuccin/zsh)/themes/catppuccin_frappe-zsh-syntax-highlighting.zsh"
-#
-# source "$(ghq list --full-path zsh-users/zsh-syntax-highlighting)/zsh-syntax-highlighting.zsh" || \
-#     ghq get 'github.com/zsh-users/zsh-syntax-highlighting' && source "$(ghq list --full-path zsh-users/zsh-syntax-highlighting)/zsh-syntax-highlighting.zsh"
-
-source "$(ghq list --full-path yuki-yano/zeno.zsh)/zeno.zsh" || \
-  ghq get 'github.com/yuki-yano/zeno.zsh' && source "$(ghq list --full-path yuki-yano/zeno.zsh)/zeno.zsh"
-
+export ZENO_ENABLE_SOCK=1
+export ZENO_GIT_CAT="bat --color-always"
+export ZENO_GIT_TREE="exa --tree"
+export ZENO_HOME="$XDG_CONFIG_HOME/zeno"
+zinit load yuki-yano/zeno.zsh
 if [[ -n $ZENO_LOADED ]]; then
   bindkey ' ' zeno-auto-snippet
   export ZENO_AUTO_SNIPPET_FALLBACK=self-insert

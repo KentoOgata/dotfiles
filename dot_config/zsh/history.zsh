@@ -9,7 +9,5 @@ setopt HIST_FIND_NO_DUPS
 setopt HIST_REDUCE_BLANKS
 setopt EXTENDED_HISTORY
 
-if [ -f "${HOME}/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
-        source "${HOME}/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
-        bindkey '^f' autosuggest-accept
-fi
+zinit load zsh-users/zsh-autosuggestions
+bindkey '^f' autosuggest-accept
