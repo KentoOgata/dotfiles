@@ -27,6 +27,15 @@ cs = '''
 razor = '''
   compiler dotnet
 '''
+json = '''
+  setl expandtab tabstop=2 shiftwidth=2
+'''
+javascript = '''
+  setl expandtab tabstop=2 shiftwidth=2
+'''
+typescript = '''
+  setl expandtab tabstop=2 shiftwidth=2
+'''
 
 [[plugins]]
 repo = 'nvim-orgmode/orgmode'
