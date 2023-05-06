@@ -75,10 +75,10 @@ repo = 'haya14busa/vim-asterisk'
 lazy = true
 on_map = '<Plug>(asterisk-'
 hook_add = '''
-  Keymap nxo *  <Plug>(asterisk-*)
-  Keymap nxo #  <Plug>(asterisk-#)
-  Keymap nxo g* <Plug>(asterisk-g*)
-  Keymap nxo g# <Plug>(asterisk-g#)
+  Keymap nxo *  <Plug>(asterisk-z*)
+  Keymap nxo #  <Plug>(asterisk-z#)
+  Keymap nxo g* <Plug>(asterisk-zg*)
+  Keymap nxo g# <Plug>(asterisk-zg#)
 '''
 
 [[plugins]]
