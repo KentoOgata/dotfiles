@@ -27,6 +27,11 @@ cs = '''
 razor = '''
   compiler dotnet
 '''
+go = '''
+  setl noexpandtab
+  setl tabstop=4
+  setl shiftwidth=4
+'''
 json = '''
   setl expandtab tabstop=2 shiftwidth=2
 '''

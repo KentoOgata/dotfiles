@@ -209,6 +209,24 @@ lua_source = '''
     }
   end
 
+  if 1 == vim.fn.executable 'gopls' then
+    lspconfig.gopls.setup {}
+  end
+
+  if 1 == vim.fn.executable 'rust-analyzer' then
+    lspconfig.rust_analyzer.setup {
+      settings = {
+        ['rust-analyzer'] = {
+          enable = true,
+        }
+      }
+    }
+  end
+
+  if 1 == vim.fn.executable 'clangd' then
+    lspconfig.clangd.setup {}
+  end
+
   if 1 == vim.fn.executable 'omnisharp' then
     lspconfig.omnisharp.setup {
       on_attach = function(client)

@@ -233,23 +233,21 @@
     :ensure t
     :bind (("C-c c" . org-capture)
            ("C-c a" . org-agenda))
-    :custom ((org-agenda-files . '("~/doc/org"))
+    :custom ((org-agenda-files . '(org-directory))
              (org-startup-folded . nil)
-             (org-capture-templates . '(("p" "電話番メモ" entry (file "~/doc/org/incoming-call-history.org")
+             (org-capture-templates . '(("p" "電話番メモ" entry (file (concat org-directory "/incoming-call-history.org"))
                                          "* %T \n- 会社: \n- 支店: \n- 部署: \n- 氏名: \n- 宛先: \n- 案件: \n- 要件: \n- 折り返し先: \n- 備考:")
-                                        ("t" "Todo" entry (file "~/doc/org/notes.org")
+                                        ("t" "Todo" entry (file (concat org-directory "/notes.org"))
                                          "* TODO \n Entry: %T"))))
     :init
     (leaf org-journal
       :doc "a simple org-mode based journaling mode"
-      :require "org"
       :ensure t
       :bind (("C-c j" . org-journal-new-entry))
-      :custom ((org-journal-dir . "~/doc/org/journal")
+      :custom ('(org-journal-dir . ,(concat org-directory "/journal"))
 	       (org-journal-date-format . "%A, %d %B %Y")))
     (leaf org-roam
       :doc "A database abstraction layer for Org-mode"
-      :require "org"
       :ensure t)
     :config
     (leaf org-modern
@@ -298,5 +296,8 @@
 (leaf evil
   :ensure t
   :bind ("C-x v" . evil-mode))
+
+(leaf magit
+  :ensure t)
 
 ;;; init.el ends here
