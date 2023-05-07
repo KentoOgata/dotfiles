@@ -6,8 +6,8 @@ autoload -U compinit
 compinit
 zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 
-zinit load b4b4r07/enhancd
-export ENHANCD_FILTER='fzf'
+# zinit load b4b4r07/enhancd
+# export ENHANCD_FILTER='fzf'
 
 zinit load zdharma-continuum/fast-syntax-highlighting
 
