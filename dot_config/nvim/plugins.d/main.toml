@@ -784,4 +784,9 @@ lua_source = '''
   })
 '''
 
+[[plugins]]
+repo = 'cohama/vim-hier'
+lazy = true
+on_event = 'QuickFixCmdPost'
+
 # vim:ft=toml expandtab tabstop=2 shiftwidth=2
