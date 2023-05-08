@@ -1,6 +1,6 @@
-namespace {{_expr_:dotnet#namespace('%')}};
+namespace {{_expr_:g:CSNamespace('%')}};
 
-public class {{_expr_:dotnet#classname('%')}}
+public class {{_expr_:g:CSClassName('%')}}
 {
     {{_cursor_}}
 }

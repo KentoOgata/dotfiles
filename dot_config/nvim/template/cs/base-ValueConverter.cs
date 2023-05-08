@@ -1,7 +1,7 @@
-namespace {{_expr_:dotnet#namespace('%')}};
+namespace {{_expr_:g:CSNamespace('%')}};
 
-public class {{_expr_:dotnet#classname('%')}} : ValueConverter<{{_expr_:substitute(dotnet#classname('%'), 'Converter$', '', '')}}, int>
+public class {{_expr_:g:CSClassName('%')}} : ValueConverter<{{_expr_:substitute(g:CSClassName('%'), 'Converter$', '', '')}}, int>
 {
-    public {{_expr_:dotnet#classname('%')}}()
+    public {{_expr_:g:CSClassName('%')}}()
         : base({{_cursor_}}) { }
 }

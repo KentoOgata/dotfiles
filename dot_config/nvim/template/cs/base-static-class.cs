@@ -1,4 +1,4 @@
-namespace {{_expr_:dotnet#namespace('%')}};
+namespace {{_expr_:g:CSNamespace('%')}};
 
 public static class {{_name_}}
 {

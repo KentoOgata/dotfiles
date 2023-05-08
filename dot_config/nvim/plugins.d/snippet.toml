@@ -33,10 +33,7 @@ on_cmd = 'Template'
 hook_add = '''
   let g:sonictemplate_vim_template_dir = [$'{stdpath("config")}/template']
 '''
-hook_source = '''
-  " sandbox内で初めてモジュールをvital#{}#importすると:delfuncが失敗する
-  runtime autoload/dotnet.vim
-'''
+hooks_file = '$DEIN_CONFIG_DIR/vim-sonictemplate.vim'
 [plugins.ftplugin]
 stpl = '''
   setl tabstop=4
