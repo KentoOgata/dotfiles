@@ -9,16 +9,14 @@ function! g:ProcessShebang() abort
           \ jsx: 'javascriptreact',
           \ }
 
-    const l:ext = matchstr(
-          \ l:line,
-          \ '--ext\s\+\zs\(' .. l:denofts->keys()->join('\|') .. '\)\ze'
-          \)
-    if l:ext->empty()
-      return
+    const l:ext = l:line->matchstr(
+         \ l:denofts->keys()->join('\|')->printf('--ext\s\+\zs\(%s\)\ze')
+         \ )
+
+    if ! l:ext->empty()
+      execute 'setfiletype' l:denofts[l:ext]
     endif
 
-    " l:denoftsにない値はl:extに入ってない
-    execute 'setfiletype' l:denofts[l:ext]
     return
   endif
 endfunction
