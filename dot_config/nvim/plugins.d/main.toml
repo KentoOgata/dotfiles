@@ -789,4 +789,12 @@ repo = 'cohama/vim-hier'
 lazy = true
 on_event = 'QuickFixCmdPost'
 
+[[plugins]]
+repo = 'yuki-yano/fuzzy-motion.vim'
+depends = 'denops.vim'
+on_cmd = 'FuzzyMotion'
+hook_add = '''
+  Keymap nxo <space>w <Cmd>FuzzyMotion<CR>
+'''
+
 # vim:ft=toml expandtab tabstop=2 shiftwidth=2
