@@ -6,6 +6,7 @@ lazy = true
 on_cmd = 'Fern'
 hook_add = '''
   nmap <space>e <Cmd>execute 'Fern' (&l:buftype->empty() ? '%:h' : '.')<CR>
+  cabbrev f. Fern . -reveal=%
 '''
 hook_source = '''
   let g:fern#hide_cursor = v:true
