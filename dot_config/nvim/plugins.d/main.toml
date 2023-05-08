@@ -845,7 +845,13 @@ depends = 'lexima.vim'
 lazy = true
 on_event = 'CmdlineEnter'
 hook_post_source = '''
-  LeximaAlterCommand fg GhqFind
+  LeximaAlterCommand fq GhqFind
+  LeximaAlterCommand fp FzfPlugins
+
+  LeximaAlterCommand gs GinStatus
+  LeximaAlterCommand gp Gin<space>push
+  LeximaAlterCommand gc Gin<space>commit
+  LeximaAlterCommand gf FzfLua<space>git_status
 '''
 
 # vim:ft=toml expandtab tabstop=2 shiftwidth=2
