@@ -8,11 +8,6 @@ call nvim_create_autocmd('FileType', #{
       \ command: 'nnoremap <buffer> K K',
       \ })
 
-" <A-,>でinit.vimを開く
-nnoremap <expr> <A-,> executable('chezmoi')
-      \ ? $'<Cmd>edit {system(['chezmoi', 'source-path', $MYVIMRC])}<CR>'
-      \ : '<Cmd>edit $MYVIMRC<CR>'
-
 " 空行でインサートを開始するときにインデントする
 nnoremap <expr> a getline('.')->empty() ? '"_cc' : 'a'
 nnoremap <expr> i getline('.')->empty() ? '"_cc' : 'i'
