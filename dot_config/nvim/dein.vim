@@ -1,6 +1,6 @@
 const s:deincache = stdpath('cache') .. '/dein'
 
-let $DEIN_CONFIG_DIR=$'{stdpath("config")}/plugins.d'
+let $DEIN_CONFIG_DIR= stdpath("config") .. '/plugins.d'
 
 function! s:deinsetup() abort
   call dein#options(#{
@@ -29,7 +29,7 @@ function! s:deinsetup() abort
 endfunction
 
 const s:deinrtp = s:deincache .. '/repos/github.com/Shougo/dein.vim'
-execute $'set runtimepath^={s:deinrtp}'
+execute 'set runtimepath^=' .. s:deinrtp
 try
   call s:deinsetup()
 catch /^\%(Vim\%((\a\+)\)\=:\)\{,1}E117:/
