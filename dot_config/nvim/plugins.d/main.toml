@@ -797,4 +797,13 @@ hook_add = '''
   Keymap nxo <space>w <Cmd>FuzzyMotion<CR>
 '''
 
+[[plugins]]
+repo = 'ojroques/vim-oscyank'
+lazy = true
+on_map = '<Plug>OSCYankVisual'
+hook_add = '''
+  xmap <space>y <Plug>OSCYankVisual
+  nmap <space>p "+p
+'''
+
 # vim:ft=toml expandtab tabstop=2 shiftwidth=2
