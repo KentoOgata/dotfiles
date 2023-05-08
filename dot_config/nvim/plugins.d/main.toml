@@ -1,7 +1,9 @@
+# プラグインマネージャー
 [[plugins]]
 repo = 'Shougo/dein.vim'
 lazy = false
 
+# <C-j>/<C-k> でparagraphの境界に飛べたりして便利
 [[plugins]]
 repo = 'haya14busa/vim-edgemotion'
 lazy = true
@@ -11,6 +13,7 @@ hook_add = '''
   Keymap nxo <C-k> <Plug>(edgemotion-k)
 '''
 
+# f/tを良い感じにしてくれる
 [[plugins]]
 repo = 'hrsh7th/vim-eft'
 lazy = true
@@ -24,6 +27,10 @@ hook_add = '''
   let g:eft_ignorecase = v:true
 '''
 
+# 検索をeasymotion的に使えるようにしてくれるやつ
+# 検索の入力文字列->クエリを変換するための関数を自分で定義できるので
+# 便利かもしれない
+# n/Nの動作が怪しい
 [[plugins]]
 repo = 'hrsh7th/vim-searchx'
 lazy = true
@@ -51,7 +58,7 @@ hook_source = '''
             \ ? input
             \ : kensaku#query(input)
     else
-      return a:input->substitute('%s', '.\{-}', 'g')
+      return a:input->substitute('\s', '.\\{-}', 'g')
     endif
   endfunction
 
@@ -70,6 +77,7 @@ hook_source = '''
   autocmd VimRc User SearchxLeave cunmap <buffer> <C-j>
 '''
 
+# * でジャンプしないようにしてくれるやつ
 [[plugins]]
 repo = 'haya14busa/vim-asterisk'
 lazy = true
@@ -81,6 +89,8 @@ hook_add = '''
   Keymap nxo g# <Plug>(asterisk-zg#)
 '''
 
+# カーソルのある位置に対応する括弧をハイライトしたりしてくれる
+# 入れただけみたいなとこある よくわかってない
 [[plugins]]
 repo = 'andymass/vim-matchup'
 lazy = true
@@ -97,16 +107,20 @@ hook_post_source = '''
 iunmap <C-g>%
 '''
 
+# Vimプラグインをdenoで書けるようにするやつ
 [[plugins]]
 repo = 'vim-denops/denops.vim'
+# plugin/ディレクトリを持つが、これはVimEnterまでに読み込みたいのでfalse
 lazy = false
 
+# Migemo
 [[plugins]]
 repo = 'lambdalisue/kensaku.vim'
 lazy = true
 depends = 'denops.vim'
 on_func = 'kensaku#query'
 
+# yankしたときに範囲をわかりやすくしてくれる
 [[plugins]]
 repo = 'machakann/vim-highlightedyank'
 lazy = true
@@ -116,6 +130,7 @@ hook_add = '''
   let g:highlightedyank_highlight_duration = 200
 '''
 
+# テキストの周りを囲んだり囲みを編集したり
 [[plugins]]
 repo = 'machakann/vim-sandwich'
 lazy = true
@@ -159,6 +174,7 @@ hook_add = '''
   Keymap nx r <Plug>(operator-replace)
 '''
 
+# gciで行をコメントアウトできて便利
 [[plugins]]
 # repo = 'tyru/caw.vim'
 repo = 'KentoOgata/caw.vim'
@@ -184,6 +200,7 @@ hook_add = '''
   xmap <Plug>(caw:prefix)c <Plug>(caw:hatpos:toggle)
 '''
 
+# 関数の引数の順番を入れ替えたりする
 [[plugins]]
 repo = 'machakann/vim-swap'
 lazy = true
@@ -196,6 +213,7 @@ hook_add = '''
   Keymap xo as <Plug>(swap-textobject-a)
 '''
 
+# denops製のskkプラグイン
 [[plugins]]
 repo  = 'vim-skk/skkeleton'
 depends = 'denops.vim'
@@ -245,16 +263,19 @@ lua_source = '''
   })
 '''
 
+# QuickFixの項目を一気に置換できる
 [[plugins]]
 repo = 'thinca/vim-qfreplace'
 lazy = true
 on_cmd = 'Qfreplace'
 
+# QuickFixから項目をddで消したりできる
 [[plugins]]
 repo = 'itchyny/vim-qfedit'
 lazy = true
 on_ft = 'qf'
 
+# chezmoiで管理してるファイル dot_* にftをあてたりする
 [[plugins]]
 repo = 'alker0/chezmoi.vim'
 lazy = false
@@ -264,14 +285,17 @@ repo = 'vim-jp/vital.vim'
 on_cmd = 'Vitalize'
 on_func = 'vital#vital#'
 
+# Vim/Neovim にいつ機能が入ったのかを確認できる
 [[plugins]]
 repo = 'tweekmonster/helpful.vim'
 on_cmd = 'HelpfulVersion'
 
+# :mes とかの内容をバッファーに展開できる
 [[plugins]]
 repo = 'tyru/capture.vim'
 on_cmd = 'Capture'
 
+# インデント位置にルーラーみたいなの表示してくれる
 [[plugins]]
 repo = 'lukas-reineke/indent-blankline.nvim'
 on_event = ['BufNewFile', 'BufReadPost']
@@ -286,6 +310,7 @@ hook_add = '''
         \ ]
 '''
 
+# vim.ui.selectとかvim.ui.inputの良い感じの設定を提供する
 [[plugins]]
 repo = 'stevearc/dressing.nvim'
 depends = 'nui.nvim'
@@ -353,6 +378,7 @@ lua_source = '''
   }
 '''
 
+# 日本語help
 [[plugins]]
 repo = 'vim-jp/vimdoc-ja'
 lazy = true
@@ -361,6 +387,7 @@ hook_add = '''
 set helplang=ja,en
 '''
 
+# 選択範囲をChatGPTに投げつける
 [[plugins]]
 repo = 'yuki-yano/ai-review.nvim'
 depends = ['denops.vim', 'nui.nvim']
@@ -460,6 +487,7 @@ lua_source = '''
   }
 '''
 
+# p で貼り付ける内容をヤンク履歴から選べる
 [[plugins]]
 repo = 'hrsh7th/nvim-pasta'
 lazy = true
@@ -480,6 +508,7 @@ lua_source = '''
   }
 '''
 
+# <C-w><C-w>したときにどこのWindowに飛ぶか選べる
 [[plugins]]
 repo = 'tkmpypy/chowcho.nvim'
 lazy = true
@@ -660,6 +689,7 @@ hook_add = '''
   let $PATH = $'{$PATH}:{$THEMIS_HOME}/bin'
 '''
 
+# 普通のバッファーみたいにファイルを操作できる
 [[plugins]]
 repo = 'stevearc/oil.nvim'
 lazy = true
@@ -784,11 +814,13 @@ lua_source = '''
   })
 '''
 
+# QuickFixでマッチした部分をハイライトする
 [[plugins]]
 repo = 'cohama/vim-hier'
 lazy = true
 on_event = 'QuickFixCmdPost'
 
+# easymotion
 [[plugins]]
 repo = 'yuki-yano/fuzzy-motion.vim'
 depends = 'denops.vim'
@@ -797,6 +829,7 @@ hook_add = '''
   Keymap nxo <space>w <Cmd>FuzzyMotion<CR>
 '''
 
+# yankした内容を端末の仕様を使ってクリップボードに入れてくれる
 [[plugins]]
 repo = 'ojroques/vim-oscyank'
 lazy = true

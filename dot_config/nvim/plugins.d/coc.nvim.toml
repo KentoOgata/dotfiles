@@ -1,3 +1,4 @@
+# 特に使ってないけど、fzf-preview.vimの依存として入れてる
 [[plugins]]
 repo = 'neoclide/coc.nvim'
 lazy = true
@@ -9,5 +10,6 @@ hook_add = '''
         \ 'coc-fzf-preview',
         \ ]
   let g:coc_data_home = $'{stdpath('data')}/coc'
+  " 補完を無効化する
   autocmd VimRc User CocNvimInit ++once CocDisable
 '''

@@ -1,3 +1,5 @@
+# ツリー表示やexrenameなどを提供する高機能なファイラー
+# neo-tree.nvimとかよりバッファーの挙動が好き
 [[plugins]]
 repo = 'lambdalisue/fern.vim'
 lazy = true
@@ -30,6 +32,7 @@ fern = '''
         \ fern#smart#leaf('<Plug>(fern-action-open)', '<Plug>(fern-action-expand)')
 '''
 
+# Fernの表示をアイコンとかつけてかわいい感じにしてくれる
 [[plugins]]
 repo = 'lambdalisue/fern-renderer-nerdfont.vim'
 lazy = true
@@ -44,6 +47,8 @@ fern = '''
   call glyph_palette#apply()
 '''
 
+# Fernのバッファーでカーソル位置のファイルの中身をプレビューできる
+# たまに便利
 [[plugins]]
 repo = 'yuki-yano/fern-preview.vim'
 lazy = true
@@ -56,6 +61,9 @@ fern = '''
   nmap <buffer> <C-u> <Plug>(fern-action-preview:scroll:up:half)
 '''
 
+# - Fernのバッファーで編集済み(作業中)のファイルが識別しやすくなる
+# - 対象のファイルが沢山あると重くなるのでこれ入れてるときは
+#   fernのディレクトリを深くしたくない
 [[plugins]]
 repo = 'lambdalisue/fern-git-status.vim'
 lazy = true
@@ -64,14 +72,19 @@ hook_source = '''
   call fern_git_status#init()
 '''
 
+# fern-renderer-nerdfontで表示するアイコンの色付けを提供する
 [[plugins]]
 repo = 'lambdalisue/glyph-palette.vim'
 lazy = true
 
+# fern-renderer-nerdfontで使うための、ファイル名->アイコンの変換を提供する
 [[plugins]]
 repo = 'lambdalisue/nerdfont.vim'
 lazy = false
 
+# # :e %:h のようにディレクトリを編集しようとしたときにnetrwではなく
+# # Fernを起動する
+# # oil.nvim を使ってみることにしたので無効化してる
 # [[plugins]]
 # repo = 'lambdalisue/fern-hijack.vim'
 # on_if = "isdirectory(expand('<afile>'))"

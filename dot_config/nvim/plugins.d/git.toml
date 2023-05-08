@@ -1,3 +1,5 @@
+# Gitクライアント
+# Gina logの機能だけまだgin.vimに移行できてないのでまだ入れてる
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
 lazy = true
@@ -7,6 +9,7 @@ hook_add = '''
   nmap <expr> <space>aH $'<Cmd>Gina log --graph --max-count=100 {nvim_buf_get_name(nvim_get_current_buf())}<CR>'
 '''
 
+# denops製のGitクライアント
 [[plugins]]
 repo = 'lambdalisue/gin.vim'
 lazy = true
@@ -25,6 +28,8 @@ gin-diff = '''
   setl nobuflisted
 '''
 
+# 現在編集しているバッファーについて、git関連の操作や表示を提供する。
+# 動作が軽快で、Visualで選択した範囲をstageしたりできるのでかなり便利
 [[plugins]]
 repo = 'lewis6991/gitsigns.nvim'
 lazy = true

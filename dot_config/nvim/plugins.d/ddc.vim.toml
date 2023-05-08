@@ -1,3 +1,4 @@
+# skkeletonの補完メニューを提供してもらってる
 [[plugins]]
 repo = 'Shougo/ddc.vim'
 lazy = false
@@ -7,6 +8,7 @@ lua_add = '''
     group = 'VimRc',
     once = true,
     pattern = 'DenopsPluginPost:skkeleton',
+    desc = 'skkeletonが読み込まれたときにddcを有効化する',
     callback = function()
       vim.fn['ddc#custom#patch_global'] {
         ui = 'pum',
@@ -27,16 +29,21 @@ lua_add = '''
   })
 '''
 
+# ddc.vimの補完メニューとしてpum.vimを使うためのやつ
 [[plugins]]
 repo = 'Shougo/ddc-ui-pum'
 lazy = false
 depends = 'pum.vim'
 
+# Shougo先生による補完メニューの実装
 [[plugins]]
 repo = 'Shougo/pum.vim'
 lazy = false
 # キーマップはnvim-cmpで解決するのでここでは設定しない
 hook_add = '''
+  " pum.vimで選択したときに挿入しないようにする
   set completeopt+=noinsert
+  " なんかのプラグインがpum.vimを呼び出したときに実行する
+  " Vimの初期化より先に実行したい処理ではないため
   autocmd VimRc SourcePost pum.vim ++once call pum#set_option('border', 'rounded')
 '''
