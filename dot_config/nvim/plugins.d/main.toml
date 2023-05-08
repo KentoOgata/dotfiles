@@ -839,4 +839,13 @@ hook_add = '''
   nmap <space>p "+p
 '''
 
+[[plugins]]
+repo = 'yuki-yano/lexima-alter-command.vim'
+depends = 'lexima.vim'
+lazy = true
+on_event = 'CmdlineEnter'
+hook_post_source = '''
+  LeximaAlterCommand fg GhqFind
+'''
+
 # vim:ft=toml expandtab tabstop=2 shiftwidth=2
