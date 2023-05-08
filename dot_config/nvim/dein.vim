@@ -1,5 +1,7 @@
 const s:deincache = stdpath('cache') .. '/dein'
 
+let $DEIN_CONFIG_DIR=$'{stdpath("config")}/plugins.d'
+
 function! s:deinsetup() abort
   call dein#options(#{
         \ install_progress_type: 'floating',
@@ -9,14 +11,12 @@ function! s:deinsetup() abort
         \ enable_notification: v:true,
         \ })
   if dein#min#load_state(s:deincache)
-    const here = stdpath('config')
     call dein#begin(s:deincache)
-    const configdir = $'{here}/plugins.d'
     call map(
-          \ readdir(configdir),
+          \ readdir($DEIN_CONFIG_DIR),
           \ { _, path ->
           \   path->fnamemodify(':e') ==# 'toml'
-          \     ? dein#load_toml($'{configdir}/{path}')
+          \     ? dein#load_toml($'{$DEIN_CONFIG_DIR}/{path}')
           \     : v:null
           \ }
           \)
