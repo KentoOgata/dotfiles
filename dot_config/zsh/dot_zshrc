@@ -1,11 +1,13 @@
+# なんかzenoの読み込みより先にbindkey読んでないと上手く動かない
+bindkey -e
+
 source "${ZDOTDIR}/ensure-zinit.zsh"
 source "${ZDOTDIR}/history.zsh"
+source "${ZDOTDIR}/zeno.d/init.zsh"
 
-bindkey -e
 autoload -U compinit
 compinit
 zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
-
 autoload -U select-word-style
 select-word-style bash
 
@@ -13,21 +15,6 @@ select-word-style bash
 # export ENHANCD_FILTER='fzf'
 
 zinit load zdharma-continuum/fast-syntax-highlighting
-
-export ZENO_ENABLE_SOCK=1
-export ZENO_GIT_CAT="bat --color-always"
-export ZENO_GIT_TREE="exa --tree"
-export ZENO_HOME="$XDG_CONFIG_HOME/zeno"
-zinit load yuki-yano/zeno.zsh
-if [[ -n $ZENO_LOADED ]]; then
-  bindkey ' ' zeno-auto-snippet
-  export ZENO_AUTO_SNIPPET_FALLBACK=self-insert
-  bindkey '^m' zeno-auto-snippet-and-accept-line
-  bindkey '^i' zeno-completion
-  bindkey '^x ' zeno-insert-space
-  bindkey '^x^m' accept-line
-  bindkey '^x^z' zeno-toggle-auto-snippet
-fi
 
 if which exa &> /dev/null; then
   alias ls="exa --icons"
