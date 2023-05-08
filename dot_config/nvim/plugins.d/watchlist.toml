@@ -57,8 +57,3 @@ lazy = true
 repo = 'eihigh/dotfiles'
 name = 'eihigh'
 lazy = true
-
-[[plugins]]
-repo = 'neovim/neovim'
-path = '~/repos/github.com/neovim/neovim'
-lazy = true
