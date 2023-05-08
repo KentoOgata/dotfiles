@@ -4,25 +4,63 @@ lazy = true
 merged = false
 build = 'go install'
 hook_add = '''
-  function s:openPluginPath(name) abort
-    const path = dein#get(a:name).path
-    execute 'edit' path
-  endfunction
   " NOTE: なんかこれ実行するとfzf.vimが読み込まれるんだけど理由はよくわからない
-  command FzfPlugins call fzf#run(#{
-        \ source: call({ -> dein#get()->values()->map({ _, plugin -> plugin.name }) }, []),
-        \ sink: function('s:openPluginPath'),
-        \ })
+  lua << EOF
+  vim.api.nvim_create_user_command(
+    'FzfPlugins',
+    function(args)
+      vim.fn['fzf#run'] {
+        source = vim.fn.map(
+          vim.fn.values(vim.fn['dein#get']()),
+          function(_, plugin)
+            return plugin.name
+          end),
+        sink = function(name)
+          require('fzf-lua').files {
+            cwd = vim.fn['dein#get'](name).path
+          }
+        end,
+        window = {
+          width = 0.9,
+          height = 0.6,
+        },
+      }
+    end,
+    {}
+  )
+EOF
   nmap <space>fp <Cmd>FzfPlugins<CR>
 
-  function s:openPath(path) abort
-    exec 'edit' a:path
-  endfunction
   command FzfMrw call fzf#run(#{
         \ source: mr#mrw#list(),
-        \ sink: function('s:openPath')
+        \ sink: 'edit',
+        \ window: #{
+        \   width: 0.9,
+        \   height: 0.6,
+        \ },
         \ })
   nmap <space>fz <Cmd>FzfMrw<CR>
+
+  lua << EOF
+  vim.api.nvim_create_user_command(
+    'GhqFind',
+    function(args)
+      vim.fn['fzf#run'] {
+        source = vim.fn.systemlist { 'ghq', 'list', '--full-path' },
+        sink = function(path)
+          require('fzf-lua').files {
+            cwd = path
+          }
+        end,
+        window = {
+          width = 0.9,
+          height = 0.6,
+        }
+      }
+    end,
+    {}
+  )
+EOF
 '''
 
 [[plugins]]
