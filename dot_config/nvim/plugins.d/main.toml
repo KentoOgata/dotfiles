@@ -35,46 +35,10 @@ hook_add = '''
 repo = 'hrsh7th/vim-searchx'
 lazy = true
 on_func = 'searchx#'
+hooks_file = '$DEIN_CONFIG_DIR/vim-searchx.vim'
 hook_add = '''
   Keymap nx / <Cmd>call searchx#start(#{ dir: 1 })<CR>
   Keymap nx ? <Cmd>call searchx#start(#{ dir: 0 })<CR>
-'''
-hook_source = '''
-  let g:searchx = #{
-        \ auto_accept: v:true,
-        \ scrolloff: &scrolloff,
-        \ scrolltime: 15,
-        \ nohlsearch: #{
-        \   jump: v:true,
-        \ },
-        \ markers: split('ASDFGHJKLQWERTYUIOPZXCVBNM', '.\zs'),
-        \ }
-
-  const g:MigemoPrompt = '(Migemo):'
-  function! g:searchx.convert(input) abort
-    if a:input[: g:MigemoPrompt->len() - 1] ==# g:MigemoPrompt
-      const input = a:input[g:MigemoPrompt->len() :]
-      return input->len() < 2
-            \ ? input
-            \ : kensaku#query(input)
-    else
-      return a:input->substitute('\s', '.\\{-}', 'g')
-    endif
-  endfunction
-
-  function! g:ToggleMigemoSearch() abort
-    const cmdtype = getcmdtype()
-    if cmdtype ==# '@'
-      const cmdline = getcmdline()
-      if cmdline =~# $'^{g:MigemoPrompt}'
-        call setcmdline(cmdline[g:MigemoPrompt->len() :])
-      else
-        call setcmdline(g:MigemoPrompt .. cmdline)
-      endif
-    endif
-  endfunction
-  autocmd VimRc User SearchxEnter cmap <buffer> <C-j> <Cmd>call g:ToggleMigemoSearch()<CR>
-  autocmd VimRc User SearchxLeave cunmap <buffer> <C-j>
 '''
 
 # * でジャンプしないようにしてくれるやつ
@@ -104,7 +68,7 @@ hook_add = '''
   Keymap nxo % <Plug>(matchup-%)
 '''
 hook_post_source = '''
-iunmap <C-g>%
+  iunmap <C-g>%
 '''
 
 # Vimプラグインをdenoで書けるようにするやつ
@@ -224,44 +188,7 @@ on_map = { ic = '<Plug>(skkeleton-enable)' }
 hook_add = '''
   Keymap ic <C-j> <Plug>(skkeleton-enable)
 '''
-lua_source = '''
-  vim.api.nvim_create_autocmd('User', {
-    group = 'VimRc',
-    once = true,
-    pattern = 'DenopsPluginPost:skkeleton',
-    callback = function()
-      ---@type string
-      local skkDataDir
-      if 1 == vim.fn.has 'win32' then
-        skkDataDir = vim.env['APPDATA'] .. '\\skk\\'
-      else
-        skkDataDir = ('%s/skk/'):format(vim.env['XDG_DATA_HOME'])
-      end
-      local dictPath = skkDataDir .. 'SKK-JISYO.L'
-
-      if 0 == vim.fn.filereadable(dictPath) then
-        local dictUrl = 'https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.L'
-        os.execute('curl -fsSLo ' .. dictPath .. ' --create-dirs ' .. dictUrl)
-      end
-
-      vim.fn['skkeleton_azik#setup'] {
-        keys = {
-          katakana = '[',
-        },
-      }
-      vim.fn['skkeleton#register_keymap']('henkan', 'p', 'purgeCandidate')
-      vim.fn['skkeleton#config'] {
-        eggLikeNewline = true,
-        globalJisyo = dictPath,
-        userJisyo = skkDataDir .. 'user-jisyo',
-        completionRankFile = skkDataDir .. 'rank.json',
-        kanaTable = 'azik',
-        immediatelyCancel = false,
-        registerConvertResult = true,
-      }
-    end,
-  })
-'''
+hooks_file = '$DEIN_CONFIG_DIR/skkeleton.lua'
 
 # QuickFixの項目を一気に置換できる
 [[plugins]]
@@ -315,68 +242,7 @@ hook_add = '''
 repo = 'stevearc/dressing.nvim'
 depends = 'nui.nvim'
 on_event = 'CursorMoved'
-lua_source = '''
-  require('dressing').setup {
-    input = {
-      enabled = true,
-      default_prompt = 'Input:',
-      prompt_align = 'left',
-      insert_only = true,
-      start_in_insert = true,
-      anchor = 'SW',
-      border = 'single',
-      relative = 'cursor',
-      prefer_width = 40,
-      width = nil,
-      max_width = { 140, 0.9 },
-      min_width = { 20, 0.2 },
-      buf_options = {},
-      win_options = {
-        winblend = 10,
-        wrap = false,
-      },
-      mappings = {
-        n = {
-          ['q'] = 'Close',
-          ['<Esc>'] = 'Close',
-          ['<CR>'] = 'Confirm',
-        },
-        i = {
-          ['<C-c>'] = 'Close',
-          ['<CR>'] = 'Confirm',
-          ['<C-p>'] = 'HistoryPrev',
-          ['<C-n>'] = 'HistoryNext',
-        },
-      },
-    },
-    select = {
-      enabled = true,
-      backend = { 'fzf_lua', 'telescope', 'nui', 'builtin' },
-      trim_prompt = true,
-      telescope = nil,
-      builtin = {
-        anchor = 'NW',
-        border = 'single',
-        relative = 'editor',
-        buf_options = {},
-        win_options = {
-          winblend = 10,
-        },
-        width = nil,
-        max_width = { 140, 0.8 },
-        min_width = { 40, 0.2 },
-        height = nil,
-        max_height = 0.9,
-        min_height = { 10, 0.2 },
-        mappings = {
-          ['<Esc>'] = 'Close',
-          ['<C-c>'] = 'Close',
-          ['<CR>'] = 'Confirm',
-        },
-      },
-    },
-  }
-'''
+hooks_file = '$DEIN_CONFIG_DIR/dressing.nvim.lua'
 
 # 日本語help
 [[plugins]]
@@ -407,85 +273,7 @@ hook_add = '''
   nmap gfK <Plug>(gtd:splitabove)
   nmap gfL <Plug>(gtd:splitright)
 '''
-lua_source = '''
-  require('gtd').setup {}
-
-  vim.keymap.set_table {
-    mode = 'n',
-    maps = {
-      {
-        '<Plug>(gtd:edit)',
-        function()
-          require('gtd').exec { command = 'edit' }
-        end,
-      },
-      {
-        '<Plug>(gtd:splitleft)',
-        function()
-          local splitright = vim.go.splitright
-          vim.go.splitright = false
-          require('gtd').exec({
-            command = 'vsplit',
-          }, {
-            on_event = function(event)
-              if event == require('gtd').Event.Finish then
-                vim.go.splitright = splitright
-              end
-            end,
-          })
-        end,
-      },
-      {
-        '<Plug>(gtd:splitbelow)',
-        function()
-          local splitbelow = vim.go.splitbelow
-          vim.go.splitbelow = true
-          require('gtd').exec({
-            command = 'split',
-          }, {
-            on_event = function(event)
-              if event == require('gtd').Event.Finish then
-                vim.go.splitbelow = splitbelow
-              end
-            end,
-          })
-        end,
-      },
-      {
-        '<Plug>(gtd:splitabove)',
-        function()
-          local splitbelow = vim.go.splitbelow
-          vim.go.splitbelow = false
-          require('gtd').exec({
-            command = 'split',
-          }, {
-            on_event = function(event)
-              if event == require('gtd').Event.Finish then
-                vim.go.splitbelow = splitbelow
-              end
-            end,
-          })
-        end,
-      },
-      {
-        '<Plug>(gtd:splitright)',
-        function()
-          local splitright = vim.go.splitright
-          vim.go.splitright = true
-          require('gtd').exec({
-            command = 'vsplit',
-          }, {
-            on_event = function(event)
-              if event == require('gtd').Event.Finish then
-                vim.go.splitright = splitright
-              end
-            end,
-          })
-        end,
-      },
-    },
-  }
-'''
+hooks_file = '$DEIN_CONFIG_DIR/nvim-gtd.lua'
 
 # p で貼り付ける内容をヤンク履歴から選べる
 [[plugins]]
@@ -513,39 +301,7 @@ lua_source = '''
 repo = 'tkmpypy/chowcho.nvim'
 lazy = true
 on_lua = 'chowcho'
-lua_add = '''
-  -- ORIGINAL: https://zenn.dev/kawarimidoll/articles/daa39da5838567
-
-  -- <C-w>xと<C-w><C-x>を同時に設定する
-  local win_keymap_set = function(key, callback)
-    vim.keymap.set({ 'n' }, '<C-w>' .. key, callback)
-    vim.keymap.set({ 'n' }, '<C-w><C-' .. key .. '>', callback)
-  end
-
-  win_keymap_set('w', function()
-    local wins = 0
-
-    -- 全ウィンドウをループ
-    for i = 1, vim.fn.winnr '$' do
-      local win_id = vim.fn.win_getid(i)
-      local conf = vim.api.nvim_win_get_config(win_id)
-
-      -- focusableなウィンドウをカウント
-      if conf.focusable then
-        wins = wins + 1
-
-        -- ウィンドウ数が3以上ならchowchoを起動
-        if wins > 2 then
-          require('chowcho').run()
-          return
-        end
-      end
-    end
-
-    -- ウィンドウが少なければ標準の<C-w><C-w>を実行
-    vim.cmd.wincmd 'w'
-  end)
-'''
+hooks_file = '$DEIN_CONFIG_DIR/chowcho.nvim.lua'
 
 [[plugins]]
 repo = 'nvim-tree/nvim-web-devicons'
@@ -563,85 +319,7 @@ lazy = true
 repo = 'rebelot/heirline.nvim'
 depends = 'nvim-web-devicons'
 on_event = ['FileType', 'WinNew']
-lua_source = '''
-  vim.go.laststatus = 2
-  local utils = require 'heirline.utils'
-
-  local separators = {
-    rounded_left = '',
-    rounded_right = '',
-    rounded_left_hollow = '',
-    rounded_right_hollow = '',
-    powerline_left = '',
-    powerline_right = '',
-    powerline_right_hollow = '',
-    powerline_left_hollow = '',
-    slant_left = '',
-    slant_right = '',
-    inverted_slant_left = '',
-    inverted_slant_right = '',
-    slant_ur = '',
-    slant_br = '',
-    vert = '│',
-    vert_thick = '┃',
-    block = '█',
-    double_vert = '║',
-    dotted_vert = '┊',
-  }
-
-  local function setup_colors()
-    vim.g.heirline_colors = {
-      bright_bg = utils.get_highlight('Folded').bg or 0,
-      bright_fg = utils.get_highlight('Folded').fg or 0,
-      red = utils.get_highlight('DiagnosticError').fg or 0,
-      dark_red = utils.get_highlight('DiffDelete').bg or 0,
-      green = utils.get_highlight('String').fg or 0,
-      blue = utils.get_highlight('Function').fg or 0,
-      gray = utils.get_highlight('NonText').fg or 0,
-      orange = utils.get_highlight('Constant').fg or 0,
-      purple = utils.get_highlight('Statement').fg or 0,
-      cyan = utils.get_highlight('Special').fg or 0,
-      diag_warn = utils.get_highlight('DiagnosticWarn').fg or 0,
-      diag_error = utils.get_highlight('DiagnosticError').fg or 0,
-      diag_hint = utils.get_highlight('DiagnosticHint').fg or 0,
-      diag_info = utils.get_highlight('DiagnosticInfo').fg or 0,
-      git_del = utils.get_highlight('diffRemoved').fg or 0,
-      git_add = utils.get_highlight('diffAdded').fg or 0,
-      git_change = utils.get_highlight('diffChanged').fg or 0,
-    }
-    return vim.g.heirline_colors
-  end
-
-  local statusLines = require 'rc.heirline.StatusLines'
-  local winBar = require 'rc.heirline.WinBar'
-  local tabLine = require 'rc.heirline.TabLine'
-  local statusColumn = require 'rc.heirline.StatusColumn'
-
-  require('heirline').setup {
-    statusline = statusLines,
-    winbar = winBar,
-    tabline = tabLine,
-    statuscolumn = statusColumn,
-    opts = {
-      disable_winbar_cb = function(args)
-        local buf = args.buf
-        local buftype = vim.tbl_contains({ 'prompt', 'nofile', 'help', 'quickfix' }, vim.bo[buf].buftype)
-        local filetype = vim.tbl_contains({ 'gitcommit', 'fugitive', 'Trouble', 'packer' }, vim.bo[buf].filetype)
-        return buftype or filetype
-      end,
-      colors = setup_colors,
-    },
-  }
-
-  vim.o.statuscolumn = require('heirline').eval_statuscolumn()
-
-  vim.api.nvim_create_autocmd('ColorScheme', {
-    group = 'VimRc',
-    callback = function()
-      utils.on_colorscheme(setup_colors)
-    end,
-  })
-'''
+hooks_file = '$DEIN_CONFIG_DIR/heirline.nvim.lua'
 
 [[plugins]]
 repo = 'lambdalisue/mr.vim'
@@ -697,122 +375,7 @@ on_if = "isdirectory(expand('<afile>'))"
 hook_add = '''
   let g:loaded_netrwPlugin = 1
 '''
-lua_source = '''
-  require("oil").setup({
-    -- Id is automatically added at the beginning, and name at the end
-    -- See :help oil-columns
-    columns = {
-      "icon",
-      -- "permissions",
-      -- "size",
-      -- "mtime",
-    },
-    -- Buffer-local options to use for oil buffers
-    buf_options = {
-      buflisted = false,
-    },
-    -- Window-local options to use for oil buffers
-    win_options = {
-      wrap = false,
-      signcolumn = "no",
-      cursorcolumn = false,
-      foldcolumn = "0",
-      spell = false,
-      list = false,
-      conceallevel = 3,
-      concealcursor = "n",
-    },
-    -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`
-    default_file_explorer = true,
-    -- Restore window options to previous values when leaving an oil buffer
-    restore_win_options = true,
-    -- Skip the confirmation popup for simple operations
-    skip_confirm_for_simple_edits = false,
-    -- Keymaps in oil buffer. Can be any value that `vim.keymap.set` accepts OR a table of keymap
-    -- options with a `callback` (e.g. { callback = function() ... end, desc = "", nowait = true })
-    -- Additionally, if it is a string that matches "actions.<name>",
-    -- it will use the mapping at require("oil.actions").<name>
-    -- Set to `false` to remove a keymap
-    -- See :help oil-actions for a list of all available actions
-    keymaps = {
-      ["g?"] = "actions.show_help",
-      ["<CR>"] = "actions.select",
-      ["<C-s>"] = "actions.select_vsplit",
-      ["<C-h>"] = "actions.select_split",
-      ["<C-t>"] = "actions.select_tab",
-      ["<C-p>"] = "actions.preview",
-      ["<C-c>"] = "actions.close",
-      ["<C-l>"] = "actions.refresh",
-      ["-"] = "actions.parent",
-      ["_"] = "actions.open_cwd",
-      ["`"] = "actions.cd",
-      ["~"] = "actions.tcd",
-      ["g."] = "actions.toggle_hidden",
-    },
-    -- Set to false to disable all of the above keymaps
-    use_default_keymaps = true,
-    view_options = {
-      -- Show files and directories that start with "."
-      show_hidden = true,
-      -- This function defines what is considered a "hidden" file
-      is_hidden_file = function(name, bufnr)
-        return vim.startswith(name, ".")
-      end,
-      -- This function defines what will never be shown, even when `show_hidden` is set
-      is_always_hidden = function(name, bufnr)
-        return false
-      end,
-    },
-    -- Configuration for the floating window in oil.open_float
-    float = {
-      -- Padding around the floating window
-      padding = 2,
-      max_width = 0,
-      max_height = 0,
-      border = "rounded",
-      win_options = {
-        winblend = 10,
-      },
-    },
-    -- Configuration for the actions floating preview window
-    preview = {
-      -- Width dimensions can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
-      -- min_width and max_width can be a single value or a list of mixed integer/float types.
-      -- max_width = {100, 0.8} means "the lesser of 100 columns or 80% of total"
-      max_width = 0.9,
-      -- min_width = {40, 0.4} means "the greater of 40 columns or 40% of total"
-      min_width = { 40, 0.4 },
-      -- optionally define an integer/float for the exact width of the preview window
-      width = nil,
-      -- Height dimensions can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
-      -- min_height and max_height can be a single value or a list of mixed integer/float types.
-      -- max_height = {80, 0.9} means "the lesser of 80 columns or 90% of total"
-      max_height = 0.9,
-      -- min_height = {5, 0.1} means "the greater of 5 columns or 10% of total"
-      min_height = { 5, 0.1 },
-      -- optionally define an integer/float for the exact height of the preview window
-      height = nil,
-      border = "rounded",
-      win_options = {
-        winblend = 0,
-      },
-    },
-    -- Configuration for the floating progress window
-    progress = {
-      max_width = 0.9,
-      min_width = { 40, 0.4 },
-      width = nil,
-      max_height = { 10, 0.9 },
-      min_height = { 5, 0.1 },
-      height = nil,
-      border = "rounded",
-      minimized_border = "none",
-      win_options = {
-        winblend = 0,
-      },
-    },
-  })
-'''
+hooks_file = '$DEIN_CONFIG_DIR/oil.nvim.lua'
 
 # QuickFixでマッチした部分をハイライトする
 [[plugins]]
