@@ -14,9 +14,9 @@ function! s:deinsetup() abort
     call dein#begin(s:deincache)
     call map(
           \ readdir($DEIN_CONFIG_DIR),
-          \ { _, path ->
-          \   path->fnamemodify(':e') ==# 'toml'
-          \     ? dein#load_toml($'{$DEIN_CONFIG_DIR}/{path}')
+          \ { _, filename ->
+          \   filename->fnamemodify(':e') ==# 'toml'
+          \     ? dein#load_toml(join([$DEIN_CONFIG_DIR, filename], '/'))
           \     : v:null
           \ }
           \)
