@@ -9,7 +9,13 @@ end
 
 if 1 == vim.fn.executable 'deno' then
   lspconfig.denols.setup {
-    root_dir = require('lspconfig.util').root_pattern { 'deno.json', 'deno.jsonc', 'denops', 'tsnip' },
+    root_dir = require('lspconfig.util').root_pattern {
+      'deno.json',
+      'deno.jsonc',
+      'denops',
+      'tsnip',
+      'deps.ts',
+    },
     init_options = {
       unstable = true,
     },
