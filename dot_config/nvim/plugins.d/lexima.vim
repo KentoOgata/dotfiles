@@ -88,7 +88,7 @@ call s:add_rules(
       \ ]
       \ )
 
-call s:add_rule(
+call s:add_rules(
       \ #{ filetype: ['lisp', 'scheme'] },
       \ [
       \   #{ char: "'", input: "'" },
