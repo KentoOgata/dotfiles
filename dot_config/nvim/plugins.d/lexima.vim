@@ -82,4 +82,9 @@ call map(
 
 " input: >>, effect: `if (\%#)condition` -> `if (condition)`
 call lexima#add_rule(#{ char: '>', at: '(>\%#)', input: '<BS><DEL><End>)' })
+
+" cmdline rules
+" `:g<space>` -> `:vimgrep \%# %`
+call lexima#add_rule(#{ mode: ':', at: '^\%(''<,''>\)\?g', char: '<space>', input: '<C-w>vimgrep ', input_after: ' %'  })
+
 " }}}
