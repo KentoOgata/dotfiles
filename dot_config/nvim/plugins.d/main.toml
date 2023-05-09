@@ -382,6 +382,14 @@ hooks_file = '$DEIN_CONFIG_DIR/oil.nvim.lua'
 repo = 'cohama/vim-hier'
 lazy = true
 on_event = 'QuickFixCmdPost'
+[plugins.ftplugin]
+qf = '''
+  " quickfixのWindowを閉じたときにハイライトを無効化する
+  autocmd VimRc WinClosed <buffer>
+        \ : if &l:buftype ==# 'quickfix'
+        \ |   execute 'HierStop'
+        \ | endif
+'''
 
 # easymotion
 [[plugins]]
