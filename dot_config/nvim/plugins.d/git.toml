@@ -14,6 +14,11 @@ hook_add = '''
 repo = 'lambdalisue/gin.vim'
 lazy = true
 depends = 'denops.vim'
+on_cmd = [
+  'GinStatus',
+  'GinBranch',
+  'Gin',
+]
 hook_add = '''
   nmap <space>aa <Cmd>GinStatus<CR>
   nmap <space>ac <Cmd>Gin commit -v<CR>
