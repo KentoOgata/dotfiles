@@ -1,6 +1,6 @@
 const s:deincache = stdpath('cache') .. '/dein'
 
-let $DEIN_CONFIG_DIR= stdpath("config") .. '/plugins.d'
+let $DEIN_CONFIG_DIR= stdpath('config') .. '/plugins.d'
 
 function! s:deinsetup() abort
   call dein#options(#{
