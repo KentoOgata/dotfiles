@@ -28,6 +28,15 @@ filetype plugin indent off
 " 構文ファイルの読み込みを無効化する
 syntax off
 
+" VimEnterより後には実行したくないやつ
+augroup VimEnterPre
+  autocmd!
+  " Vimが起動したときにこのグループに削除してるやつを全部消す
+  autocmd VimEnter * autocmd! VimEnterPre
+  " 起動前にもFileTypeを発火させたい
+  autocmd BufReadPost * ++once filetype detect
+augroup END
+
 let g:dein#inline_vimrcs = [
       \ s:here .. '/commands.vim',
       \ s:here .. '/options.vim',
