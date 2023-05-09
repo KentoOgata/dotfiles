@@ -31,3 +31,11 @@ completions:
     sourceCommand: "fd . -e csproj --full-path \"$(git rev-parse --show-toplevel)\""
     options:
       --prompt: "'Find csproj > '"
+  - name: kill
+    patterns:
+      - "^kill( -9)? $"
+    sourceCommand: "procs --color=always"
+    options:
+      --multi: true
+      --prompt: "'Kill Process > '"
+    callback: "awk '{print $1}'"
