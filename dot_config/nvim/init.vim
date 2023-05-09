@@ -31,7 +31,7 @@ syntax off
 " VimEnterより後には実行したくないやつ
 augroup VimEnterPre
   autocmd!
-  " Vimが起動したときにこのグループに削除してるやつを全部消す
+  " Vimが起動したときにこのグループに所属してるやつを全部消す
   autocmd VimEnter * autocmd! VimEnterPre
   " 起動前にもFileTypeを発火させたい
   autocmd BufReadPost * ++once filetype detect
