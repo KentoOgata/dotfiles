@@ -1,12 +1,10 @@
 # プラグインマネージャー
 [[plugins]]
 repo = 'Shougo/dein.vim'
-lazy = false
 
 # <C-j>/<C-k> でparagraphの境界に飛べたりして便利
 [[plugins]]
 repo = 'haya14busa/vim-edgemotion'
-lazy = true
 on_map = '<Plug>(edgemotion-'
 hook_add = '''
   Keymap nxo <C-j> <Plug>(edgemotion-j)
@@ -16,7 +14,6 @@ hook_add = '''
 # f/tを良い感じにしてくれる
 [[plugins]]
 repo = 'hrsh7th/vim-eft'
-lazy = true
 on_map = '<Plug>(eft-'
 hook_add = '''
   Keymap nxo f <Plug>(eft-f)
@@ -33,7 +30,6 @@ hook_add = '''
 # n/Nの動作が怪しい
 [[plugins]]
 repo = 'hrsh7th/vim-searchx'
-lazy = true
 on_func = 'searchx#'
 hooks_file = '$DEIN_CONFIG_DIR/vim-searchx.vim'
 hook_add = '''
@@ -44,7 +40,6 @@ hook_add = '''
 # * でジャンプしないようにしてくれるやつ
 [[plugins]]
 repo = 'haya14busa/vim-asterisk'
-lazy = true
 on_map = '<Plug>(asterisk-'
 hook_add = '''
   Keymap nxo *  <Plug>(asterisk-z*)
@@ -57,7 +52,6 @@ hook_add = '''
 # 入れただけみたいなとこある よくわかってない
 [[plugins]]
 repo = 'andymass/vim-matchup'
-lazy = true
 on_map = '<Plug>(matchup-%)'
 hook_add = '''
   let g:loaded_matchit = v:true
@@ -75,19 +69,16 @@ hook_post_source = '''
 [[plugins]]
 repo = 'vim-denops/denops.vim'
 # plugin/ディレクトリを持つが、これはVimEnterまでに読み込みたいのでfalse
-lazy = false
 
 # Migemo
 [[plugins]]
 repo = 'lambdalisue/kensaku.vim'
-lazy = true
 depends = 'denops.vim'
 on_func = 'kensaku#query'
 
 # yankしたときに範囲をわかりやすくしてくれる
 [[plugins]]
 repo = 'machakann/vim-highlightedyank'
-lazy = true
 on_map = '<Plug>(highlightedyank)'
 hook_add = '''
   Keymap nxo y <Plug>(highlightedyank)
@@ -97,7 +88,6 @@ hook_add = '''
 # テキストの周りを囲んだり囲みを編集したり
 [[plugins]]
 repo = 'machakann/vim-sandwich'
-lazy = true
 on_map = { nx = '<Plug>(sandwich-', xo = '<Plug>(textobj-sandwich-' }
 hook_add = '''
   Keymap nx s   <Nop>
@@ -113,11 +103,9 @@ hook_add = '''
 
 [[plugins]]
 repo = 'kana/vim-textobj-user'
-lazy = false
 
 [[plugins]]
 repo = 'kana/vim-textobj-entire'
-lazy = true
 depends = 'vim-textobj-user'
 on_map = { xo = '<Plug>(textobj-entire-' }
 hook_add = '''
@@ -127,11 +115,9 @@ hook_add = '''
 
 [[plugins]]
 repo = 'kana/vim-operator-user'
-lazy = false
 
 [[plugins]]
 repo = 'kana/vim-operator-replace'
-lazy = true
 depends = 'vim-operator-user'
 on_map = { nx = '<Plug>(operator-replace)' }
 hook_add = '''
@@ -167,7 +153,6 @@ hook_add = '''
 # 関数の引数の順番を入れ替えたりする
 [[plugins]]
 repo = 'machakann/vim-swap'
-lazy = true
 on_map = { nxo = '<Plug>(swap-' }
 hook_add = '''
   nmap g< <Plug>(swap-prev)
@@ -181,7 +166,6 @@ hook_add = '''
 [[plugins]]
 repo  = 'vim-skk/skkeleton'
 depends = 'denops.vim'
-lazy = true
 # 辞書の読み込みを待機しない
 denops_wait = false
 on_map = { ic = '<Plug>(skkeleton-enable)' }
@@ -193,19 +177,16 @@ hooks_file = '$DEIN_CONFIG_DIR/skkeleton.lua'
 # QuickFixの項目を一気に置換できる
 [[plugins]]
 repo = 'thinca/vim-qfreplace'
-lazy = true
 on_cmd = 'Qfreplace'
 
 # QuickFixから項目をddで消したりできる
 [[plugins]]
 repo = 'itchyny/vim-qfedit'
-lazy = true
 on_ft = 'qf'
 
 # chezmoiで管理してるファイル dot_* にftをあてたりする
 [[plugins]]
 repo = 'alker0/chezmoi.vim'
-lazy = false
 
 [[plugins]]
 repo = 'vim-jp/vital.vim'
@@ -265,7 +246,6 @@ lazy = true
 
 [[plugins]]
 repo = 'hrsh7th/nvim-gtd'
-lazy = true
 on_map = '<Plug>(gtd:'
 hook_add = '''
   nmap gfH <Plug>(gtd:splitleft)
@@ -278,7 +258,6 @@ hooks_file = '$DEIN_CONFIG_DIR/nvim-gtd.lua'
 # p で貼り付ける内容をヤンク履歴から選べる
 [[plugins]]
 repo = 'hrsh7th/nvim-pasta'
-lazy = true
 on_lua = 'pasta'
 hook_add = '''
   nmap p <Cmd>lua require('pasta.mappings').p()<CR>
@@ -299,7 +278,6 @@ lua_source = '''
 # <C-w><C-w>したときにどこのWindowに飛ぶか選べる
 [[plugins]]
 repo = 'tkmpypy/chowcho.nvim'
-lazy = true
 on_lua = 'chowcho'
 hooks_file = '$DEIN_CONFIG_DIR/chowcho.nvim.lua'
 
@@ -329,7 +307,6 @@ on_event = ['BufReadPre', 'BufNewFile']
 # バッファー上のカラーコードをハイライト(こっちがメインで入れてる)
 [[plugins]]
 repo = 'uga-rosa/ccc.nvim'
-lazy = true
 on_cmd = ['CccPick', 'CccHighlighterEnable']
 on_map = { i = '<Plug>(ccc-insert)' }
 on_event = ['BufReadPost', 'FileType']
@@ -370,7 +347,6 @@ hook_add = '''
 # 普通のバッファーみたいにファイルを操作できる
 [[plugins]]
 repo = 'stevearc/oil.nvim'
-lazy = true
 on_if = "isdirectory(expand('<afile>'))"
 hook_add = '''
   let g:loaded_netrwPlugin = 1
@@ -380,7 +356,6 @@ hooks_file = '$DEIN_CONFIG_DIR/oil.nvim.lua'
 # QuickFixでマッチした部分をハイライトする
 [[plugins]]
 repo = 'cohama/vim-hier'
-lazy = true
 on_event = 'QuickFixCmdPost'
 [plugins.ftplugin]
 qf = '''
@@ -403,7 +378,6 @@ hook_add = '''
 # yankした内容を端末の仕様を使ってクリップボードに入れてくれる
 [[plugins]]
 repo = 'ojroques/vim-oscyank'
-lazy = true
 on_map = '<Plug>OSCYankVisual'
 hook_add = '''
   xmap <space>y <Plug>OSCYankVisual
@@ -413,7 +387,6 @@ hook_add = '''
 [[plugins]]
 repo = 'yuki-yano/lexima-alter-command.vim'
 depends = 'lexima.vim'
-lazy = true
 on_event = 'CmdlineEnter'
 hook_post_source = '''
   LeximaAlterCommand fq GhqFind

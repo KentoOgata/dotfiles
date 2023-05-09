@@ -2,7 +2,6 @@
 # neo-tree.nvimとかよりバッファーの挙動が好き
 [[plugins]]
 repo = 'lambdalisue/fern.vim'
-lazy = true
 on_cmd = 'Fern'
 hook_add = '''
   nmap <space>e <Cmd>execute 'Fern' (&l:buftype->empty() ? '%:h' : '.')<CR>
@@ -36,7 +35,6 @@ fern = '''
 # Fernの表示をアイコンとかつけてかわいい感じにしてくれる
 [[plugins]]
 repo = 'lambdalisue/fern-renderer-nerdfont.vim'
-lazy = true
 depends = ['nerdfont.vim', 'glyph-palette.vim']
 on_source = 'fern.vim'
 hook_source = '''
@@ -52,7 +50,6 @@ fern = '''
 # たまに便利
 [[plugins]]
 repo = 'yuki-yano/fern-preview.vim'
-lazy = true
 on_source = 'fern.vim'
 [plugins.ftplugin]
 fern = '''
@@ -67,7 +64,6 @@ fern = '''
 #   fernのディレクトリを深くしたくない
 [[plugins]]
 repo = 'lambdalisue/fern-git-status.vim'
-lazy = true
 on_source = 'fern.vim'
 hook_source = '''
   call fern_git_status#init()
@@ -81,7 +77,6 @@ lazy = true
 # fern-renderer-nerdfontで使うための、ファイル名->アイコンの変換を提供する
 [[plugins]]
 repo = 'lambdalisue/nerdfont.vim'
-lazy = false
 
 # # :e %:h のようにディレクトリを編集しようとしたときにnetrwではなく
 # # Fernを起動する

@@ -2,7 +2,6 @@
 # Gina logの機能だけまだgin.vimに移行できてないのでまだ入れてる
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
-lazy = true
 on_cmd = 'Gina'
 hook_add = '''
   nmap <space>ah <Cmd>Gina log --graph --all --max-count=100<CR>
@@ -12,7 +11,6 @@ hook_add = '''
 # denops製のGitクライアント
 [[plugins]]
 repo = 'lambdalisue/gin.vim'
-lazy = true
 depends = 'denops.vim'
 on_cmd = [
   'GinStatus',
@@ -37,7 +35,6 @@ gin-diff = '''
 # 動作が軽快で、Visualで選択した範囲をstageしたりできるのでかなり便利
 [[plugins]]
 repo = 'lewis6991/gitsigns.nvim'
-lazy = true
 on_event = ['BufReadPost', 'BufNewFile']
 hook_add = '''
   set signcolumn=yes

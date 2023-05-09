@@ -1,12 +1,10 @@
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
-lazy = true
 on_event = 'FileType'
 hooks_file = '$DEIN_CONFIG_DIR/nvim-lspconfig.lua'
 
 [[plugins]]
 repo = 'folke/neodev.nvim'
-lazy = true
 on_source = 'nvim-lspconfig'
 lua_source = '''
   require('neodev').setup {
@@ -23,7 +21,6 @@ lua_source = '''
 
 [[plugins]]
 repo = 'williamboman/mason.nvim'
-lazy = true
 on_cmd = ['Mason', 'MasonInstall']
 lua_source = '''
   -- ~/.cache/nvim/ が存在しないとエラーになる
@@ -36,7 +33,6 @@ lua_source = '''
 
 [[plugins]]
 repo = 'williamboman/mason-lspconfig.nvim'
-lazy = true
 depends = 'mason.nvim'
 on_source = 'nvim-lspconfig'
 lua_source = '''
@@ -45,7 +41,6 @@ lua_source = '''
 
 [[plugins]]
 repo = 'j-hui/fidget.nvim'
-lazy = true
 on_event = 'LspAttach'
 lua_source = '''
   require('fidget').setup {}
@@ -53,7 +48,6 @@ lua_source = '''
 
 [[plugins]]
 repo = 'jose-elias-alvarez/null-ls.nvim'
-lazy = true
 depends = 'plenary.nvim'
 on_event = ['BufReadPost', 'BufNewFile']
 lua_source = '''
@@ -76,7 +70,6 @@ lua_source = '''
 # 使ってない変数を暗くハイライトしてくれる
 [[plugins]]
 repo = 'zbirenbaum/neodim'
-lazy = true
 on_event = 'LspAttach'
 lua_source = '''
   require('neodim').setup {
@@ -97,7 +90,6 @@ lua_source = '''
 # winbarに class->function->if みたいな現在のカーソル位置のコンテキストを表示する
 [[plugins]]
 repo = 'SmiteshP/nvim-navic'
-lazy = false
 lua_add = '''
   vim.api.nvim_create_autocmd('LspAttach', {
     group = 'VimRc',

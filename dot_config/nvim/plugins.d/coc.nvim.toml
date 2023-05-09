@@ -1,7 +1,6 @@
 # 特に使ってないけど、fzf-preview.vimの依存として入れてる
 [[plugins]]
 repo = 'neoclide/coc.nvim'
-lazy = true
 if = "executable('node')"
 on_cmd = 'CocCommand'
 rev = 'release'

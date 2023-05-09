@@ -1,7 +1,6 @@
 # skkeletonの補完メニューを提供してもらってる
 [[plugins]]
 repo = 'Shougo/ddc.vim'
-lazy = false
 depends = 'denops.vim'
 lua_add = '''
   vim.api.nvim_create_autocmd('User', {
@@ -32,13 +31,11 @@ lua_add = '''
 # ddc.vimの補完メニューとしてpum.vimを使うためのやつ
 [[plugins]]
 repo = 'Shougo/ddc-ui-pum'
-lazy = false
 depends = 'pum.vim'
 
 # Shougo先生による補完メニューの実装
 [[plugins]]
 repo = 'Shougo/pum.vim'
-lazy = false
 # キーマップはnvim-cmpで解決するのでここでは設定しない
 hook_add = '''
   " pum.vimで選択したときに挿入しないようにする

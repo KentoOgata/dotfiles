@@ -64,15 +64,14 @@ EOF
 
 [[plugins]]
 repo = 'junegunn/fzf.vim'
-lazy = true
 depends = 'fzf'
+on_func = 'fzf#'
 hook_add = '''
   let g:fzf_command_prefix = 'Fzf'
 '''
 
 [[plugins]]
 repo = 'yuki-yano/fzf-preview.vim'
-lazy = true
 if = "executable('node')"
 depends = ['fzf.vim', 'coc.nvim']
 on_cmd = [
@@ -87,7 +86,6 @@ hook_add = '''
 
 [[plugins]]
 repo = 'ibhagwan/fzf-lua'
-lazy = true
 if = "executable('fzf')"
 depends = ['nvim-web-devicons', 'nvim-treesitter']
 on_lua = 'fzf-lua'

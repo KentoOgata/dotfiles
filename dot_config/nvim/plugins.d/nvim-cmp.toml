@@ -1,42 +1,34 @@
 [[plugins]]
 repo = 'hrsh7th/nvim-cmp'
-lazy = true
 depends = ['vim-vsnip', 'lspkind-nvim']
 on_event = ['InsertEnter', 'CmdlineEnter']
 hooks_file = '$DEIN_CONFIG_DIR/nvim-cmp.lua'
 
 [[plugins]]
 repo = 'hrsh7th/cmp-nvim-lsp'
-lazy = true
 on_source = 'nvim-cmp'
 
 [[plugins]]
 repo = 'hrsh7th/cmp-buffer'
-lazy = true
 on_source = 'nvim-cmp'
 
 [[plugins]]
 repo = 'hrsh7th/cmp-path'
-lazy = true
 on_source = 'nvim-cmp'
 
 [[plugins]]
 repo = 'hrsh7th/cmp-cmdline'
-lazy = true
 on_source = 'nvim-cmp'
 
 [[plugins]]
 repo  = 'hrsh7th/cmp-emoji'
-lazy = true
 on_source = 'nvim-cmp'
 
 [[plugins]]
 repo = 'f3fora/cmp-spell'
-lazy = true
 on_source = 'nvim-cmp'
 
 [[plugins]]
 repo = 'hrsh7th/cmp-vsnip'
-lazy = true
 depends = 'vim-vsnip'
 on_source = 'nvim-cmp'

@@ -1,6 +1,5 @@
 [[plugins]]
 repo = 'cohama/lexima.vim'
-lazy = true
 on_event = ['InsertEnter', 'CmdlineEnter']
 hooks_file = '$DEIN_CONFIG_DIR/lexima.vim'
 
@@ -42,7 +41,7 @@ stpl = '''
 
 [[plugins]]
 repo = 'hrsh7th/vim-vsnip'
-lazy = true
+on_func = 'vsnip#'
 hook_add = '''
   let g:vsnip_snippet_dir = $'{stdpath('config')}/vsnip'
   let g:vsnip_filetypes = #{
