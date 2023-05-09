@@ -23,3 +23,11 @@ snippets:
   - name: chezmoi cd
     keyword: ccd
     snippet: chezmoi cd
+
+completions:
+  - name: dotnet add reference
+    patterns:
+      - "^dotnet add reference $"
+    sourceCommand: "fd . -e csproj --full-path \"$(git rev-parse --show-toplevel)\""
+    options:
+      --prompt: "'Find csproj > '"
