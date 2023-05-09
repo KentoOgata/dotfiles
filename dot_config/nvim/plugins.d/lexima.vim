@@ -88,6 +88,13 @@ call s:add_rules(
       \ ]
       \ )
 
+call s:add_rule(
+      \ #{ filetype: ['lisp', 'scheme'] },
+      \ [
+      \   #{ char: "'", input: "'" },
+      \   #{ char: '`', input: '`' },
+      \ ]
+      \ )
 
 " input: >>, effect: `if (\%#)condition` -> `if (condition)`
 call lexima#add_rule(#{ char: '>', at: '(>\%#)', input: '<BS><DEL><End>)' })
