@@ -86,12 +86,9 @@ lua_source = '''
 
 [[plugins]]
 repo = 'jlcrochet/vim-razor'
-merge_ftdetect = true
-on_ft = 'razor'
 
 [[plugins]]
 repo = 'PhilT/vim-fsharp'
-on_ft = 'fsharp'
 
 [[plugins]]
 repo = 'chrisbra/csv.vim'
@@ -102,5 +99,3 @@ hook_add = '''
 
 [[plugins]]
 repo = 'wgwoods/vim-systemd-syntax'
-merge_ftdetect = true
-on_ft = 'systemd'
