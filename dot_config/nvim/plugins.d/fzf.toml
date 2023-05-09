@@ -29,7 +29,6 @@ hook_add = '''
     {}
   )
 EOF
-  nmap <space>fp <Cmd>FzfPlugins<CR>
 
   command FzfMrw call fzf#run(#{
         \ source: mr#mrw#list(),
