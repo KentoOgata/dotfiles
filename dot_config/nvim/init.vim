@@ -7,10 +7,25 @@ const s:here = $MYVIMRC->fnamemodify(':h')
 
 augroup VimRc
   autocmd!
-  autocmd FileType * ++once filetype indent on | syntax enable
+  " 最初に'filetype'オプションがセットされたときに以下を有効化する
+  "   - ftplugin scriptの検出
+  "   - indent scriptの検出
+  "   - syntax scriptの検出
+  " NOTE: `$ nvim file.vim` のように起動するとftがセットされないので実行されない(つらい)
+  autocmd FileType * ++once call map(
+        \   [
+        \     'filetype plugin indent on',
+        \     'syntax enable'
+        \   ],
+        \   { _, cmd -> execute(cmd) }
+        \ )
 augroup END
 
-filetype indent off
+" filetypeの検出を有効化する
+filetype on
+" filetypeプラグインの検出を無効化する
+filetype plugin indent off
+" 構文ファイルの読み込みを無効化する
 syntax off
 
 let g:dein#inline_vimrcs = [
