@@ -34,7 +34,7 @@ augroup VimEnterPre
   " Vimが起動したときにこのグループに所属してるやつを全部消す
   autocmd VimEnter * autocmd! VimEnterPre
   " 起動前にもFileTypeを発火させたい
-  autocmd BufReadPost * ++once filetype detect
+  autocmd BufReadPost,BufNewFile * ++once filetype detect
 augroup END
 
 let g:dein#inline_vimrcs = [
