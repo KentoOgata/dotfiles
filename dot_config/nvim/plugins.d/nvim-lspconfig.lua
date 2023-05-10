@@ -1,14 +1,31 @@
 -- lua_source {{{
 local lspconfig = require 'lspconfig'
 
+local function ensure_capabilities()
+  local dein = require 'dein'
+  if not dein.is_sourced 'cmp-nvim-lsp' then
+    dein.source 'cmp-nvim-lsp'
+  end
+  return require('cmp_nvim_lsp').default_capabilities()
+end
+local capabilities = ensure_capabilities()
+
+if 1 == vim.fn.executable 'vscode-json-language-server' then
+  lspconfig.jsonls.setup {
+    capabilities = capabilities,
+  }
+end
+
 if 1 == vim.fn.executable 'haskell-language-server-wrapper' then
   lspconfig.hls.setup {
+    capabilities = capabilities,
     filetypes = { 'haskell' },
   }
 end
 
 if 1 == vim.fn.executable 'deno' then
   lspconfig.denols.setup {
+    capabilities = capabilities,
     root_dir = require('lspconfig.util').root_pattern {
       'deno.json',
       'deno.jsonc',
@@ -24,6 +41,7 @@ end
 
 if 1 == vim.fn.executable 'lua-language-server' then
   lspconfig.lua_ls.setup {
+    capabilities = capabilities,
     settings = {
       Lua = {
         runtime = {
@@ -51,11 +69,14 @@ if 1 == vim.fn.executable 'lua-language-server' then
 end
 
 if 1 == vim.fn.executable 'gopls' then
-  lspconfig.gopls.setup {}
+  lspconfig.gopls.setup {
+    capabilities = capabilities,
+  }
 end
 
 if 1 == vim.fn.executable 'rust-analyzer' then
   lspconfig.rust_analyzer.setup {
+    capabilities = capabilities,
     settings = {
       ['rust-analyzer'] = {
         enable = true,
@@ -65,11 +86,14 @@ if 1 == vim.fn.executable 'rust-analyzer' then
 end
 
 if 1 == vim.fn.executable 'clangd' then
-  lspconfig.clangd.setup {}
+  lspconfig.clangd.setup {
+    capabilities = capabilities,
+  }
 end
 
 if 1 == vim.fn.executable 'omnisharp' then
   lspconfig.omnisharp.setup {
+    capabilities = capabilities,
     on_attach = function(client)
       -- OmniSharp's semantic token format is broken.
       -- https://github.com/OmniSharp/omnisharp-roslyn/issues/2483
@@ -170,6 +194,7 @@ end
 
 if 1 == vim.fn.executable 'typescript-language-server' then
   lspconfig.tsserver.setup {
+    capabilities = capabilities,
     root_dir = require('lspconfig.util').root_pattern { 'tsconfig.json', 'jsconfig.json', 'package.json' },
     single_file_support = false,
   }
@@ -185,6 +210,7 @@ end
 
 if 1 == vim.fn.executable 'yaml-language-server' then
   lspconfig.yamlls.setup {
+    capabilities = capabilities,
     settings = {
       yaml = {
         keyOrdering = false,
