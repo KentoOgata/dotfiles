@@ -1,7 +1,8 @@
 hook_add = '''
-  " Vimが起動するとき、`g:themeSetups`に登録されているカラースキームから無作為に設定する
+  " Vimが起動するとき、 $COLOR_SCHEMEでカラースキームが指定されていればそれを設定する。
+  " $COLOR_SCHEMEが指定されていなかったとき、`g:themeSetups`に登録されているカラースキームから無作為に設定する
   " 直下で定義しているautocmdも実行させたいのでnestedを指定する
-  autocmd VimRc VimEnter * ++once ++nested execute 'colorscheme' g:Pick(keys(g:themeSetups))
+  autocmd VimRc VimEnter * ++once ++nested execute 'colorscheme' $COLOR_SCHEME ?? g:Pick(g:themeSetups->keys())
   " カラースキームが設定されたとき、`g:themeSetups`に名前が登録されていれば実行する。
   " OptionSet background のautocmdを実行したいのでnestedを指定する
   autocmd VimRc ColorSchemePre * ++nested
