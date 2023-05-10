@@ -88,3 +88,14 @@ repo = 'lambdalisue/nerdfont.vim'
 # hook_add = '''
 #   let g:loaded_netrwPlugin = 1
 # '''
+
+[[plugins]]
+repo = 'lambdalisue/fern-bookmark.vim'
+on_source = 'fern.vim'
+hook_add = '''
+  call add(g:AlterCommands, #{ keyword: 'kk', input: 'Fern bookmark:///' })
+'''
+[plugins.ftplugin]
+fern = '''
+  nmap B <Plug>(fern-action-save-as-bookmark)
+'''
