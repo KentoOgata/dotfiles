@@ -87,7 +87,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         _,
         results,
         ctx,
-        table.extend(config or {}, {
+        vim.tbl_deep_extend('error', config or {}, {
           focusable = false,
           border = 'rounded',
           title = client.name,
@@ -102,7 +102,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         _,
         results,
         ctx,
-        table.extend(config or {}, {
+        vim.tbl_deep_extend('error', config or {}, {
           focusable = false,
           border = 'rounded',
           title = client.name,
