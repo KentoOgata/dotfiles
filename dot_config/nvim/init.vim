@@ -38,7 +38,7 @@ augroup VimEnterPre
 augroup END
 
 " cmdlineにおけるエイリアスを定義する
-" [{ keyword: string, input: string, input_after: string? }]
+" [{ char: string, input: string, input_after: string? }]
 let g:AlterCommands = []
 
 let g:dein#inline_vimrcs = [

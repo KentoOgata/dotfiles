@@ -24,9 +24,9 @@ hook_add = '''
   nmap <space>ab <Cmd>GinBranch<CR>
   call map(
         \ [
-        \   #{ keyword: 'gs', input: 'GinStatus' },
-        \   #{ keyword: 'gp', input: 'Gin<space>push' },
-        \   #{ keyword: 'gc', input: 'Gin<space>commit' },
+        \   #{ char: 'gs', input: 'GinStatus' },
+        \   #{ char: 'gp', input: 'Gin<space>push' },
+        \   #{ char: 'gc', input: 'Gin<space>commit' },
         \ ],
         \ { _, rule -> g:AlterCommands->add(rule) }
         \ )

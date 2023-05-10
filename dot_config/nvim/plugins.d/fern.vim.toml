@@ -93,7 +93,7 @@ repo = 'lambdalisue/nerdfont.vim'
 repo = 'lambdalisue/fern-bookmark.vim'
 on_source = 'fern.vim'
 hook_add = '''
-  call add(g:AlterCommands, #{ keyword: 'kk', input: 'Fern bookmark:///' })
+  call add(g:AlterCommands, #{ char: 'kk', input: 'Fern bookmark:///' })
 '''
 [plugins.ftplugin]
 fern = '''
