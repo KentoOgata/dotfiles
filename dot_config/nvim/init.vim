@@ -22,7 +22,7 @@ augroup VimRc
 augroup END
 
 " filetypeの検出を有効化する
-filetype on
+filetype off
 " filetypeプラグインの検出を無効化する
 filetype plugin indent off
 " 構文ファイルの読み込みを無効化する
