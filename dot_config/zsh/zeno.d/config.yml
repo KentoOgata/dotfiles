@@ -2,12 +2,72 @@ snippets:
   - name: git status
     keyword: gs
     snippet: git status --short --branch
+  - name: git commit
+    keyword: gci
+    snippet: git commit
   - name: git commit message
     keyword: gcim
     snippet: git commit -m '{{commit_message}}'
+  - name: git commit fixup
+    keyword: gcif
+    snippet: git commit --fixup {{commit_id}}
+  - name: git diff
+    keyword: gd
+    snippet: git diff {{branch}}
+  - name: git diff file
+    keyword: gd
+    snippet: git diff -- {{file}}
+  - name: git diff branch file
+    keyword: gd
+    snippet: git diff {{branch}} -- {{file}}
+  - name: git diff 2 branch
+    keyword: gd
+    snippet: git diff {{branch1}} {{branch2}}
+  - name: git diff 2 branch file
+    keyword: gd
+    snippet: git diff {{branch1}} {{branch2}} -- {{file}}
+  - name: git diff cached
+    keyword: gdc
+    snippet: git diff --cached
+  - name: git diff cached file
+    keyword: gdc
+    snippet: git diff --cached -- {{file}}
+  - name: git checkout
+    keyword: gco
+    snippet: git checkout {{rev}}
+  - name: git checkout file
+    keyword: gcof
+    snippet: git checkout {{rev}} -- {{file}}
+  - name: git checkout track
+    keyword: gcot
+    snippet: git checkout --track {{origin_branch}}
+  - name: git reset
+    keyword: gre
+    snippet: git reset {{branch}}
+  - name: git reset file
+    keyword: gre
+    snippet: git reset -- {{file}}
+  - name: git reset hard
+    keyword: gre
+    snippet: git reset --hard {{rev}}
+  - name: git stash
+    keyword: gst
+    snippet: git stash
+  - name: git stash --include-untracked
+    keyword: gstu
+    snippet: git stash -u
+  - name: git stash list
+    keyword: gstl
+    snippet: git stash list
+  - name: git stash show
+    keyword: gsts
+    snippet: git stash show {{stash}}
   - name: git push
     keyword: gp
     snippet: git push
+  - name: git push --set-upstream
+    keyword: gpu
+    snippet: git push --set-upstream origin {{branch}}
   - name: dotnet build
     keyword: db
     snippet: dotnet build --nologo --no-restore
@@ -26,6 +86,8 @@ snippets:
 
 completions:
   - name: dotnet add reference
+    # context:
+    #   lbuffer: '.+\.csproj'
     patterns:
       - "^dotnet add reference $"
     sourceCommand: "fd . -e csproj --full-path \"$(git rev-parse --show-toplevel)\""
