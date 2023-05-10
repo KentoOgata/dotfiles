@@ -21,11 +21,10 @@ augroup VimRc
         \ )
 augroup END
 
-" filetypeの検出を有効化する
+" 起動前にfiletype系のスクリプトを読み込む必要はないので無効化する
+" NOTE: filetype offにしてても起動したらonになってる なんでかはわからん
 filetype off
-" filetypeプラグインの検出を無効化する
 filetype plugin indent off
-" 構文ファイルの読み込みを無効化する
 syntax off
 
 " VimEnterより後には実行したくないやつ
