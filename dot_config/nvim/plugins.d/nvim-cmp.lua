@@ -43,7 +43,22 @@ cmp.setup {
   formatting = {
     fields = { 'kind', 'abbr', 'menu' },
     format = require('lspkind').cmp_format {
-      with_text = false,
+      mode = 'symbol',
+      preset = 'codicons',
+      menu = {
+        luasnip = '[Snippet]',
+        tsnip = '[TSnip]',
+        copilot = '[Copilot]',
+        nvim_lsp = '[LSP]',
+        treesitter = '[Tree]',
+        nvim_lua = '[Lua]',
+        cmp_tabnine = '[Tabnine]',
+        buffer = '[Buffer]',
+        tmux = '[Tmux]',
+        rg = '[Rg]',
+        look = '[Look]',
+        path = '[Path]',
+      },
     },
   },
   sources = cmp.config.sources {
