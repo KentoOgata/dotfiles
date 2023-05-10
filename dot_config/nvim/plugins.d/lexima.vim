@@ -101,5 +101,19 @@ call lexima#add_rule(#{ char: '>', at: '(>\%#)', input: '<BS><DEL><End>)' })
 
 " cmdline rules
 " `:g<space>` -> `:vimgrep \%# %`
-call lexima#add_rule(#{ mode: ':', at: '^\%(''<,''>\)\?g', char: '<space>', input: '<C-w>vimgrep ', input_after: ' %'  })
+call add(g:AlterCommands, #{ keyword: 'g', input: 'vimgrep ', input_after: ' %' })
+
+" ORIGINAL:
+"   SOURCE: https://github.com/yuki-yano/lexima-alter-command.vim/blob/main/autoload/lexima_alter_command.vim
+"   LICENSE: https://github.com/yuki-yano/lexima-alter-command.vim/blob/main/LICENSE
+for alterCmd in g:AlterCommands
+  let rule = #{ mode: ':', at: '^\%(''<,''>\)\?' .. alterCmd.keyword, char: '<space>' }
+  if ! alterCmd->get('input')->empty()
+    let rule.input = '<C-u>' .. alterCmd.input
+  endif
+  if ! alterCmd->get('input_after')->empty()
+    let rule.input_after = alterCmd.input_after
+  endif
+  call lexima#add_rule(rule)
+endfor
 " }}}

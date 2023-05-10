@@ -37,6 +37,10 @@ augroup VimEnterPre
   autocmd BufReadPost,BufNewFile * ++once filetype detect
 augroup END
 
+" cmdlineにおけるエイリアスを定義する
+" [{ keyword: string, input: string, input_after: string? }]
+let g:AlterCommands = []
+
 let g:dein#inline_vimrcs = [
       \ s:here .. '/commands.vim',
       \ s:here .. '/options.vim',

@@ -29,6 +29,7 @@ hook_add = '''
     {}
   )
 EOF
+  call add(g:AlterCommands, #{ keyword: 'fp', input: 'FzfPlugins' })
 
   command FzfMrw call fzf#run(#{
         \ source: mr#mrw#list(),
@@ -60,6 +61,7 @@ EOF
     {}
   )
 EOF
+  call add(g:AlterCommands, #{ keyword: 'fq', input: 'GhqFind' })
 '''
 
 [[plugins]]

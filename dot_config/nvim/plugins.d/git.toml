@@ -22,6 +22,14 @@ hook_add = '''
   nmap <space>ac <Cmd>Gin commit -v<CR>
   nmap <space>aC <Cmd>Gin commit -v --amend<CR>
   nmap <space>ab <Cmd>GinBranch<CR>
+  call map(
+        \ [
+        \   #{ keyword: 'gs', input: 'GinStatus' },
+        \   #{ keyword: 'gp', input: 'Gin<space>push' },
+        \   #{ keyword: 'gc', input: 'Gin<space>commit' },
+        \ ],
+        \ { _, rule -> g:AlterCommands->add(rule) }
+        \ )
 '''
 [plugins.ftplugin]
 gin-branch = '''
