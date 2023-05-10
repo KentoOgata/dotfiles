@@ -1,6 +1,6 @@
 " hook_source {{{
 function s:add_rules(shared, rules) abort
-  call map(a:rules, { _, rule -> lexima#add_rule(a:shared->extend(rule, 'force')) })
+  call map(a:rules, { _, rule -> lexima#add_rule(a:shared->deepcopy()->extend(rule, 'error')) })
 endfunction
 
 call s:add_rules(
