@@ -9,8 +9,6 @@ set shiftround
 set hidden
 set noswapfile
 set updatetime=30
-set number
-set relativenumber
 set termguicolors
 set cmdheight=1
 set laststatus=0
@@ -23,6 +21,15 @@ set fileformats=unix,dos,mac
 set colorcolumn=130
 set expandtab
 set nowrap
+
+set number relativenumber
+" terminal以外ではnumber,relativenumberを有効化する
+autocmd VimRc OptionSet buftype
+      \ : if v:option_new ==# 'terminal'
+      \ |   setl nonumber norelativenumber
+      \ | else
+      \ |   setl number relativenumber
+      \ | endif
 
 " rgが$PATHにあるときは`:grep`でrgを使う
 if executable('rg')
