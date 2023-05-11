@@ -101,19 +101,23 @@ call lexima#add_rule(#{ char: '>', at: '(>\%#)', input: '<BS><DEL><End>)' })
 
 " cmdline rules
 " `:g<space>` -> `:vimgrep \%# %`
-call add(g:AlterCommands, #{ char: 'g', input: 'vimgrep ', input_after: ' %' })
+call add(g:AlterCommands, #{ char: 'g', input: 'vimgrep', input_after: ' %' })
 
 " ORIGINAL:
 "   SOURCE: https://github.com/yuki-yano/lexima-alter-command.vim/blob/main/autoload/lexima_alter_command.vim
 "   LICENSE: https://github.com/yuki-yano/lexima-alter-command.vim/blob/main/LICENSE
 for alterCmd in g:AlterCommands
-  let rule = #{ mode: ':', at: '^\%(''<,''>\)\?' .. alterCmd.char, char: '<space>' }
+  let space_rule = #{ mode: ':', at: '^\%(''<,''>\)\?' .. alterCmd.char, char: '<space>' }
+  let cr_rule = #{ mode: ':', at: '^\%(''<,''>\)\?' .. alterCmd.char, char: '<cr>' }
   if ! alterCmd->get('input')->empty()
-    let rule.input = '<C-u>' .. alterCmd.input
+    let space_rule.input = '<C-u>' .. alterCmd.input .. '<space>'
+    let cr_rule.input = '<C-u>' .. alterCmd.input .. '<cr>'
   endif
   if ! alterCmd->get('input_after')->empty()
-    let rule.input_after = alterCmd.input_after
+    let space_rule.input_after = alterCmd.input_after
+    let cr_rule.input_after = alterCmd.input_after
   endif
-  call lexima#add_rule(rule)
+  call lexima#add_rule(space_rule)
+  call lexima#add_rule(cr_rule)
 endfor
 " }}}
