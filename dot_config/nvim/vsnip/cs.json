@@ -32,6 +32,6 @@
     "prefix": "notimplemented",
     "body": [
       "throw new NotImplementedException($1)$0"
-    ],
+    ]
   }
 }
