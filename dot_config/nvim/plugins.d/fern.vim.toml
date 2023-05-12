@@ -97,5 +97,5 @@ hook_add = '''
 '''
 [plugins.ftplugin]
 fern = '''
-  nmap B <Plug>(fern-action-save-as-bookmark)
+  nmap <buffer> B <Plug>(fern-action-save-as-bookmark)
 '''
