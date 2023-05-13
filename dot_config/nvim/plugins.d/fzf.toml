@@ -5,6 +5,7 @@ merged = false
 build = 'go install'
 hook_add = '''
   " NOTE: なんかこれ実行するとfzf.vimが読み込まれるんだけど理由はよくわからない
+  "   -> deinがFuncUndefinedで関数名からプラグインを推論してfzf.vimを読み込んでるっぽい
   lua << EOF
   vim.api.nvim_create_user_command(
     'FzfPlugins',
