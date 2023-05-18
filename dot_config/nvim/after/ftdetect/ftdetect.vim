@@ -1,4 +1,4 @@
-function! g:ProcessShebang() abort
+function! s:ProcessShebang() abort
   const l:line = getline(1)
   " #!/bin/env -S deno run --ext js
   if l:line =~# '#!/\%(usr/\)\{,1}bin/env -S deno run'
@@ -26,5 +26,5 @@ augroup FileTypeDetect
   autocmd BufNewFile,BufReadPost *.org setfiletype org
   " Stored Procedureファイルの拡張子を.SQLにする不届き者の対策
   autocmd BufNewFile,BufRead *.SQL setfiletype sql
-  autocmd BufReadPost * call g:ProcessShebang()
+  autocmd BufReadPost * call s:ProcessShebang()
 augroup END
