@@ -19,6 +19,15 @@ lua_source = '''
     filetype = 'xml',
   }
 
+  parser_config.unifieddiff = {
+    install_info = {
+      url = 'https://github.com/monaqa/tree-sitter-unifieddiff.git',
+      files = { 'src/parser.c', 'src/scanner.c' }
+    },
+    -- パーサー名とファイルタイプ名が一致しないときは指定する必要がある
+    filetype = 'diff',
+  }
+
   -- parser_config.ps1 = {
   --   install_info = {
   --     url = 'https://github.com/PowerShell/tree-sitter-PowerShell',
