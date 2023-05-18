@@ -344,19 +344,6 @@ hook_add = '''
   let $PATH = $'{$PATH}:{$THEMIS_HOME}/bin'
 '''
 
-# QuickFixでマッチした部分をハイライトする
-[[plugins]]
-repo = 'cohama/vim-hier'
-on_event = 'QuickFixCmdPost'
-[plugins.ftplugin]
-qf = '''
-  " quickfixのWindowを閉じたときにハイライトを無効化する
-  autocmd VimRc WinClosed <buffer>
-        \ : if &l:buftype ==# 'quickfix'
-        \ |   execute 'HierStop'
-        \ | endif
-'''
-
 # easymotion
 [[plugins]]
 repo = 'yuki-yano/fuzzy-motion.vim'
