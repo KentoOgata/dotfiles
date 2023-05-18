@@ -15,6 +15,7 @@ depends = 'denops.vim'
 on_cmd = [
   'GinStatus',
   'GinBranch',
+  'GinPreview',
   'Gin',
 ]
 hook_add = '''
@@ -31,6 +32,7 @@ hook_add = '''
         \ { _, rule -> g:AlterCommands->add(rule) }
         \ )
 '''
+hooks_file = '$DEIN_CONFIG_DIR/gin.vim'
 [plugins.ftplugin]
 gin-branch = '''
   nmap <buffer> N <Plug>(gin-action-new)
