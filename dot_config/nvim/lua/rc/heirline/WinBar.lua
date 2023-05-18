@@ -4,7 +4,6 @@ local utils = require 'heirline.utils'
 local fileType = require 'rc.heirline.components.FileType'
 local terminalName = require 'rc.heirline.components.TerminalName'
 local closeButton = require 'rc.heirline.components.CloseButton'
-local fileNameBlock = require 'rc.heirline.components.FileNameBlock'
 local navic = require 'rc.heirline.components.Navic'
 
 local space = { provider = ' ' }
@@ -41,7 +40,6 @@ return {
       {
         hl = { fg = 'bright_fg', force = true },
         align,
-        fileNameBlock,
       },
       closeButton,
     },
@@ -50,7 +48,6 @@ return {
       navic,
       { provider = '%<' },
       align,
-      fileNameBlock,
       closeButton,
     },
   }),
