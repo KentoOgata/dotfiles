@@ -18,12 +18,6 @@ vim.api.nvim_create_autocmd({ 'BufAdd', 'BufDelete' }, {
       for i = #buffers + 1, #buflist_cache do
         buflist_cache[i] = nil
       end
-
-      if #buflist_cache > 1 then
-        vim.o.showtabline = 2
-      else
-        vim.o.showtabline = 1
-      end
     end)
   end,
 })

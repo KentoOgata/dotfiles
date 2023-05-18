@@ -1,5 +1,6 @@
 -- lua_source {{{
 vim.go.laststatus = 2
+vim.go.showtabline = 2
 local utils = require 'heirline.utils'
 
 local separators = {
