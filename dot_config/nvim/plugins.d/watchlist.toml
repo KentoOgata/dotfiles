@@ -57,3 +57,13 @@ lazy = true
 repo = 'eihigh/dotfiles'
 name = 'eihigh'
 lazy = true
+
+[[plugins]]
+repo = 'cohama/.vim'
+name = 'cohama'
+lazy = true
+
+[[plugins]]
+repo = 'uga-rosa/dotfiles'
+name = 'uga-rosa'
+lazy = true
