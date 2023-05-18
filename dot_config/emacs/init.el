@@ -300,4 +300,9 @@
 (leaf magit
   :ensure t)
 
+(leaf paredit
+  :ensure t
+  :init
+  (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode))
+
 ;;; init.el ends here
