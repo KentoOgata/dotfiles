@@ -24,15 +24,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         {
           'mf',
           function()
-            vim.lsp.buf.format {
-              async = true,
-              filter = function(client)
-                -- I want to use csharpier instead of OmniSharp's document formatting feature.
-                -- But capability request of documentFormattingProvider of OmniSharp seems not working.
-                -- So use filter to don't send formatting request to OmniSharp.
-                return not (client.name:match '^(omnisharp|csharp_ls|tsserver)$')
-              end,
-            }
+            vim.lsp.buf.format { async = true }
           end,
           { desc = 'textDocument/formatting' },
         },
