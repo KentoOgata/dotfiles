@@ -11,3 +11,5 @@ setopt EXTENDED_HISTORY
 
 zinit load zsh-users/zsh-autosuggestions
 bindkey '^f' autosuggest-accept
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(accept-line)

@@ -92,7 +92,7 @@ hook_add = '''
 repo = 'lambdalisue/fern-bookmark.vim'
 on_source = 'fern.vim'
 hook_add = '''
-  call add(g:AlterCommands, #{ char: 'kk', input: 'Fern bookmark:///' })
+  nmap <space>o <Cmd>Fern bookmark:///<CR>
 '''
 [plugins.ftplugin]
 fern = '''

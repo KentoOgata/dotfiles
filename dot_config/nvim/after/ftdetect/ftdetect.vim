@@ -27,4 +27,5 @@ augroup FileTypeDetect
   " Stored Procedureファイルの拡張子を.SQLにする不届き者の対策
   autocmd BufNewFile,BufRead *.SQL setfiletype sql
   autocmd BufReadPost * call s:ProcessShebang()
+  autocmd BufNewfile,BufReadPost Directory.Build.props setfiletype xml
 augroup END

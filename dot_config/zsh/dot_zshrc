@@ -12,7 +12,8 @@ autoload -U select-word-style
 select-word-style bash
 
 # zinit load b4b4r07/enhancd
-# export ENHANCD_FILTER='fzf'
+source "${XDG_DATA_HOME}/zinit/plugins/b4b4r07---enhancd/init.sh"
+export ENHANCD_FILTER='fzf'
 
 zinit load zdharma-continuum/fast-syntax-highlighting
 

@@ -41,6 +41,12 @@ javascript = '''
 typescript = '''
   setl expandtab tabstop=2 shiftwidth=2
 '''
+css = '''
+  setl expandtab tabstop=2 shiftwidth=2
+'''
+xml = '''
+  setl expandtab tabstop=2 shiftwidth=2
+'''
 
 [[plugins]]
 repo = 'nvim-orgmode/orgmode'

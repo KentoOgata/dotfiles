@@ -272,7 +272,7 @@
     :bind (("C-s" . consult-line)
 	   ("C-S-s" . consult-imenu)
 	   ("C-x C-r" . consult-recent-file)
-	   ("C-x b" . consult-buffer))
+	   ("C-x C-b" . consult-buffer))
     :init
     (leaf consult-ghq
       :ensure t)
