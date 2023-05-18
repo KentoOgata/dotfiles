@@ -104,7 +104,7 @@ lua_add = '''
   vim.keymap.set('n', '<Plug>(ff-help_tags)', '<Cmd>FzfLua help_tags<CR>')
   vim.keymap.set('n', '<Plug>(ff-buffers)', '<Cmd>FzfLua buffers<CR>')
   vim.keymap.set('n', '<Plug>(ff-buffers)', '<Cmd>FzfLua buffers<CR>')
-  vim.keymap.set('n', '<Plug>(ff-lines)', '<Cmd>FzfLua lines<CR>')
+  vim.keymap.set('n', '<Plug>(ff-lines)', '<Cmd>FzfLua blines<CR>')
   vim.keymap.set('n', '<Plug>(ff-resume)', '<Cmd>FzfLua resume<CR>')
   vim.keymap.set('n', '<Plug>(ff-lsp_references)', '<Cmd>FzfLua lsp_references<CR>')
   vim.keymap.set('n', '<Plug>(ff-lsp_implementations)', '<Cmd>FzfLua lsp_implementations<CR>')
