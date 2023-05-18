@@ -231,4 +231,10 @@ if 1 == vim.fn.executable 'yaml-language-server' then
     },
   }
 end
+
+if 1 == vim.fn.executable 'vscode-css-language-server' then
+  lspconfig.cssls.setup {
+    capabilities = capabilities,
+  }
+end
 -- }}}
