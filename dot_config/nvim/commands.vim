@@ -13,12 +13,18 @@ function! s:DefKeymap(force_map, args) abort
 endfunction
 command! -nargs=+ -bang Keymap call <SID>DefKeymap('<bang>' ==# '!', [<f-args>])
 
+function s:findRoot(path, rootPattern) abort
+  let path = a:path->isdirectory() ? a:path : a:path->fnamemodify(':h')
+  while path !=# '/' && path->readdir({ fname -> fname ==# a:rootPattern })->empty()
+    let path = path->fnamemodify(':h')
+  endwhile
+  return path
+endfunction
+
 function! s:OpenTerminal(command, shell, bang) abort
   execute a:command $'term://{
-        \ a:bang
-        \   ? getcwd()
-        \   : &l:buftype->empty() && !bufname()->empty()
-        \     ? "%:h"
+        \   &l:buftype->empty() && !bufname()->empty()
+        \     ? a:bang ? s:findRoot(expand('%'), '.git') : "%:h"
         \     : getcwd()
         \ }//{a:shell}'
 endfunction
