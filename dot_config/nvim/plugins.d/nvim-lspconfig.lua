@@ -172,16 +172,11 @@ if 1 == vim.fn.executable 'omnisharp' then
         range = true,
       }
 
-      -- OmniSharpはInitializeが終わらないとレスポンスを返さないので
-      -- キーマップが有効になるタイミングとかわからないとつらい
-      -- capabilitiesを渡す設定がbufferにカーソルがないと上手く動かないっぽいのもつらい
       if not vim.g.OmniSharpStarted then
         vim.cmd.highlight { 'link', '@lsp.type.tag.cs', '@tag' }
         vim.cmd.highlight { 'link', '@lsp.type.tag.attribute', '@tag.attribute' }
         vim.cmd.highlight { 'link', '@lsp.type.tag.delimiter.cs', '@tag.delimiter' }
         vim.cmd.highlight { 'link', '@lsp.type.tag.text.cs', '@text' }
-
-        vim.notify('OmniSharp is active now.', vim.log.levels.INFO)
         vim.g.OmniSharpStarted = true
       end
     end,
