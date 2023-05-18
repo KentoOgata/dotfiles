@@ -2,9 +2,8 @@ local conditions = require 'heirline.conditions'
 
 local viMode = require 'rc.heirline.components.ViMode'
 local spell = require 'rc.heirline.components.Spell'
-local workDir = require 'rc.heirline.components.WorkDir'
 local fileNameBlock = require 'rc.heirline.components.FileNameBlock'
-local git = require 'rc.heirline.components.Git'
+local gitDiff = require 'rc.heirline.components.GitDiff'
 local diagnostics = require 'rc.heirline.components.Diagnostics'
 local lspActive = require 'rc.heirline.components.LspActive'
 local fileType = require 'rc.heirline.components.FileType'
@@ -18,10 +17,10 @@ local align = { provider = '%=' }
 
 local defaultStatusLine = {
   spell,
-  workDir,
+  fileNameBlock,
   { provider = '%<' },
   space,
-  git,
+  gitDiff,
   space,
   diagnostics,
   align,
@@ -38,8 +37,9 @@ local defaultStatusLine = {
 
 local inactiveStatusLine = {
   condition = conditions.is_not_active,
-  { hl = { fg = 'gray', force = true }, workDir },
   fileNameBlock,
+  space,
+  gitDiff,
   { provider = '%<' },
   align,
 }
