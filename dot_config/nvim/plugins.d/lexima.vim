@@ -57,7 +57,7 @@ call s:add_rules(
       \   #{ char: ';', at: 'for\s*([^)]*\%#)', input: ';' },
       \   #{ char: ';', at: '\%(get\|set\|init\)\%( => [^;]\+\)*\%#', input: ';' },
       \   #{ char: ';', at: '\%#.\+$', input: '<End>;' },
-      \   #{ char: '<Space>', at: '\.\w\+(\%([^)]\+,\s\)*\w\+\%#)', input: '<Space>=><Space>' },
+      \   #{ char: '<Space>', at: '\.\w\+(\%([^)]\+,\s\)*\<\%(new\|out\)\@!\w\+\%#)', input: '<Space>=><Space>' },
       \   #{ char: '$', input: '$"', input_after: '"' },
       \   #{ char: '<Space>', at: '\<pp\%#', input: '<BS><BS>Console.WriteLine(', input_after: ')' },
       \ ]
