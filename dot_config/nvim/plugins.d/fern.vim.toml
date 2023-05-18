@@ -78,16 +78,15 @@ lazy = true
 [[plugins]]
 repo = 'lambdalisue/nerdfont.vim'
 
-# # :e %:h のようにディレクトリを編集しようとしたときにnetrwではなく
-# # Fernを起動する
-# # oil.nvim を使ってみることにしたので無効化してる
-# [[plugins]]
-# repo = 'lambdalisue/fern-hijack.vim'
-# on_if = "isdirectory(expand('<afile>'))"
-# depends = 'fern.vim'
-# hook_add = '''
-#   let g:loaded_netrwPlugin = 1
-# '''
+# :e %:h のようにディレクトリを編集しようとしたときにnetrwではなく
+# Fernを起動する
+[[plugins]]
+repo = 'lambdalisue/fern-hijack.vim'
+on_if = "isdirectory(expand('<afile>'))"
+depends = 'fern.vim'
+hook_add = '''
+  let g:loaded_netrwPlugin = 1
+'''
 
 [[plugins]]
 repo = 'lambdalisue/fern-bookmark.vim'

@@ -344,15 +344,6 @@ hook_add = '''
   let $PATH = $'{$PATH}:{$THEMIS_HOME}/bin'
 '''
 
-# 普通のバッファーみたいにファイルを操作できる
-[[plugins]]
-repo = 'stevearc/oil.nvim'
-on_if = "isdirectory(expand('<afile>'))"
-hook_add = '''
-  let g:loaded_netrwPlugin = 1
-'''
-hooks_file = '$DEIN_CONFIG_DIR/oil.nvim.lua'
-
 # QuickFixでマッチした部分をハイライトする
 [[plugins]]
 repo = 'cohama/vim-hier'
