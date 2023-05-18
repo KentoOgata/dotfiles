@@ -384,4 +384,10 @@ hook_add = '''
   nmap <space>p "+p
 '''
 
+# vimでプレゼンテーション
+# markdownを開いて:ShowtimeStart
+[[plugins]]
+repo = 'thinca/vim-showtime'
+on_cmd = 'ShowtimeStart'
+
 # vim:ft=toml expandtab tabstop=2 shiftwidth=2
