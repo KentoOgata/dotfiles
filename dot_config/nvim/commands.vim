@@ -31,3 +31,4 @@ endfunction
 command -bang Shell call s:OpenTerminal('edit', $SHELL, '<bang>' ==# '!')
 command -bang HShell call s:OpenTerminal('belowright split', $SHELL, '<bang>' ==# '!')
 command -bang VShell call s:OpenTerminal('belowright vsplit', $SHELL, '<bang>' ==# '!')
+command -bang TShell call s:OpenTerminal('tabnew', $SHELL, '<bang>' ==# '!')
