@@ -7,11 +7,11 @@ vim.api.nvim_create_autocmd('User', {
     ---@type string
     local skkDataDir
     if 1 == vim.fn.has 'win32' then
-      skkDataDir = vim.env['APPDATA'] .. '\\skk\\'
+      skkDataDir = vim.fs.joinpath(vim.env['APPDATA'], 'skk')
     else
-      skkDataDir = ('%s/skk/'):format(vim.env['XDG_DATA_HOME'])
+      skkDataDir = vim.fs.joinpath(vim.env['XDG_DATA_HOME'], 'skk')
     end
-    local dictPath = skkDataDir .. 'SKK-JISYO.L'
+    local dictPath = vim.fs.joinpath(skkDataDir, 'SKK-JISYO.L')
 
     if 0 == vim.fn.filereadable(dictPath) then
       local dictUrl = 'https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.L'
@@ -27,8 +27,8 @@ vim.api.nvim_create_autocmd('User', {
     vim.fn['skkeleton#config'] {
       eggLikeNewline = true,
       globalJisyo = dictPath,
-      userJisyo = skkDataDir .. 'user-jisyo',
-      completionRankFile = skkDataDir .. 'rank.json',
+      userJisyo = vim.fs.joinpath(skkDataDir, 'user-jisyo'),
+      completionRankFile = vim.fs.joinpath(skkDataDir, 'rank.json'),
       kanaTable = 'azik',
       immediatelyCancel = false,
       registerConvertResult = true,
