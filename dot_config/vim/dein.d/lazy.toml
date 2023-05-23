@@ -254,6 +254,9 @@ def s:OnLspAttach(): void
 enddef
 autocmd VimRc User lsp_buffer_enabled call <SID>OnLspAttach()
 '''
+hook_post_source = '''
+call lsp#enable()
+'''
 
 [[plugins]]
 repo = 'mattn/vim-lsp-settings'
