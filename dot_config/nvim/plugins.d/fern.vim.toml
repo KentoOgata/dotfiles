@@ -17,7 +17,7 @@ hook_source = '''
 [plugins.ftplugin]
 fern = '''
   nmap <buffer><nowait><silent> <space> <Plug>(fern-action-mark:toggle)
-  nmap <buffer><nowait><silent> <C-l>   <Plug>(fern-action-reload:all)
+  nmap <buffer><nowait><silent> <C-l>   <Cmd>nohlsearch<CR><Plug>(fern-action-reload:all)
   nmap <buffer><nowait><silent> h       <Plug>(fern-action-collapse)
   nmap <buffer><nowait><silent> <C-h>   <Plug>(fern-action-leave)
   nmap <buffer><nowait><silent> <Enter> <Plug>(fern-action-open)
