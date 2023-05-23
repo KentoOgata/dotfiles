@@ -310,10 +310,10 @@ repo = 'uga-rosa/ccc.nvim'
 on_cmd = ['CccPick', 'CccHighlighterEnable']
 on_event = ['BufReadPost', 'FileType']
 lua_source = '''
-  local ccc = require("ccc")
+  local ccc = require 'ccc'
 
   ccc.setup {
-    default_color = "#40bfbf",
+    default_color = '#40bfbf',
     highlighter = {
       auto_enable = true,
       lsp = true,
