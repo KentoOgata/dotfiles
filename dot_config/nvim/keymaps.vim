@@ -15,9 +15,7 @@ nnoremap <expr> i getline('.')->empty() ? '"_cc' : 'i'
 " Emacs-style key mappings (cmdline mode)
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
-" TODO: <A-f>と<A-b>のやつ
-cnoremap <C-f> <Right>
-cnoremap <C-b> <Left>
+" <[AC]-[fb]>は使わない
 " カーソルが一番左にあるときはgetcmdpos()は1を返す
 " 'hello'[:0] => 'h' なので、カーソルがh|elloにあるとき(getcmdpos() == 2)で0になるようにする
 " 1のときに -2 するとおかしいのでそこだけ対応する
