@@ -308,32 +308,36 @@ on_event = ['BufReadPre', 'BufNewFile']
 [[plugins]]
 repo = 'uga-rosa/ccc.nvim'
 on_cmd = ['CccPick', 'CccHighlighterEnable']
-on_map = { i = '<Plug>(ccc-insert)' }
 on_event = ['BufReadPost', 'FileType']
-hook_add = '''
-  imap <C-v>c <Plug>(ccc-insert)
-'''
 lua_source = '''
-  require('ccc').setup {
+  local ccc = require("ccc")
+
+  ccc.setup {
+    default_color = "#40bfbf",
     highlighter = {
       auto_enable = true,
       lsp = true,
     },
+    pickers = {
+      ccc.picker.hex,
+      ccc.picker.css_rgb,
+      ccc.picker.css_hsl,
+      ccc.picker.css_hwb,
+      ccc.picker.css_lab,
+      ccc.picker.css_lch,
+      ccc.picker.css_oklab,
+      ccc.picker.css_oklch,
+      ccc.picker.trailing_space {
+        enable = true,
+        disable = {
+          'fzf',
+          'gin-diff',
+          'gitcommit',
+          'diff',
+        },
+      },
+    },
   }
-
-  local auid = vim.api.nvim_create_autocmd('BufWinEnter', {
-    group = 'VimRc',
-    callback = function()
-      vim.cmd.CccHighlighterEnable()
-    end,
-  })
-
-  vim.api.nvim_create_user_command('CccDisableAutoHighlight', function()
-    vim.api.nvim_del_autocmd(auid)
-  end, {})
-'''
-hook_post_source = '''
-  CccHighlighterEnable
 '''
 
 [[plugins]]
