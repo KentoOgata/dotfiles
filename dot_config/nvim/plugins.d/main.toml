@@ -372,4 +372,9 @@ hook_add = '''
 repo = 'thinca/vim-showtime'
 on_cmd = 'ShowtimeStart'
 
+# :terminalでnvim実行したときに新しいタブで開いてくれる
+# TODO: 遅延読み込み
+[[plugins]]
+repo = 'lambdalisue/guise.vim'
+
 # vim:ft=toml expandtab tabstop=2 shiftwidth=2
