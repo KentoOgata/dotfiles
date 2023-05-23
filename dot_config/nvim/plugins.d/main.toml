@@ -360,9 +360,10 @@ hook_add = '''
 # yankした内容を端末の仕様を使ってクリップボードに入れてくれる
 [[plugins]]
 repo = 'ojroques/vim-oscyank'
-on_map = '<Plug>OSCYankVisual'
+on_map = '<Plug>OSCYank'
 hook_add = '''
   xmap <space>y <Plug>OSCYankVisual
+  nmap <space>y <Plug>OSCYankOperator
   nmap <space>p "+p
 '''
 
