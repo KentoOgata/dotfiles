@@ -378,4 +378,11 @@ on_cmd = 'ShowtimeStart'
 [[plugins]]
 repo = 'lambdalisue/guise.vim'
 
+[[plugins]]
+repo = '4513ECHO/vim-readme-viewer'
+on_cmd = 'ReadmeOpen'
+hook_source = '''
+  let g:readme_viewer#plugin_manager = 'dein.vim'
+'''
+
 # vim:ft=toml expandtab tabstop=2 shiftwidth=2
