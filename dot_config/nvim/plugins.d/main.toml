@@ -44,8 +44,8 @@ on_map = '<Plug>(asterisk-'
 hook_add = '''
   Keymap nxo *  <Plug>(asterisk-z*)
   Keymap nxo #  <Plug>(asterisk-z#)
-  Keymap nxo g* <Plug>(asterisk-zg*)
-  Keymap nxo g# <Plug>(asterisk-zg#)
+  Keymap nxo g* <Plug>(asterisk-gz*)
+  Keymap nxo g# <Plug>(asterisk-gz#)
 '''
 
 # カーソルのある位置に対応する括弧をハイライトしたりしてくれる
