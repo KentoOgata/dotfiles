@@ -11,7 +11,7 @@ local function getCurrentDisplayedBuffers()
   local bufs = {}
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     local buf = vim.api.nvim_win_get_buf(win)
-    if not (vim.api.nvim_buf_get_option(buf, 'buftype') == 'terminal') then
+    if not (vim.api.nvim_get_option_value('buftype', { buf = buf }) == 'terminal') then
       table.insert(bufs, buf)
     end
   end
