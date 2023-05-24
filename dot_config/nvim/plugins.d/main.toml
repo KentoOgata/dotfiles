@@ -335,6 +335,7 @@ lua_source = '''
           'gitcommit',
           'diff',
           'gina-log',
+          'help',
           '',
         },
       },
