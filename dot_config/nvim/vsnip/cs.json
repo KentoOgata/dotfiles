@@ -8,7 +8,7 @@
       "}"
     ]
   },
-  "Creates a foreach statement": {
+  "foreach": {
     "prefix": "foreach",
     "body": [
       "foreach (var ${2} in ${1})",
@@ -18,7 +18,7 @@
     ],
     "description": "Creates a foreach statement"
   },
-  "Creates an if statement": {
+  "if": {
     "prefix": "if",
     "body": [
       "if (${1})",
@@ -28,10 +28,28 @@
     ],
     "description": "Creates an if statement"
   },
-  "Throw NotImplementedException": {
-    "prefix": "notimplemented",
+  "throw new NotImplementedException": {
+    "prefix": "throw new NotImplementedException",
     "body": [
       "throw new NotImplementedException($1)$0"
+    ]
+  },
+  "is not null": {
+    "prefix": "is not null",
+    "body": [
+      "is not null"
+    ]
+  },
+  "is null": {
+    "prefix": "is null",
+    "body": [
+      "is null"
+    ]
+  },
+  "yield return": {
+    "prefix": "yield return",
+    "body": [
+      "yield return "
     ]
   }
 }
