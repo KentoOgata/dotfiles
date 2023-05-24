@@ -32,3 +32,17 @@ command -bang Shell call s:OpenTerminal('edit', $SHELL, '<bang>' ==# '!')
 command -bang HShell call s:OpenTerminal('belowright split', $SHELL, '<bang>' ==# '!')
 command -bang VShell call s:OpenTerminal('belowright vsplit', $SHELL, '<bang>' ==# '!')
 command -bang TShell call s:OpenTerminal('tabnew', $SHELL, '<bang>' ==# '!')
+
+function! s:OpenRazor(command, fname, bang) abort
+  if &ft ==# 'razor'
+    const fname = a:fname .. '.cs'
+  elseif &ft ==# 'cs'
+    const fname = a:fname->substitute('\.razor\.cs', '.razor', '')
+  endif
+  if !fname->filereadable()
+    throw fname .. ' does not exist'
+  endif
+  execute a:command fname
+endfunction
+command EditRazor call s:OpenRazor('edit', expand('%:p'), '<bang>' ==# '!')
+call add(g:AlterCommands, #{ char: 'er', input: 'EditRazor' })
