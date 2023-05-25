@@ -166,7 +166,8 @@ hook_add = '''
 [[plugins]]
 repo  = 'vim-skk/skkeleton'
 depends = 'denops.vim'
-# 辞書の読み込みを待機しない
+# 初期化を待機しない
+# NOTE: 本当は遅延読み込みにしたくないけど plugin/ ディレクトリが存在するので仕方なく遅延してる
 denops_wait = false
 on_map = { ic = '<Plug>(skkeleton-enable)' }
 hook_add = '''
