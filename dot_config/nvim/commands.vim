@@ -34,6 +34,11 @@ command -bang VShell call s:OpenTerminal('belowright vsplit', $SHELL, '<bang>' =
 command -bang TShell call s:OpenTerminal('tabnew', $SHELL, '<bang>' ==# '!')
 
 function! s:OpenRazor(command, fname, bang) abort
+  const expectedFileTypes = ['cs', 'razor']
+  if -1 ==# expectedFileTypes->index(&ft)
+    throw $'FileType "{&ft}" is not expected.'
+  endif
+
   if &ft ==# 'razor'
     const fname = a:fname .. '.cs'
   elseif &ft ==# 'cs'
