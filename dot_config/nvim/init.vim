@@ -41,6 +41,7 @@ augroup END
 let g:AlterCommands = []
 
 let g:dein#inline_vimrcs = [
+      \ s:here .. '/global.lua',
       \ s:here .. '/commands.vim',
       \ s:here .. '/options.vim',
       \ s:here .. '/keymaps.vim',
