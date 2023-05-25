@@ -3,75 +3,19 @@ repo = 'junegunn/fzf'
 lazy = true
 merged = false
 build = 'go install'
-hook_add = '''
-  " NOTE: なんかこれ実行するとfzf.vimが読み込まれるんだけど理由はよくわからない
-  "   -> deinがFuncUndefinedで関数名からプラグインを推論してfzf.vimを読み込んでるっぽい
-  lua << EOF
-  vim.api.nvim_create_user_command(
-    'FzfPlugins',
-    function(args)
-      vim.fn['fzf#run'] {
-        source = vim.fn.map(
-          vim.fn.values(vim.fn['dein#get']()),
-          function(_, plugin)
-            return plugin.name
-          end),
-        sink = function(name)
-          require('fzf-lua').files {
-            cwd = vim.fn['dein#get'](name).path
-          }
-        end,
-        window = {
-          width = 0.9,
-          height = 0.6,
-        },
-      }
-    end,
-    {}
-  )
-EOF
-  call add(g:AlterCommands, #{ char: 'fp', input: 'FzfPlugins' })
-
-  command FzfMrw call fzf#run(#{
-        \ source: mr#mrw#list(),
-        \ sink: 'edit',
-        \ window: #{
-        \   width: 0.9,
-        \   height: 0.6,
-        \ },
-        \ })
-  nmap <space>fz <Cmd>FzfMrw<CR>
-
-  lua << EOF
-  vim.api.nvim_create_user_command(
-    'GhqFind',
-    function(args)
-      vim.fn['fzf#run'] {
-        source = vim.fn.systemlist { 'ghq', 'list', '--full-path' },
-        sink = function(path)
-          require('fzf-lua').files {
-            cwd = path
-          }
-        end,
-        window = {
-          width = 0.9,
-          height = 0.6,
-        }
-      }
-    end,
-    {}
-  )
-EOF
-  call add(g:AlterCommands, #{ char: 'fq', input: 'GhqFind' })
-'''
 
 [[plugins]]
 repo = 'junegunn/fzf.vim'
 depends = 'fzf'
 on_func = 'fzf#'
+on_cmd = ['FzfPlugins', 'FzfMrw', 'GhqFind']
 hook_add = '''
   let g:fzf_command_prefix = 'Fzf'
+  call add(g:AlterCommands, #{ char: 'fp', input: 'FzfPlugins' })
+  nmap <space>fz <Cmd>FzfMrw<CR>
+  call add(g:AlterCommands, #{ char: 'fq', input: 'GhqFind' })
 '''
+hooks_file = '$DEIN_CONFIG_DIR/fzf.vim.lua'
 
 [[plugins]]
 repo = 'yuki-yano/fzf-preview.vim'
