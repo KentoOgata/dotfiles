@@ -238,6 +238,7 @@ set helplang=ja,en
 # 選択範囲をChatGPTに投げつける
 [[plugins]]
 repo = 'yuki-yano/ai-review.nvim'
+if = '!empty($OPENAI_API_KEY)'
 depends = ['denops.vim', 'nui.nvim']
 on_cmd = 'AiReview'
 
