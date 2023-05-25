@@ -221,4 +221,17 @@ vim.api.nvim_create_autocmd('User', {
     require('cmp').setup.buffer { enabled = false }
   end,
 })
+
+cmp.event:on('confirm_done', function(event)
+  local function is_function_symbol(item)
+    local kind = cmp.lsp.CompletionItemKind
+    return (item.kind == kind.Method) or (item.kind == kind.Function) or (item.kind == kind.Constructor)
+  end
+  local item = event.entry:get_completion_item()
+  if is_function_symbol(item) then
+    feedkeys '<Plug>(complete-function-symbol)'
+  end
+end)
+-- どこかでハンドルしない限りは何もしない
+vim.keymap.set('i', '<Plug>(complete-function-symbol)', '<Nop>')
 --- }}}

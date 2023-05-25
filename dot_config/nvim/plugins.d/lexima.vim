@@ -96,6 +96,8 @@ call s:add_rules(
       \ ]
       \ )
 
+call lexima#add_rule(#{ char: '<Plug>(complete-function-symbol)', input: '(', input_after: ')' })
+
 " input: >>, effect: `if (\%#)condition` -> `if (condition)`
 call lexima#add_rule(#{ char: '>', at: '(>\%#)', input: '<BS><DEL><End>)' })
 
