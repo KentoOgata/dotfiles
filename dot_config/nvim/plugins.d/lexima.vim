@@ -112,8 +112,8 @@ for alterCmd in g:AlterCommands
   let space_rule = #{ mode: ':', at: '^\%(''<,''>\)\?' .. alterCmd.char, char: '<space>' }
   let cr_rule = #{ mode: ':', at: '^\%(''<,''>\)\?' .. alterCmd.char, char: '<cr>' }
   if ! alterCmd->get('input')->empty()
-    let space_rule.input = '<C-u>' .. alterCmd.input .. '<space>'
-    let cr_rule.input = '<C-u>' .. alterCmd.input .. '<cr>'
+    let space_rule.input = '<C-w>' .. alterCmd.input .. '<space>'
+    let cr_rule.input = '<C-w>' .. alterCmd.input .. '<cr>'
   endif
   if ! alterCmd->get('input_after')->empty()
     let space_rule.input_after = alterCmd.input_after
