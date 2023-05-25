@@ -338,6 +338,7 @@ lua_source = '''
           'diff',
           'gina-log',
           'help',
+          'mason',
           '',
         },
       },
