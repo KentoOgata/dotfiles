@@ -23,6 +23,7 @@ toml = '''
 '''
 cs = '''
   compiler dotnet
+  setl indentkeys-=<>>
   setl expandtab tabstop=4 shiftwidth=4
 '''
 razor = '''
