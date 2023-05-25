@@ -2,85 +2,53 @@
 const s:Vital = vital#vital#new()
 const s:XML = s:Vital.import('Web.XML')
 
-function s:find_csproj(cs) abort
-  const l:cs = fnamemodify(expand(a:cs), ':p')
-
-  let l:dir = fnamemodify(l:cs, ':h')
-  while '/' !=# l:dir
-    let l:files = readdir(l:dir)
-    for l:file in l:files
-      if 'csproj' ==# fnamemodify(l:file, ':e')
-        return l:dir .. '/' .. l:file
-      endif
-    endfor
-    let l:dir = fnamemodify(l:dir, ':h')
+function s:find_csproj(path) abort
+  let dir = a:path->isdirectory() ? a:path : a:path->fnamemodify(':h')
+  let files = dir->readdir({ fname -> fname->fnamemodify(':e') ==# 'csproj' })
+  while '/' !=# dir && files->empty()
+    let dir = dir->fnamemodify(':h')
+    let files = dir->readdir({ fname -> fname->fnamemodify(':e') ==# 'csproj' })
   endwhile
-  throw 'csproj not found.'
-endfunction
-
-function s:root_namespace(csproj) abort
-  const l:path = fnamemodify(expand(a:csproj), ':p')
-  call s:assert_filereadable(l:path)
-
-  const l:csproj = s:XML.parseFile(l:path)
-  const l:root_namespace = l:csproj.find('PropertyGroup').find('RootNamespace')
-
-  if !empty(l:root_namespace)
-    return l:root_namespace.value()
+  if dir ==# '/'
+    throw 'csproj is not found.'
   endif
-
-  return fnamemodify(l:path, ':t:r')
+  return [dir, files[0]]->join('/')
 endfunction
 
-function s:find_root_namespace(path)
-  return s:root_namespace(s:find_csproj(a:path))
+function s:root_namespace(path) abort
+  const path = a:path->fnamemodify(':e') ==# 'csproj'
+        \ ? a:path
+        \ : s:find_csproj(a:path)
+  const csproj = s:XML.parseFile(path)
+  " root namespace
+  const rns = csproj.find('PropertyGroup').find('RootNamespace')
+  " RootNamespaceプロパティがなかった場合はcsprojファイルのファイル名を使う
+  return !rns->empty()
+        \ ? rns.value()
+        \ : path->fnamemodify(':t:r')
 endfunction
 
-function s:parent_directory(path)
-  return fnamemodify(a:path, ':h')
-endfunction
-
-function s:project_root(path)
-  return s:parent_directory(s:find_csproj(a:path))
-endfunction
-
-function s:relative_path(from, to)
-  return substitute(a:to, a:from, '', '')
-endfunction
-
-function s:path_to_namespace(path)
-  return substitute(a:path, '/', '.', 'g')
-endfunction
-
-function s:assert_filereadable(path)
-  if !filereadable(a:path)
-    throw a:path .. ' is not readable.'
-  endif
-endfunction
-
-function s:assert_csharp_source(file_name)
-  if 'cs' !=# fnamemodify(a:file_name, ':e')
-    throw fnamemodify(a:file_name, ':t') .. 'is not C# source file.'
-  endif
-endfunction
+const s:find_root_namespace = { path -> s:root_namespace(path) }
+const s:parent_directory = { path -> path->fnamemodify(':h') }
+const s:project_root = { path -> s:parent_directory(s:find_csproj(path)) }
+const s:relative_path = { from, to -> substitute(to, from, '', '') }
+const s:path_to_namespace = { path -> substitute(path, '/', '.', 'g') }
 
 " Determine namespace of a:cs
 function g:CSNamespace(cs) abort
-  const l:cs = fnamemodify(expand(a:cs), ':p')
-  call s:assert_csharp_source(l:cs)
-
-  return s:find_root_namespace(l:cs) .. s:path_to_namespace(s:relative_path(s:project_root(l:cs), s:parent_directory(l:cs)))
+  const cs = expand(a:cs)->fnamemodify(':p')
+  return s:find_root_namespace(cs) ..
+        \ s:path_to_namespace(s:relative_path(s:project_root(cs), s:parent_directory(cs)))
 endfunction
 
-function g:CSClassName(file_name) abort
-  const l:file_name = fnamemodify(expand(a:file_name), ':p:t:r')
-  if l:file_name =~# '\.razor$'
-    return fnamemodify(l:file_name, ':r')
-  endif
-  return l:file_name
+function g:CSClassName(fname) abort
+  const fname = expand(a:fname)->fnamemodify(':p:t:r')
+  return fname->fnamemodify(':e') ==# 'razor'
+        \ ? fname->fnamemodify(':r')
+        \ : fname
 endfunction
 
-function g:CSEntityName(file_name) abort
-    return substitute(g:CSClassName(a:file_name), 'EntityTypeConfiguration', '', '')
+function g:CSEntityName(fname) abort
+    return g:CSClassName(a:fname)->substitute('EntityTypeConfiguration', '', '')
 endfunction
 " }}}
