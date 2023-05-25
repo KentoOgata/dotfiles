@@ -23,9 +23,11 @@ toml = '''
 '''
 cs = '''
   compiler dotnet
+  setl expandtab tabstop=4 shiftwidth=4
 '''
 razor = '''
   compiler dotnet
+  setl expandtab tabstop=4 shiftwidth=4
 '''
 go = '''
   setl noexpandtab
