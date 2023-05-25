@@ -175,6 +175,18 @@ hook_add = '''
 '''
 hooks_file = '$DEIN_CONFIG_DIR/skkeleton.lua'
 
+# skkの辞書
+# deinで管理するアイディアはkuuさんがslackで言及してたやつ
+[[plugins]]
+repo = 'skk-dev/dict'
+name = 'skk-dict'
+lazy = true
+hook_add = '''
+  function! g:GetDictPath(dictType) abort
+    return [dein#get('skk-dict').path, 'SKK-JISYO.'..a:dictType]->join('/')
+  endfunction
+'''
+
 # QuickFixの項目を一気に置換できる
 [[plugins]]
 repo = 'thinca/vim-qfreplace'
