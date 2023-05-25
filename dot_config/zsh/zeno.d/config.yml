@@ -83,6 +83,9 @@ snippets:
   - name: chezmoi cd
     keyword: ccd
     snippet: chezmoi cd
+  - name: cd to gitroot
+    keyword: cdr
+    snippet: cd "$(git rev-parse --show-toplevel)"
 
 completions:
   - name: dotnet add reference

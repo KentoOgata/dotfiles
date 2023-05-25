@@ -51,5 +51,11 @@
     "body": [
       "yield return "
     ]
+  },
+  "throw new InvalidOperationException": {
+    "prefix": "throw new InvalidOperationException",
+    "body": [
+      "throw new InvalidOperationException($1)$0"
+    ]
   }
 }
