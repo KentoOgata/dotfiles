@@ -1,5 +1,6 @@
 function! s:ProcessShebang() abort
   const l:line = getline(1)
+  " denoの実行ファイルにftをつける
   " #!/bin/env -S deno run --ext js
   if l:line =~# '#!/\%(usr/\)\{,1}bin/env -S deno run'
     const l:denofts = #{
