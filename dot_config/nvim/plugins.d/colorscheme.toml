@@ -9,188 +9,53 @@ hook_add = '''
         \ :if has_key(g:themeSetups, expand('<amatch>'))
         \ |  call g:themeSetups[expand('<amatch>')]()
         \ |endif
-
-  function g:Pick(items) abort
-    return a:items[rand(srand()) % a:items->len()]
-  endfunction
 '''
 
 [[plugins]]
 repo = 'rose-pine/neovim'
 name = 'rose-pine'
 hook_add = '''
-  function s:SetupRosePineTheme() abort dict
-    let &background = g:Pick(['dark', 'light'])
-    lua << EOF
-      require('rose-pine').setup {
-        variant = 'auto',
-        dark_variant = 'main',
-        bold_vert_split = false,
-        dim_nc_background = false,
-        disable_background = false,
-        disable_float_background = false,
-        disable_italics = false,
-        groups = {
-          background = 'base',
-          background_nc = '_experimental_nc',
-          panel = 'surface',
-          panel_nc = 'base',
-          border = 'highlight_med',
-          comment = 'muted',
-          link = 'iris',
-          punctuation = 'subtle',
-
-          error = 'love',
-          hint = 'iris',
-          info = 'foam',
-          warn = 'gold',
-
-          headings = {
-            h1 = 'iris',
-            h2 = 'foam',
-            h3 = 'rose',
-            h4 = 'gold',
-            h5 = 'pine',
-            h6 = 'foam',
-          },
-        },
-        -- Change specific vim highlight groups
-        -- https://github.com/rose-pine/neovim/wiki/Recipes
-        highlight_groups = {
-          ColorColumn = { bg = 'rose' },
-
-          -- Blend colours against the "base" background
-          CursorLine = { bg = 'foam', blend = 10 },
-          StatusLine = { fg = 'love', bg = 'love', blend = 10 },
-        },
-      }
-EOF
-  endfunction
   " NOTE:
   " よくわからないけどファイル先頭のhook_addより先にこっちが実行されるっぽいので
   " ここで`g:themeSetups`を宣言しないとエラーになる
   let g:themeSetups = get(g:, 'themeSetups', {})
-  let g:themeSetups['rose-pine'] = function('s:SetupRosePineTheme')
+  let g:themeSetups['rose-pine'] = { -> luaeval('require("rc.colorscheme-setups.rose-pine")') }
 '''
 
 [[plugins]]
 repo = 'rebelot/kanagawa.nvim'
 hook_add = '''
-  function g:themeSetups.kanagawa() abort
-    set background=dark
-    lua << EOF
-      require('kanagawa').setup {
-        commentStyle = { italic = false },
-        keywordStyle = { italic = false },
-        variablebuiltinStyle = { italic = false },
-      }
-EOF
-  endfunction
+  let g:themeSetups['kanagawa'] = { -> luaeval('require("rc.colorscheme-setups.kanagawa")') }
 '''
 
 [[plugins]]
 repo = 'cocopon/iceberg.vim'
 hook_add = '''
-  function g:themeSetups.iceberg() abort
-    let &background = g:Pick(['dark', 'light'])
-  endfunction
+  let g:themeSetups['iceberg'] = { -> luaeval('require("rc.colorscheme-setups.iceberg")') }
 '''
 
 [[plugins]]
 repo = 'sainnhe/gruvbox-material'
 hook_add = '''
-  function s:SetupGruvBoxMaterialTheme() abort dict
-    set background=dark
-    let g:gruvbox_material_background = g:Pick(['hard', 'medium', 'soft'])
-    let g:gruvbox_material_foreground = g:Pick(['material', 'mix', 'original'])
-    let g:gruvbox_material_disable_italic_comment = 1
-    let g:gruvbox_material_enable_bold = 0
-    let g:gruvbox_material_enable_italic = 0
-    let g:gruvbox_material_cursor = 'auto'
-    let g:gruvbox_material_transparent_background = 0
-    let g:gruvbox_material_visual = 'grey background'
-    let g:gruvbox_material_menu_selection_background = 'grey'
-    let g:gruvbox_material_spell_foreground = 'none'
-    let g:gruvbox_material_ui_contrast = g:Pick(['low', 'high'])
-    let g:gruvbox_material_show_eob = 1
-    let g:gruvbox_material_diagnostic_text_highlight = 1
-    let g:gruvbox_material_diagnostic_line_highlight = 1
-    let g:gruvbox_material_diagnostic_virtual_text = 'colored'
-    let g:gruvbox_material_current_word = 'grey background'
-    let g:gruvbox_material_disable_terminal_colors = 0
-    let g:gruvbox_material_statusline_style = g:Pick(['default', 'mix', 'original'])
-    let g:gruvbox_material_better_performance = 1
-  endfunction
-  let g:themeSetups['gruvbox-material'] = function('s:SetupGruvBoxMaterialTheme')
+  let g:themeSetups['gruvbox-material'] = { -> luaeval('require("rc.colorscheme-setups.gruvbox-material")') }
 '''
 
 [[plugins]]
 repo = 'sainnhe/edge'
 hook_add = '''
-  function g:themeSetups.edge() abort
-    let g:edge_style = g:Pick(['default', 'aura', 'neon'])
-    let g:edge_dim_foreground = 0
-    let g:edge_disable_italic_comment = 1
-    let g:edge_enable_italic = 0
-    let g:edge_cursor = 'auto'
-    let g:edge_transparent_background = 0
-    let g:edge_menu_selection_background = 'blue'
-    let g:edge_spell_foreground = 'none'
-    let g:edge_show_eob = 1
-    let g:edge_diagnostic_text_highlight = 1
-    let g:edge_diagnostic_line_highlight = 1
-    let g:edge_diagnostic_virtual_text = 'colored'
-    let g:edge_current_word = 'grey background'
-    let g:edge_disable_terminal_colors = 0
-    let g:edge_better_performance = 1
-  endfunction
+  let g:themeSetups['edge'] = { -> luaeval('require("rc.colorscheme-setups.edge")') }
 '''
 
 [[plugins]]
 repo = 'sainnhe/everforest'
 hook_add = '''
-  function g:themeSetups.everforest() abort
-    let &background = g:Pick(['dark', 'light'])
-
-    let g:everforest_background = g:Pick(['hard', 'medium', 'soft'])
-    let g:everforest_enable_italic = 0
-    let g:everforest_disable_italic_comment = 1
-    let g:everforest_cursor = 'auto'
-    let g:everforest_transparent_background = 0
-    let g:everforest_sign_column_background = 'none'
-    let g:everforest_spell_foreground = 'none'
-    let g:everforest_ui_contrast = g:Pick(['low', 'high'])
-    let g:everforest_show_eob = 1
-    let g:everforest_diagnostic_text_highlight = 1
-    let g:everforest_diagnostic_line_highlight = 0
-    let g:everforest_diagnostic_virtual_text = 'colored'
-    let g:everforest_current_word = 'grey background'
-    let g:everforest_disable_terminal_colors = 0
-    let g:everforest_better_performance = 1
-  endfunction
+  let g:themeSetups['everforest'] = { -> luaeval('require("rc.colorscheme-setups.everforest")') }
 '''
 
 [[plugins]]
 repo = 'sainnhe/sonokai'
 hook_add = '''
-  function g:themeSetups.sonokai() abort
-    let &background = 'dark'
-
-    let g:sonokai_style = g:Pick(['default', 'atlantis', 'andromeda', 'shusia', 'maia', 'espresso'])
-    let g:sonokai_disable_italic_comment = 1
-    let g:sonokai_enable_italic = 0
-    let g:sonokai_cursor = 'auto'
-    let g:sonokai_transparent_background = 0
-    let g:sonokai_menu_selection_background = 'blue'
-    let g:sonokai_spell_foreground = 'none'
-    let g:sonokai_show_eob = 1
-    let g:sonokai_diagnostic_text_highlight = 1
-    let g:sonokai_diagnostic_line_highlight = 1
-    let g:sonokai_diagnostic_virtual_text = 'colored'
-    let g:sonokai_current_word = 'grey background'
-    let g:sonokai_disable_terminal_colors = 0
-    let g:sonokai_better_performance = 1
-  endfunction
+  let g:themeSetups['sonokai'] = { -> luaeval('require("rc.colorscheme-setups.sonokai")') }
 '''
 
 [[plugins]]
@@ -208,17 +73,7 @@ hook_add = '''
 [[plugins]]
 repo = 'folke/tokyonight.nvim'
 hook_add = '''
-  function s:SetupTokyoNightTheme() abort
-    lua << EOF
-      require('tokyonight').setup {
-        styles = {
-          comments = { italic = false },
-          keywords = { italic = false },
-        },
-      }
-EOF
-  endfunction
-  let g:themeSetups['tokyonight-night'] = function('s:SetupTokyoNightTheme')
+  let g:themeSetups['tokyonight-night'] = { -> luaeval('require("rc.colorscheme-setups.tokyonight")') }
 '''
 
 [[plugins]]
@@ -230,9 +85,7 @@ hook_add = '''
 [[plugins]]
 repo = 'shaunsingh/nord.nvim'
 hook_add = '''
-  function g:themeSetups.nord() abort
-    let g:nord_italic = v:false
-  endfunction
+  let g:themeSetups['nord'] = { -> luaeval('require("rc.colorscheme-setups.nord")') }
 '''
 
 [[plugins]]
@@ -245,66 +98,10 @@ hook_add = '''
 repo = 'catppuccin/nvim'
 name = 'catppuccin'
 hook_add = '''
-  function s:SetupCatppuccinTheme()
-    lua << EOF
-      require('catppuccin').setup {
-        no_italic = true,
-        integrations = {
-          aerial = true,
-          bufferline = true,
-          cmp = true,
-          coc_nvim = true,
-          fern = true,
-          fidget = true,
-          gitsigns = true,
-          indent_blankline = {
-            colored_indent_levels = true,
-          },
-          lsp_trouble = true,
-          markdown = true,
-          mason = true,
-          noice = true,
-          neotree = true,
-          notify = true,
-          sandwich = true,
-          semantic_tokens = true,
-          telekasten = true,
-          telescope = true,
-          treesitter = true,
-          treesitter_context = true,
-          ts_rainbow = true,
-        },
-      }
-
-      local flavor = vim.fn.expand('<amatch>'):sub(('catppuccin-'):len() + 1)
-      local p = require(('catppuccin.palettes.%s'):format(flavor))
-
-      vim.env['FZF_DEFAULT_OPTS'] = ([[
-          --color=bg+:%s,bg:%s,spinner:%s,hl:%s
-          --color=fg:%s,header:%s,info:%s,pointer:%s
-          --color=marker:%s,fg+:%s,prompt:%s,hl+:%s
-        ]]):format(
-        p.surface0,
-        p.base,
-        p.rosewater,
-        p.red,
-        p.text,
-        p.red,
-        p.mauve,
-        p.rosewater,
-        p.rosewater,
-        p.text,
-        p.mauve,
-        p.red
-      )
-
-      vim.env['BAT_THEME'] = ('Catppuccin-%s'):format(flavor)
-EOF
-  let g:themeSetups['catppuccin-latte'] = function('s:SetupCatppuccinTheme')
-  let g:themeSetups['catppuccin-frappe'] = function('s:SetupCatppuccinTheme')
-  let g:themeSetups['catppuccin-macchiato'] = function('s:SetupCatppuccinTheme')
-  let g:themeSetups['catppuccin-mocha'] = function('s:SetupCatppuccinTheme')
-  endfunction
+  let g:themeSetups['catppuccin-latte'] = { -> luaeval('require("rc.colorscheme-setups.catppuccin")') }
+  let g:themeSetups['catppuccin-frappe'] = { -> luaeval('require("rc.colorscheme-setups.catppuccin")') }
+  let g:themeSetups['catppuccin-macchiato'] = { -> luaeval('require("rc.colorscheme-setups.catppuccin")') }
+  let g:themeSetups['catppuccin-mocha'] = { -> luaeval('require("rc.colorscheme-setups.catppuccin")') }
 '''
 
 [[plugins]]
@@ -316,10 +113,7 @@ hook_add = '''
 [[plugins]]
 repo = 'eihigh/vim-aomi-grayscale'
 hook_add = '''
-  function s:SetupAomiGrayscaleTheme() abort dict
-    let &background = g:Pick(['dark', 'light'])
-  endfunction
-  let g:themeSetups['aomi-grayscale'] = function('s:SetupAomiGrayscaleTheme')
+  let g:themeSetups['aomi-grayscale'] = { -> luaeval('require("rc.colorscheme-setups.aomi-grayscale")') }
 '''
 
 [[plugins]]
