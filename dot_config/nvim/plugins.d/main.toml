@@ -362,8 +362,8 @@ lua_source = '''
 repo = 'thinca/vim-themis'
 hook_add = '''
   let $THEMIS_VIM = 'nvim'
-  let $THEMIS_HOME = $'{stdpath('cache')}/dein/repos/github.com/thinca/vim-themis'
-  let $PATH = $'{$PATH}:{$THEMIS_HOME}/bin'
+  let $THEMIS_HOME = dein#get('vim-themis').path
+  let $PATH = [[$THEMIS_HOME, 'bin']->join('/'), $PATH]->join(':')
 '''
 
 # easymotion
