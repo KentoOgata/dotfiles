@@ -1,6 +1,6 @@
 return {
   pick = function(list)
     math.randomseed(os.time())
-    return math.random(#list)
+    return list[math.random(#list)]
   end,
 }
