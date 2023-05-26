@@ -1,6 +1,6 @@
 local pick = require('rc.utils').pick
 
-vim.go.ackground = pick { 'dark', 'light' }
+vim.go.background = pick { 'dark', 'light' }
 
 require('rose-pine').setup {
   variant = 'auto',

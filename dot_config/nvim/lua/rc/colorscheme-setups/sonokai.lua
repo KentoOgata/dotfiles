@@ -2,21 +2,23 @@ local pick = require('rc.utils').pick
 
 vim.go.background = 'dark'
 
-local function setOpt(name, value)
-  vim.g['sonokai_' .. name] = value
-end
+local opts = {
+  style = pick { 'default', 'atlantis', 'andromeda', 'shusia', 'maia', 'espresso' },
+  disable_italic_comment = 1,
+  enable_italic = 0,
+  cursor = 'auto',
+  transparent_background = 0,
+  menu_selection_background = 'blue',
+  spell_foreground = 'none',
+  show_eob = 1,
+  diagnostic_text_highlight = 1,
+  diagnostic_line_highlight = 1,
+  diagnostic_virtual_text = 'colored',
+  current_word = 'grey background',
+  disable_terminal_colors = 0,
+  better_performance = 1,
+}
 
-setOpt('style', pick { 'default', 'atlantis', 'andromeda', 'shusia', 'maia', 'espresso' })
-setOpt('disable_italic_comment', 1)
-setOpt('enable_italic', 0)
-setOpt('cursor', 'auto')
-setOpt('transparent_background', 0)
-setOpt('menu_selection_background', 'blue')
-setOpt('spell_foreground', 'none')
-setOpt('show_eob', 1)
-setOpt('diagnostic_text_highlight', 1)
-setOpt('diagnostic_line_highlight', 1)
-setOpt('diagnostic_virtual_text', 'colored')
-setOpt('current_word', 'grey background')
-setOpt('disable_terminal_colors', 0)
-setOpt('better_performance', 1)
+for opt, value in pairs(opts) do
+  vim.g['sonokai_' .. opt] = value
+end
