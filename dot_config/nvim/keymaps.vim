@@ -29,3 +29,5 @@ nmap <Space>fh <Plug>(ff-help_tags)
 nmap <Space>fs <Plug>(ff-lines)
 nmap <Space>fb <Plug>(ff-buffers)
 nmap <Space>fn <Plug>(ff-resume)
+
+nmap <space>e <Cmd>execute 'edit' (&l:buftype->empty() ? '%:h' : '.')<CR>
