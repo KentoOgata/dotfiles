@@ -1,0 +1,21 @@
+[[plugins]]
+repo = 'Shougo/ddu.vim'
+hook_add = '''
+  nmap <space>b <Plug>(ddu-buffers)
+
+  " なんかのマッピングが実行されるまでautoload/ddu.vimを読み込まないようにする
+  " 初回実行時に待機時間が発生するので微妙かも
+  nmap <Plug>(ddu- :<C-u>execute 'nunmap' '<Plug>(ddu-'<CR><Cmd>lua require('rc.ddu').setup()<CR><Plug>(ddu-
+'''
+
+[[plugins]]
+repo = 'shun/ddu-source-buffer'
+
+[[plugins]]
+repo = 'Shougo/ddu-kind-file'
+
+[[plugins]]
+repo = 'Shougo/ddu-ui-ff'
+
+[[plugins]]
+repo = 'yuki-yano/ddu-filter-fzf'
