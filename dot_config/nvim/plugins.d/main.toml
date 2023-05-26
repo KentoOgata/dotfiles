@@ -366,15 +366,6 @@ hook_add = '''
   let $PATH = [[$THEMIS_HOME, 'bin']->join('/'), $PATH]->join(':')
 '''
 
-# easymotion
-[[plugins]]
-repo = 'yuki-yano/fuzzy-motion.vim'
-depends = 'denops.vim'
-on_cmd = 'FuzzyMotion'
-hook_add = '''
-  Keymap nxo <space>w <Cmd>FuzzyMotion<CR>
-'''
-
 # yankした内容を端末の仕様を使ってクリップボードに入れてくれる
 [[plugins]]
 repo = 'ojroques/vim-oscyank'
