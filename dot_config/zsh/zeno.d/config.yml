@@ -86,6 +86,9 @@ snippets:
   - name: cd to gitroot
     keyword: cdr
     snippet: cd "$(git rev-parse --show-toplevel)"
+  - name: git switch
+    keyword: gsw
+    snippet: git switch {{branch}}
 
 completions:
   - name: dotnet add reference
