@@ -12,13 +12,9 @@ augroup VimRc
   "   - indent scriptの検出
   "   - syntax scriptの検出
   " NOTE: `$ nvim file.vim` のように起動するとftがセットされないので実行されない(つらい)
-  autocmd FileType * ++once call map(
-        \   [
-        \     'filetype plugin indent on',
-        \     'syntax enable'
-        \   ],
-        \   { _, cmd -> execute(cmd) }
-        \ )
+  autocmd FileType * ++once
+        \ : filetype plugin indent on
+        \ | syntax enable
 augroup END
 
 " 起動前にfiletype系のスクリプトを読み込む必要はないので無効化する
