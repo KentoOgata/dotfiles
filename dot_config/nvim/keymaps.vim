@@ -30,4 +30,6 @@ nmap <Space>fs <Plug>(ff-lines)
 nmap <Space>fb <Plug>(ff-buffers)
 nmap <Space>fn <Plug>(ff-resume)
 
+" ファイルに紐付いているバッファならその親ディレクトリを指定する
+" そうでない場合はcwd
 nmap <space>e <Cmd>execute 'edit' (!getbufinfo(0)->empty() && &l:buftype->empty() ? '%:h' : '.')<CR>
