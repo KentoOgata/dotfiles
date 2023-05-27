@@ -31,6 +31,8 @@ execute 'set runtimepath^=' .. s:deinrtp
 try
   call s:deinsetup()
 catch /^\%(Vim\%((\a\+)\)\=:\)\{,1}E117:/
+  " dein.vimがインストールされてなかったら(E117: Unknown function)
+  " インストールしてリトライする
   echom system([
         \ 'git',
         \ 'clone',
