@@ -12,14 +12,12 @@ function! s:deinsetup() abort
         \ })
   if dein#min#load_state(s:deincache)
     call dein#begin(s:deincache)
-    call map(
-          \ readdir($DEIN_CONFIG_DIR),
-          \ { _, filename ->
-          \   filename->fnamemodify(':e') ==# 'toml'
-          \     ? dein#load_toml(join([$DEIN_CONFIG_DIR, filename], '/'))
-          \     : v:null
-          \ }
-          \)
+    for toml in
+          \ $DEIN_CONFIG_DIR
+          \ ->readdir({ fname -> fname->fnamemodify(':e') ==# 'toml' })
+          \ ->map({ _, fname -> [$DEIN_CONFIG_DIR, fname]->join('/') })
+      call dein#load_toml(toml)
+    endfor
     call dein#end()
     if dein#check_install()
       call dein#install()
