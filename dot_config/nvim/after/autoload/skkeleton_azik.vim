@@ -603,7 +603,6 @@ function! skkeleton_azik#setup(config = {}) abort
   call skkeleton#register_kanatable('azik', l:azik_kanatable, v:true)
 
   let l:config = deepcopy(a:config)
-  call extend(l:config, get(g:, 'skkeleton_azik', {}), 'keep')
   call extend(l:config, skkeleton_azik#get_default_config(), 'keep')
 
   " input stateのマッピングはregister_keymapではなくてregister_kanatableでやるのがよさそう
