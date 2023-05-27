@@ -311,6 +311,7 @@ lazy = true
 repo = 'MunifTanjim/nui.nvim'
 lazy = true
 
+# LSのkind(補完するitemの種類 classとかmethod)に応じたアイコンを提供する
 [[plugins]]
 repo = 'onsails/lspkind-nvim'
 lazy = true
