@@ -284,8 +284,8 @@ lua_source = '''
     },
     paste_mode = true,
     prevent_diagnostics = false,
-    next_key = vim.api.nvim_replace_termcodes('<C-p>', true, true, true),
-    prev_key = vim.api.nvim_replace_termcodes('<C-n>', true, true, true),
+    next_key = vim.keycode '<C-p>',
+    prev_key = vim.keycode '<C-n>',
   }
 '''
 
