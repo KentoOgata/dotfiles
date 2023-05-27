@@ -602,8 +602,7 @@ function! skkeleton_azik#setup(config = {}) abort
 
   call skkeleton#register_kanatable('azik', l:azik_kanatable, v:true)
 
-  let l:config = deepcopy(a:config)
-  call extend(l:config, skkeleton_azik#get_default_config(), 'keep')
+  const l:config = a:config->deepcopy()->extend(skkeleton_azik#get_default_config(), 'keep')
 
   " input stateのマッピングはregister_keymapではなくてregister_kanatableでやるのがよさそう
   " kanatable毎にマッピングを定義できたり、lexima的なことも少しはできる
