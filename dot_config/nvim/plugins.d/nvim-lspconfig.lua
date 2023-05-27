@@ -9,6 +9,13 @@ local function ensure_capabilities()
   return require('cmp_nvim_lsp').default_capabilities()
 end
 local capabilities = ensure_capabilities()
+local formatDisabled = vim.tbl_deep_extend('force', capabilities, {
+  textDocument = {
+    formatting = nil,
+    rangeFormatting = nil,
+    onTypeFormatting = nil,
+  },
+})
 
 if 1 == vim.fn.executable 'vscode-json-language-server' then
   lspconfig.jsonls.setup {
@@ -41,13 +48,7 @@ end
 
 if 1 == vim.fn.executable 'lua-language-server' then
   lspconfig.lua_ls.setup {
-    capabilities = vim.tbl_deep_extend('force', capabilities, {
-      textDocument = {
-        formatting = nil,
-        rangeFormatting = nil,
-        onTypeFormatting = nil,
-      },
-    }),
+    capabilities = formatDisabled,
     settings = {
       Lua = {
         runtime = {
@@ -99,13 +100,7 @@ end
 
 if 1 == vim.fn.executable 'omnisharp' then
   lspconfig.omnisharp.setup {
-    capabilities = vim.tbl_deep_extend('force', capabilities, {
-      textDocument = {
-        formatting = nil,
-        rangeFormatting = nil,
-        onTypeFormatting = nil,
-      },
-    }),
+    capabilities = formatDisabled,
     on_attach = function(client)
       -- OmniSharp's semantic token format is broken.
       -- https://github.com/OmniSharp/omnisharp-roslyn/issues/2483
@@ -201,13 +196,7 @@ end
 
 if 1 == vim.fn.executable 'typescript-language-server' then
   lspconfig.tsserver.setup {
-    capabilities = vim.tbl_deep_extend('force', capabilities, {
-      textDocument = {
-        formatting = nil,
-        rangeFormatting = nil,
-        onTypeFormatting = nil,
-      },
-    }),
+    capabilities = formatDisabled,
     root_dir = require('lspconfig.util').root_pattern { 'tsconfig.json', 'jsconfig.json', 'package.json' },
     single_file_support = false,
   }
