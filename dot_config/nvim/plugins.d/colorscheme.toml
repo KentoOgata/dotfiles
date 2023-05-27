@@ -1,15 +1,18 @@
 hook_add = '''
   " Vimが起動するとき、 $COLOR_SCHEMEでカラースキームが指定されていればそれを設定する。
-  " $COLOR_SCHEMEが指定されていなかったとき、`g:themeSetups`に登録されているカラースキームから無作為に設定する
+  " $COLOR_SCHEMEが指定されていなかったとき、`g:themeSetupModules`に登録されているカラースキームから無作為に設定する
   " 直下で定義しているautocmdも実行させたいのでnestedを指定する
   autocmd VimRc VimEnter * ++once ++nested
         \ execute 'colorscheme' $COLOR_SCHEME
-        \ ?? { items -> items[rand(srand()) % items->len()] }(g:themeSetups->keys())
-  " カラースキームが設定されたとき、`g:themeSetups`に名前が登録されていれば実行する。
+        \ ?? { items -> items[rand(srand()) % items->len()] }(g:themeSetupModules->keys())
+  " カラースキームが設定されたとき、`g:themeSetupModules`に名前が登録されていれば実行する。
   " OptionSet background のautocmdを実行したいのでnestedを指定する
   autocmd VimRc ColorSchemePre * ++nested
-        \ :if has_key(g:themeSetups, expand('<amatch>'))
-        \ |  call g:themeSetups[expand('<amatch>')]()
+        \ :if !get(g:themeSetupModules, expand('<amatch>'), '')->empty()
+        \ |  call luaeval(
+        \      g:themeSetupModules[expand('<amatch>')]
+        \       ->printf('require("rc.colorscheme-setups.%s")')
+        \    )
         \ |endif
 '''
 
@@ -19,107 +22,107 @@ name = 'rose-pine'
 hook_add = '''
   " NOTE:
   " よくわからないけどファイル先頭のhook_addより先にこっちが実行されるっぽいので
-  " ここで`g:themeSetups`を宣言しないとエラーになる
-  let g:themeSetups = get(g:, 'themeSetups', {})
-  let g:themeSetups['rose-pine'] = { -> luaeval('require("rc.colorscheme-setups.rose-pine")') }
+  " ここで`g:themeSetupModules`を宣言しないとエラーになる
+  let g:themeSetupModules = get(g:, 'themeSetups', {})
+  let g:themeSetupModules['rose-pine'] = 'rose-pine'
 '''
 
 [[plugins]]
 repo = 'rebelot/kanagawa.nvim'
 hook_add = '''
-  let g:themeSetups['kanagawa'] = { -> luaeval('require("rc.colorscheme-setups.kanagawa")') }
+  let g:themeSetupModules['kanagawa'] = 'kanagawa'
 '''
 
 [[plugins]]
 repo = 'cocopon/iceberg.vim'
 hook_add = '''
-  let g:themeSetups['iceberg'] = { -> luaeval('require("rc.colorscheme-setups.iceberg")') }
+  let g:themeSetupModules['iceberg'] = 'iceberg'
 '''
 
 [[plugins]]
 repo = 'sainnhe/gruvbox-material'
 hook_add = '''
-  let g:themeSetups['gruvbox-material'] = { -> luaeval('require("rc.colorscheme-setups.gruvbox-material")') }
+  let g:themeSetupModules['gruvbox-material'] = 'gruvbox-material'
 '''
 
 [[plugins]]
 repo = 'sainnhe/edge'
 hook_add = '''
-  let g:themeSetups['edge'] = { -> luaeval('require("rc.colorscheme-setups.edge")') }
+  let g:themeSetupModules['edge'] = 'edge'
 '''
 
 [[plugins]]
 repo = 'sainnhe/everforest'
 hook_add = '''
-  let g:themeSetups['everforest'] = { -> luaeval('require("rc.colorscheme-setups.everforest")') }
+  let g:themeSetupModules['everforest'] = 'everforest'
 '''
 
 [[plugins]]
 repo = 'sainnhe/sonokai'
 hook_add = '''
-  let g:themeSetups['sonokai'] = { -> luaeval('require("rc.colorscheme-setups.sonokai")') }
+  let g:themeSetupModules['sonokai'] = 'sonokai'
 '''
 
 [[plugins]]
 repo = 'EdenEast/nightfox.nvim'
 hook_add = '''
-  let g:themeSetups.nightfox  = {->v:null}
-  let g:themeSetups.duskfox   = {->v:null}
-  let g:themeSetups.dawnfox   = {->v:null}
-  let g:themeSetups.nordfox   = {->v:null}
-  let g:themeSetups.dayfox    = {->v:null}
-  let g:themeSetups.terafox   = {->v:null}
-  let g:themeSetups.carbonfox = {->v:null}
+  let g:themeSetupModules.nightfox  = ''
+  let g:themeSetupModules.duskfox   = ''
+  let g:themeSetupModules.dawnfox   = ''
+  let g:themeSetupModules.nordfox   = ''
+  let g:themeSetupModules.dayfox    = ''
+  let g:themeSetupModules.terafox   = ''
+  let g:themeSetupModules.carbonfox = ''
 '''
 
 [[plugins]]
 repo = 'folke/tokyonight.nvim'
 hook_add = '''
-  let g:themeSetups['tokyonight-night'] = { -> luaeval('require("rc.colorscheme-setups.tokyonight")') }
+  let g:themeSetupModules['tokyonight-night'] = 'tokyonight'
 '''
 
 [[plugins]]
 repo = 'YorickPeterse/vim-paper'
 hook_add = '''
-  let g:themeSetups.paper = {->v:null}
+  let g:themeSetupModules.paper = ''
 '''
 
 [[plugins]]
 repo = 'shaunsingh/nord.nvim'
 hook_add = '''
-  let g:themeSetups['nord'] = { -> luaeval('require("rc.colorscheme-setups.nord")') }
+  let g:themeSetupModules['nord'] = 'nord'
 '''
 
 [[plugins]]
 repo = 'Julpikar/night-owl.nvim'
 hook_add = '''
-  let g:themeSetups['night-owl'] = {->v:null}
+  let g:themeSetupModules['night-owl'] = ''
 '''
 
 [[plugins]]
 repo = 'catppuccin/nvim'
 name = 'catppuccin'
 hook_add = '''
-  let g:themeSetups['catppuccin-latte'] = { -> luaeval('require("rc.colorscheme-setups.catppuccin")') }
-  let g:themeSetups['catppuccin-frappe'] = { -> luaeval('require("rc.colorscheme-setups.catppuccin")') }
-  let g:themeSetups['catppuccin-macchiato'] = { -> luaeval('require("rc.colorscheme-setups.catppuccin")') }
-  let g:themeSetups['catppuccin-mocha'] = { -> luaeval('require("rc.colorscheme-setups.catppuccin")') }
+  let g:themeSetupModules['catppuccin-latte']     = 'catppuccin'
+  let g:themeSetupModules['catppuccin-frappe']    = 'catppuccin'
+  let g:themeSetupModules['catppuccin-macchiato'] = 'catppuccin'
+  let g:themeSetupModules['catppuccin-mocha']     = 'catppuccin'
 '''
 
 [[plugins]]
 repo = 'machakann/vim-colorscheme-snowtrek'
 hook_add = '''
-  let g:themeSetups.snowtrek = {->v:null}
+  let g:themeSetupModules.snowtrek = ''
 '''
 
 [[plugins]]
 repo = 'eihigh/vim-aomi-grayscale'
 hook_add = '''
-  let g:themeSetups['aomi-grayscale'] = { -> luaeval('require("rc.colorscheme-setups.aomi-grayscale")') }
+  let g:themeSetupModules['aomi-grayscale'] = 'aomi-grayscale'
 '''
 
 [[plugins]]
 repo = 'marko-cerovac/material.nvim'
 hook_add = '''
-  let g:themeSetups.material = {->v:null}
+  let g:themeSetupModules.material = ''
 '''
