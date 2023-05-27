@@ -1,3 +1,5 @@
+# neovim用の自動補完エンジン
+# マッピングを処理する機能が強力なのでddcでは代替できない
 [[plugins]]
 repo = 'hrsh7th/nvim-cmp'
 depends = ['vim-vsnip', 'lspkind-nvim']

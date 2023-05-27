@@ -1,5 +1,5 @@
 # Gitクライアント
-# Gina logの機能だけまだgin.vimに移行できてないのでまだ入れてる
+# Gina logの機能だけgin.vimに移行できてないのでまだ入れてる
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
 on_cmd = 'Gina'
@@ -9,6 +9,7 @@ hook_add = '''
 '''
 
 # denops製のGitクライアント
+# 良いところを上手く説明できない Chaperonは競合解決するときに便利
 [[plugins]]
 repo = 'lambdalisue/gin.vim'
 depends = 'denops.vim'
@@ -23,14 +24,11 @@ hook_add = '''
   nmap <space>ac <Cmd>Gin commit -v<CR>
   nmap <space>aC <Cmd>Gin commit -v --amend<CR>
   nmap <space>ab <Cmd>GinBranch<CR>
-  call map(
-        \ [
+  call extend(g:AlterCommands, [
         \   #{ char: 'gs', input: 'GinStatus' },
         \   #{ char: 'gp', input: 'Gin<space>push' },
         \   #{ char: 'gc', input: 'Gin<space>commit' },
-        \ ],
-        \ { _, rule -> g:AlterCommands->add(rule) }
-        \ )
+        \ ])
 '''
 hooks_file = '$DEIN_CONFIG_DIR/gin.vim'
 [plugins.ftplugin]

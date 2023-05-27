@@ -1,8 +1,11 @@
+# 世界最強スニペットプラグイン
 [[plugins]]
 repo = 'cohama/lexima.vim'
 on_event = ['InsertEnter', 'CmdlineEnter']
 hooks_file = '$DEIN_CONFIG_DIR/lexima.vim'
 
+# htmlっぽいやつを編集するときにdiv-><div><div/>とか展開できるので便利
+# emmet記法はあんま使ってない 覚えられない
 [[plugins]]
 repo = 'mattn/emmet-vim'
 on_map = { i = '<Plug>(emmet-' }
@@ -24,6 +27,7 @@ hook_add = '''
   imap <C-y>c <Plug>(emmet-code-pretty)
 '''
 
+# 新しいファイル開いて `:Template nanka` すると良い感じになる
 [[plugins]]
 repo = 'mattn/vim-sonictemplate'
 merge_ftdetect = true
@@ -39,6 +43,7 @@ stpl = '''
   setl noexpandtab
 '''
 
+# VSCode風の書式でスニペットを定義できる
 [[plugins]]
 repo = 'hrsh7th/vim-vsnip'
 on_func = 'vsnip#'

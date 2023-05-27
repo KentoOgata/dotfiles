@@ -1,8 +1,10 @@
+# LSを起動するための設定とか色々してくれる
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
 on_event = 'FileType'
 hooks_file = '$DEIN_CONFIG_DIR/nvim-lspconfig.lua'
 
+# lua language serverにneovimのlua apiの情報を渡してくれる
 [[plugins]]
 repo = 'folke/neodev.nvim'
 on_source = 'nvim-lspconfig'
@@ -19,6 +21,7 @@ lua_source = '''
   }
 '''
 
+# neovimで使う関連ツール(LS/formatter/linter)をインストールする
 [[plugins]]
 repo = 'williamboman/mason.nvim'
 on_cmd = ['Mason', 'MasonInstall']
@@ -31,6 +34,8 @@ lua_source = '''
   require('mason').setup()
 '''
 
+# mason.nvimとnvim-lspconfigの仲を取り持ってくれるらしい
+# なんで必要なのかあんま説明できない
 [[plugins]]
 repo = 'williamboman/mason-lspconfig.nvim'
 depends = 'mason.nvim'
@@ -39,6 +44,7 @@ lua_source = '''
   require('mason-lspconfig').setup()
 '''
 
+# LSのプログレスを格好良く表示してくれる
 [[plugins]]
 repo = 'j-hui/fidget.nvim'
 on_event = 'LspAttach'
@@ -46,6 +52,7 @@ lua_source = '''
   require('fidget').setup {}
 '''
 
+# formatterとかlinterをneovimのLS用インターフェースを介して実行するやつ
 [[plugins]]
 repo = 'jose-elias-alvarez/null-ls.nvim'
 depends = 'plenary.nvim'
