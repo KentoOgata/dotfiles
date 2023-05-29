@@ -54,9 +54,10 @@ call s:add_rules(
       \   #{ char: 'i', at: '{ get\%( => [^;]\+\)*; \%# }', input: 'init', input_after: ';' },
       \   #{ char: '<Space>', at: 'DbSet<\([0-9a-zA-Z<>_]\+\)> \w\+\%#', input: ' => Set<\1>();', with_submatch: 1 },
       \   #{ char: '<', at: '[a-zA-Z0-9_]\%#', input_after: '>' },
-      \   #{ char: ';', at: 'for\s*([^)]*\%#)', input: ';' },
-      \   #{ char: ';', at: '\%(get\|set\|init\)\%( => [^;]\+\)*\%#', input: ';' },
-      \   #{ char: ';', at: '\%#.\+$', input: '<End>;' },
+      \   #{ char: ';', at: '\%#.\+$', input: '<End>;', except: '\('..
+      \     'for\s*([^)]*\%#)'..'\|'..
+      \     '\%(get\|set\|init\)\%( => [^;]\+\)*\%#'..'\)'
+      \   },
       \   #{ char: '<Space>', at: '\.\w\+(\%([^)]\+,\s\)*\<\%(new\|out\)\@!\w\+\%#)', input: '<Space>=><Space>' },
       \   #{ char: '$', input: '$"', input_after: '"' },
       \   #{ char: '<Space>', at: '\<pp\%#', input: '<BS><BS>Console.WriteLine(', input_after: ')' },
@@ -96,7 +97,13 @@ call s:add_rules(
       \ ]
       \ )
 
-call lexima#add_rule(#{ char: '<Plug>(complete-function-symbol)', input: '(', input_after: ')' })
+call s:add_rules(
+      \ #{ char: '<Plug>(post-complete-function-symbol)' },
+      \ [
+      \   #{ except: '\%#(', input: '(', input_after: ')' },
+      \   #{ input: '', priority: -1 },
+      \ ]
+      \ )
 
 " input: >>, effect: `if (\%#)condition` -> `if (condition)`
 call lexima#add_rule(#{ char: '>', at: '(>\%#)', input: '<BS><DEL><End>)' })
