@@ -229,9 +229,9 @@ cmp.event:on('confirm_done', function(event)
   end
   local item = event.entry:get_completion_item()
   if is_function_symbol(item) then
-    feedkeys '<Plug>(complete-function-symbol)'
+    feedkeys '<Plug>(post-complete-function-symbol)'
   end
 end)
 -- どこかでハンドルしない限りは何もしない
-vim.keymap.set('i', '<Plug>(complete-function-symbol)', '<Nop>')
+vim.keymap.set('i', '<Plug>(post-complete-function-symbol)', '<Nop>')
 --- }}}
