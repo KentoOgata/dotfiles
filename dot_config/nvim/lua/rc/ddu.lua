@@ -9,9 +9,23 @@ local ffUiParams = {
   },
 }
 
-local function dduAction(action)
+---@param action string
+---@return function
+local function uiAction(action)
   return function()
     vim.fn['ddu#ui#do_action'](action)
+  end
+end
+
+---@param action string
+---@param params? table
+---@return function
+local function itemAction(action, params)
+  return function()
+    vim.fn['ddu#ui#do_action']('itemAction', {
+      name = action,
+      params = params,
+    })
   end
 end
 
@@ -20,7 +34,7 @@ return {
     vim.keymap.set('n', '<Plug>(ddu-buffers)', function()
       vim.fn['ddu#start'] {
         ui = 'ff',
-        uiParams = ffUiParams,
+        uiParams = vim.tbl_deep_extend('force', ffUiParams, { ff = { startFilter = true } }),
         sources = {
           {
             name = 'buffer',
@@ -51,9 +65,11 @@ return {
             buffer = ctx.buf,
           },
           maps = {
-            { '<CR>', dduAction 'itemAction' },
-            { 'i', dduAction 'openFilterWindow' },
-            { 'q', dduAction 'quit' },
+            { '<CR>', uiAction 'itemAction' },
+            { 'i', uiAction 'openFilterWindow' },
+            { 'q', uiAction 'quit' },
+            { 'd', itemAction 'delete' },
+            { '<SPACE>', uiAction 'toggleSelectItem', { nowait = true } },
           },
         }
       end,
@@ -68,8 +84,8 @@ return {
           vim.cmd.stopinsert()
           vim.fn['ddu#ui#do_action'] 'closeFilterWindow'
         end, { buffer = ctx.buf })
-        vim.keymap.set('n', '<CR>', dduAction 'closeFilterWindow', { buffer = ctx.buf })
-        vim.keymap.set('n', 'q', dduAction 'quit', { buffer = ctx.buf })
+        vim.keymap.set('n', '<CR>', uiAction 'closeFilterWindow', { buffer = ctx.buf })
+        vim.keymap.set('n', 'q', uiAction 'quit', { buffer = ctx.buf })
       end,
     })
   end,
