@@ -43,6 +43,7 @@ let g:dein#inline_vimrcs = [
       \ s:here .. '/keymaps.vim',
       \ s:here .. '/chezmoi.vim',
       \ s:here .. '/nvim-lsp.lua',
+      \ s:here .. '/autocmds.vim',
       \ ]
 
 execute 'source' s:here .. '/dein.vim'

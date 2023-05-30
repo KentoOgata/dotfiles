@@ -76,15 +76,6 @@ repo = 'lambdalisue/kensaku.vim'
 depends = 'denops.vim'
 on_func = 'kensaku#query'
 
-# yankしたときに範囲をわかりやすくしてくれる
-[[plugins]]
-repo = 'machakann/vim-highlightedyank'
-on_map = '<Plug>(highlightedyank)'
-hook_add = '''
-  Keymap nxo y <Plug>(highlightedyank)
-  let g:highlightedyank_highlight_duration = 200
-'''
-
 # テキストの周りを囲んだり囲みを編集したり
 [[plugins]]
 repo = 'machakann/vim-sandwich'
