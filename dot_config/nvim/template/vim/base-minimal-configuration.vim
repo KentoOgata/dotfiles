@@ -1,16 +1,17 @@
-const s:packpath = expand('<sfile>:h')
-const s:optpackpath = s:packpath .. '/pack/github.com/opt/'
-if !isdirectory(s:optpackpath)
-  call mkdir(s:optpackpath, 'p')
-endif
-exec printf('set packpath=%s', s:packpath)
+const s:packpath = expand('<script>:p:h')
+let &packpath = s:packpath
+const s:ToPackPath = { name -> s:packpath .. '/pack/github.com/opt/' .. name }
 
-function s:packadd(ghrepo)
-  const l:installdir = s:optpackpath .. a:ghrepo
-  if !isdirectory(l:installdir)
-    call system(printf('git clone https://github.com/%s.git %s', a:ghrepo, l:installdir))
+function s:PackAdd(ghrepo) abort
+  const plugin = #{
+        \ path: s:ToPackPath(a:ghrepo),
+        \ repo: $'https://github.com/{a:ghrepo}.git',
+        \ name: a:ghrepo,
+        \ }
+  if !isdirectory(plugin.path)
+    call system(['git', 'clone', plugin.repo, plugin.path])
   endif
-  exec printf('packadd %s', a:ghrepo)
+  exec 'packadd' plugin.name
 endfunction
 
-call s:packadd({{_cursor_}})
+call s:PackAdd({{_cursor_}})
