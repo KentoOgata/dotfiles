@@ -32,9 +32,6 @@ g:stdpath = {
 }
 
 $MYVIMRC = expand('<sfile>')
-$VIMRUNTIME = expand('$XDG_DATA_HOME/vim/vim90')
-set rtp=$VIMRUNTIME
-set helpfile=$VIMRUNTIME/doc/help.txt
 execute($'set runtimepath^={g:stdpath.config.vim}')
 execute($'set runtimepath+={g:stdpath.config.vim}/after')
 
