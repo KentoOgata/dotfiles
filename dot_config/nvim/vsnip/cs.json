@@ -1,33 +1,4 @@
 {
-  "statement-lambda": {
-    "prefix": "fn",
-    "body": [
-      "$1 =>",
-      "{",
-      "\t$0",
-      "}"
-    ]
-  },
-  "foreach": {
-    "prefix": "foreach",
-    "body": [
-      "foreach (var ${2} in ${1})",
-      "{",
-      "\t$0",
-      "}"
-    ],
-    "description": "Creates a foreach statement"
-  },
-  "if": {
-    "prefix": "if",
-    "body": [
-      "if (${1})",
-      "{",
-      "\t$0",
-      "}"
-    ],
-    "description": "Creates an if statement"
-  },
   "throw new NotImplementedException": {
     "prefix": "throw new NotImplementedException",
     "body": [
