@@ -51,6 +51,11 @@ return {
             },
           },
         },
+        filterParams = {
+          matcher_fzf = {
+            highlightMatched = 'Search',
+          },
+        },
       }
     end)
 
