@@ -33,3 +33,7 @@ nmap <Space>fn <Plug>(ff-resume)
 " ファイルに紐付いているバッファならその親ディレクトリを指定する
 " そうでない場合はcwd
 nmap <space>e <Cmd>execute 'edit' (!getbufinfo(0)->empty() && &l:buftype->empty() ? '%:h' : '.')<CR>
+
+" <C-[pn]>による履歴の補完でも現在の入力をリスペクトしてほしい
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
