@@ -100,6 +100,7 @@ end
 
 if 1 == vim.fn.executable 'omnisharp' then
   lspconfig.omnisharp.setup {
+    cmd = { 'omnisharp' },
     capabilities = formatDisabled,
     on_attach = function(client)
       -- OmniSharp's semantic token format is broken.

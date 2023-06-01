@@ -25,6 +25,7 @@ lua_source = '''
 [[plugins]]
 repo = 'williamboman/mason.nvim'
 on_cmd = ['Mason', 'MasonInstall']
+on_source = 'nvim-lspconfig'
 lua_source = '''
   -- ~/.cache/nvim/ が存在しないとエラーになる
   local cache_dir = vim.fn.stdpath 'cache'
@@ -32,16 +33,6 @@ lua_source = '''
     os.execute(('mkdir %s'):format(cache_dir))
   end
   require('mason').setup()
-'''
-
-# mason.nvimとnvim-lspconfigの仲を取り持ってくれるらしい
-# なんで必要なのかあんま説明できない
-[[plugins]]
-repo = 'williamboman/mason-lspconfig.nvim'
-depends = 'mason.nvim'
-on_source = 'nvim-lspconfig'
-lua_source = '''
-  require('mason-lspconfig').setup()
 '''
 
 # LSのプログレスを格好良く表示してくれる
