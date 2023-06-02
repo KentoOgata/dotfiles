@@ -59,7 +59,7 @@ call s:add_rules(
       \     '\%(get\|set\|init\)\%( => [^;]\+\)*\%#'..'\)'
       \   },
       \   #{ char: '<Space>', at: '\.\w\+(\%([^)]\+,\s\)*\<\%(new\|out\)\@!\w\+\%#)', input: '<Space>=><Space>' },
-      \   #{ char: '$', input: '$"', input_after: '"' },
+      \   #{ char: '$', except: '\%#"', input: '$"', input_after: '"' },
       \   #{ char: '<Space>', at: '\<pp\%#', input: '<BS><BS>Console.WriteLine(', input_after: ')' },
       \ ]
       \ )

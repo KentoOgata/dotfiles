@@ -21,3 +21,6 @@ repo = 'Shougo/ddu-ui-ff'
 
 [[plugins]]
 repo = 'yuki-yano/ddu-filter-fzf'
+
+[[plugins]]
+repo = 'uga-rosa/ddu-source-nvim_lsp'

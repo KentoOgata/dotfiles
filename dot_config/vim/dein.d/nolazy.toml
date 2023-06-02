@@ -143,12 +143,15 @@ def s:SetupDduFf(): void
       _: {
         ignoreCase: true,
         matchers: ['matcher_fzf'],
+        sorters: ['sorter_fzf'],
       },
       line: {
         matchers: ['matcher_substring'],
+        sorters: [],
       },
       rg: {
         matchers: ['matcher_substring'],
+        sorters: [],
       },
     },
     kindOptions: {
@@ -262,6 +265,8 @@ def s:SetupDduFf(): void
   enddef
   nmap <Plug>(ddu:ff:plugins) <Cmd>call g:DduFfPlugins()<CR>
 enddef
+
+autocmd VimRc VimEnter * ++once call timer_start(10, { -> ddu#start({}) })
 
 " <Plug>(ddu:ff:で始まるマッピングのどれかを実行したときに
 " マッピング先を定義して実行する(deinのon_mapみたいな)

@@ -64,7 +64,6 @@ command -nargs=+ -bang Keymap call <SID>DefKeymap('<bang>' ==# '!', [<f-args>])
 
 nnoremap <expr> a (len(getline('.')) ==# 0) ? '"_cc' : 'a'
 nnoremap <expr> i (len(getline('.')) ==# 0) ? '"_cc' : 'i'
-inoremap <C-l> <Del>
 nnoremap <C-l> <Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-l><CR>
 inoremap <C-a> <Home>
 inoremap <C-e> <End>

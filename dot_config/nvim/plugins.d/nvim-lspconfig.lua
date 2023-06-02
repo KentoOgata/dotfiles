@@ -227,4 +227,10 @@ if 1 == vim.fn.executable 'vscode-css-language-server' then
     capabilities = capabilities,
   }
 end
+
+if 1 == vim.fn.executable 'pyright' then
+  lspconfig.pyright.setup {
+    capabilities = capabilities,
+  }
+end
 -- }}}
