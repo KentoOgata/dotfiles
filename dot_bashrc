@@ -6,4 +6,8 @@
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
-exec fish
+if fish 2>/dev/null; then
+        exit
+else
+        echo "fish failed to start, falling back to bash."
+fi
