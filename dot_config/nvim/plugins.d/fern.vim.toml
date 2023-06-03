@@ -15,19 +15,19 @@ hook_source = '''
 '''
 [plugins.ftplugin]
 fern = '''
-  nmap <buffer><nowait><silent> <space> <Plug>(fern-action-mark:toggle)
-  nmap <buffer><nowait><silent> <C-l>   <Cmd>nohlsearch<CR><Plug>(fern-action-reload:all)
-  nmap <buffer><nowait><silent> h       <Plug>(fern-action-collapse)
-  nmap <buffer><nowait><silent> <C-h>   <Plug>(fern-action-leave)
-  nmap <buffer><nowait><silent> <Enter> <Plug>(fern-action-open)
-  nmap <buffer><nowait><silent> y       <Plug>(fern-action-yank:path)
-  nmap <buffer><nowait><silent> <C-c>   <Plug>(fern-action-cancel)
-  nmap <buffer><nowait><silent> N       <Plug>(fern-action-new-file)
-  nmap <buffer><nowait><silent> K       <Plug>(fern-action-new-dir)
-  nmap <buffer><nowait><silent> d       <Plug>(fern-action-trash)
-  nmap <buffer><nowait><silent> gr      <Plug>(fern-action-grep)
-  nmap <buffer><nowait><silent> r       <Plug>(fern-action-rename)
-  nmap <buffer><nowait><silent><expr> l
+  nnoremap <buffer><nowait><silent> <space> <Plug>(fern-action-mark:toggle)
+  nnoremap <buffer><nowait><silent> <C-l>   <Cmd>nohlsearch<CR><Plug>(fern-action-reload:all)
+  nnoremap <buffer><nowait><silent> h       <Plug>(fern-action-collapse)
+  nnoremap <buffer><nowait><silent> <C-h>   <Plug>(fern-action-leave)
+  nnoremap <buffer><nowait><silent> <Enter> <Plug>(fern-action-open)
+  nnoremap <buffer><nowait><silent> y       <Plug>(fern-action-yank:path)
+  nnoremap <buffer><nowait><silent> <C-c>   <Plug>(fern-action-cancel)
+  nnoremap <buffer><nowait><silent> N       <Plug>(fern-action-new-file)
+  nnoremap <buffer><nowait><silent> K       <Plug>(fern-action-new-dir)
+  nnoremap <buffer><nowait><silent> d       <Plug>(fern-action-trash)
+  nnoremap <buffer><nowait><silent> gr      <Plug>(fern-action-grep)
+  nnoremap <buffer><nowait><silent> r       <Plug>(fern-action-rename)
+  nnoremap <buffer><nowait><silent><expr> l
         \ fern#smart#leaf('<Plug>(fern-action-open)', '<Plug>(fern-action-expand)')
 '''
 
@@ -52,10 +52,10 @@ repo = 'yuki-yano/fern-preview.vim'
 on_source = 'fern.vim'
 [plugins.ftplugin]
 fern = '''
-  nmap <buffer> p     <Plug>(fern-action-preview:toggle)
-  nmap <buffer> <C-p> <Plug>(fern-action-preview:auto:toggle)
-  nmap <buffer> <C-d> <Plug>(fern-action-preview:scroll:down:half)
-  nmap <buffer> <C-u> <Plug>(fern-action-preview:scroll:up:half)
+  nnoremap <buffer> p     <Plug>(fern-action-preview:toggle)
+  nnoremap <buffer> <C-p> <Plug>(fern-action-preview:auto:toggle)
+  nnoremap <buffer> <C-d> <Plug>(fern-action-preview:scroll:down:half)
+  nnoremap <buffer> <C-u> <Plug>(fern-action-preview:scroll:up:half)
 '''
 
 # - Fernのバッファーで編集済み(作業中)のファイルが識別しやすくなる
@@ -91,9 +91,9 @@ hook_add = '''
 repo = 'lambdalisue/fern-bookmark.vim'
 on_source = 'fern.vim'
 hook_add = '''
-  nmap <space>o <Cmd>Fern bookmark:///<CR>
+  nnoremap <space>o <Cmd>Fern bookmark:///<CR>
 '''
 [plugins.ftplugin]
 fern = '''
-  nmap <buffer> B <Plug>(fern-action-save-as-bookmark)
+  nnoremap <buffer> B <Plug>(fern-action-save-as-bookmark)
 '''

@@ -12,7 +12,7 @@ on_cmd = ['FzfPlugins', 'FzfMrw', 'GhqFind']
 hook_add = '''
   let g:fzf_command_prefix = 'Fzf'
   call add(g:AlterCommands, #{ char: 'fp', input: 'FzfPlugins' })
-  nmap <space>fz <Cmd>FzfMrw<CR>
+  nnoremap <space>fz <Cmd>FzfMrw<CR>
   call add(g:AlterCommands, #{ char: 'fq', input: 'GhqFind' })
 '''
 hooks_file = '$DEIN_CONFIG_DIR/fzf.vim.lua'
@@ -28,7 +28,7 @@ on_cmd = [
   'FzfPreviewProjectFiles',
 ]
 hook_add = '''
-  nmap <space>af <Cmd>FzfPreviewGitActions<CR>
+  nnoremap <space>af <Cmd>FzfPreviewGitActions<CR>
 '''
 
 [[plugins]]

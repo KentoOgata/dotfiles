@@ -10,21 +10,21 @@ hooks_file = '$DEIN_CONFIG_DIR/lexima.vim'
 repo = 'mattn/emmet-vim'
 on_map = { i = '<Plug>(emmet-' }
 hook_add = '''
-  imap <C-y>, <Plug>(emmet-expand-abbr)
-  imap <C-y>; <Plug>(emmet-expand-word)
-  imap <C-y>u <Plug>(emmet-update-tag)
-  imap <C-y>d <Plug>(emmet-balance-tag-inward)
-  imap <C-y>D <Plug>(emmet-balance-tag-outward)
-  imap <C-y>n <Plug>(emmet-move-next)
-  imap <C-y>N <Plug>(emmet-move-prev)
-  imap <C-y>i <Plug>(emmet-image-size)
-  imap <C-y>/ <Plug>(emmet-toggle-comment)
-  imap <C-y>j <Plug>(emmet-split-join-tag)
-  imap <C-y>k <Plug>(emmet-remove-tag)
-  imap <C-y>a <Plug>(emmet-anchorize-url)
-  imap <C-y>A <Plug>(emmet-anchorize-summary)
-  imap <C-y>m <Plug>(emmet-merge-lines)
-  imap <C-y>c <Plug>(emmet-code-pretty)
+  inoremap <C-y>, <Plug>(emmet-expand-abbr)
+  inoremap <C-y>; <Plug>(emmet-expand-word)
+  inoremap <C-y>u <Plug>(emmet-update-tag)
+  inoremap <C-y>d <Plug>(emmet-balance-tag-inward)
+  inoremap <C-y>D <Plug>(emmet-balance-tag-outward)
+  inoremap <C-y>n <Plug>(emmet-move-next)
+  inoremap <C-y>N <Plug>(emmet-move-prev)
+  inoremap <C-y>i <Plug>(emmet-image-size)
+  inoremap <C-y>/ <Plug>(emmet-toggle-comment)
+  inoremap <C-y>j <Plug>(emmet-split-join-tag)
+  inoremap <C-y>k <Plug>(emmet-remove-tag)
+  inoremap <C-y>a <Plug>(emmet-anchorize-url)
+  inoremap <C-y>A <Plug>(emmet-anchorize-summary)
+  inoremap <C-y>m <Plug>(emmet-merge-lines)
+  inoremap <C-y>c <Plug>(emmet-code-pretty)
 '''
 
 # 新しいファイル開いて `:Template nanka` すると良い感じになる

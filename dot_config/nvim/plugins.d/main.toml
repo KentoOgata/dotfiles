@@ -142,8 +142,8 @@ hook_add = '''
   Keymap nx <Plug>(caw:prefix)b   <Plug>(caw:box:comment)
   Keymap nx <Plug>(caw:prefix)o   <Plug>(caw:jump:comment-next)
   Keymap nx <Plug>(caw:prefix)O   <Plug>(caw:jump:comment-prev)
-  nmap <Plug>(caw:prefix)c <Plug>(caw:wrap:toggle:operator)
-  xmap <Plug>(caw:prefix)c <Plug>(caw:hatpos:toggle)
+  nnoremap <Plug>(caw:prefix)c <Plug>(caw:wrap:toggle:operator)
+  xnoremap <Plug>(caw:prefix)c <Plug>(caw:hatpos:toggle)
 '''
 
 # 関数の引数の順番を入れ替えたりする
@@ -151,9 +151,9 @@ hook_add = '''
 repo = 'machakann/vim-swap'
 on_map = { nxo = '<Plug>(swap-' }
 hook_add = '''
-  nmap g< <Plug>(swap-prev)
-  nmap g> <Plug>(swap-next)
-  nmap gs <Plug>(swap-interactive)
+  nnoremap g< <Plug>(swap-prev)
+  nnoremap g> <Plug>(swap-next)
+  nnoremap gs <Plug>(swap-interactive)
   Keymap xo is <Plug>(swap-textobject-i)
   Keymap xo as <Plug>(swap-textobject-a)
 '''
@@ -260,10 +260,10 @@ lazy = true
 repo = 'hrsh7th/nvim-gtd'
 on_map = '<Plug>(gtd:'
 hook_add = '''
-  nmap gfH <Plug>(gtd:splitleft)
-  nmap gfJ <Plug>(gtd:splitbelow)
-  nmap gfK <Plug>(gtd:splitabove)
-  nmap gfL <Plug>(gtd:splitright)
+  nnoremap gfH <Plug>(gtd:splitleft)
+  nnoremap gfJ <Plug>(gtd:splitbelow)
+  nnoremap gfK <Plug>(gtd:splitabove)
+  nnoremap gfL <Plug>(gtd:splitright)
 '''
 hooks_file = '$DEIN_CONFIG_DIR/nvim-gtd.lua'
 
@@ -273,8 +273,8 @@ hooks_file = '$DEIN_CONFIG_DIR/nvim-gtd.lua'
 repo = 'hrsh7th/nvim-pasta'
 on_lua = 'pasta'
 hook_add = '''
-  nmap p <Cmd>lua require('pasta.mappings').p()<CR>
-  nmap P <Cmd>lua require('pasta.mappings').P()<CR>
+  nnoremap p <Cmd>lua require('pasta.mappings').p()<CR>
+  nnoremap P <Cmd>lua require('pasta.mappings').P()<CR>
 '''
 lua_source = '''
   require('pasta').setup {
@@ -375,9 +375,9 @@ hook_add = '''
 repo = 'ojroques/vim-oscyank'
 on_map = '<Plug>OSCYank'
 hook_add = '''
-  xmap <space>y <Plug>OSCYankVisual
-  nmap <space>y <Plug>OSCYankOperator
-  nmap <space>p "+p
+  xnoremap <space>y <Plug>OSCYankVisual
+  nnoremap <space>y <Plug>OSCYankOperator
+  nnoremap <space>p "+p
 '''
 
 # vimでプレゼンテーション

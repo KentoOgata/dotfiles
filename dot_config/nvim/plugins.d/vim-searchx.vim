@@ -32,6 +32,6 @@ function! g:ToggleMigemoSearch() abort
     endif
   endif
 endfunction
-autocmd VimRc User SearchxEnter cmap <buffer> <C-j> <Cmd>call g:ToggleMigemoSearch()<CR>
+autocmd VimRc User SearchxEnter cnoremap <buffer> <C-j> <Cmd>call g:ToggleMigemoSearch()<CR>
 autocmd VimRc User SearchxLeave cunmap <buffer> <C-j>
 " }}}

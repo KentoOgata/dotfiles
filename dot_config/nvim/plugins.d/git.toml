@@ -4,8 +4,8 @@
 repo = 'lambdalisue/gina.vim'
 on_cmd = 'Gina'
 hook_add = '''
-  nmap <space>ah <Cmd>Gina log --graph --all --max-count=100<CR>
-  nmap <expr> <space>aH $'<Cmd>Gina log --graph --max-count=100 {nvim_buf_get_name(nvim_get_current_buf())}<CR>'
+  nnoremap <space>ah <Cmd>Gina log --graph --all --max-count=100<CR>
+  nnoremap <expr> <space>aH $'<Cmd>Gina log --graph --max-count=100 {nvim_buf_get_name(nvim_get_current_buf())}<CR>'
 '''
 
 # denops製のGitクライアント
@@ -20,10 +20,10 @@ on_cmd = [
   'Gin',
 ]
 hook_add = '''
-  nmap <space>aa <Cmd>GinStatus<CR>
-  nmap <space>ac <Cmd>Gin commit -v<CR>
-  nmap <space>aC <Cmd>Gin commit -v --amend<CR>
-  nmap <space>ab <Cmd>GinBranch<CR>
+  nnoremap <space>aa <Cmd>GinStatus<CR>
+  nnoremap <space>ac <Cmd>Gin commit -v<CR>
+  nnoremap <space>aC <Cmd>Gin commit -v --amend<CR>
+  nnoremap <space>ab <Cmd>GinBranch<CR>
   call extend(g:AlterCommands, [
         \   #{ char: 'gs', input: 'GinStatus' },
         \   #{ char: 'gp', input: 'Gin<space>push' },
@@ -33,7 +33,7 @@ hook_add = '''
 hooks_file = '$DEIN_CONFIG_DIR/gin.vim'
 [plugins.ftplugin]
 gin-branch = '''
-  nmap <buffer> N <Plug>(gin-action-new)
+  nnoremap <buffer> N <Plug>(gin-action-new)
 '''
 gin-diff = '''
   setl nobuflisted

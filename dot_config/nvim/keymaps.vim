@@ -22,17 +22,17 @@ cnoremap <C-e> <End>
 cnoremap <C-k> <Cmd>call setcmdline(getcmdpos() == 1 ? '' : getcmdline()[:getcmdpos() - 2])<CR>
 
 " Fuzzy Finder
-nmap <Space>ff <Plug>(ff-files)
-nmap <Space>fc <Plug>(ff-config_files)
-nmap <Space>fw <Plug>(ff-grep)
-nmap <Space>fh <Plug>(ff-help_tags)
-nmap <Space>fs <Plug>(ff-lines)
-nmap <Space>fb <Plug>(ff-buffers)
-nmap <Space>fn <Plug>(ff-resume)
+nnoremap <Space>ff <Plug>(ff-files)
+nnoremap <Space>fc <Plug>(ff-config_files)
+nnoremap <Space>fw <Plug>(ff-grep)
+nnoremap <Space>fh <Plug>(ff-help_tags)
+nnoremap <Space>fs <Plug>(ff-lines)
+nnoremap <Space>fb <Plug>(ff-buffers)
+nnoremap <Space>fn <Plug>(ff-resume)
 
 " ファイルに紐付いているバッファならその親ディレクトリを指定する
 " そうでない場合はcwd
-nmap <space>e <Cmd>execute 'edit' (!getbufinfo(0)->empty() && &l:buftype->empty() ? '%:h' : '.')<CR>
+nnoremap <space>e <Cmd>execute 'edit' (!getbufinfo(0)->empty() && &l:buftype->empty() ? '%:h' : '.')<CR>
 
 " <C-[pn]>による履歴の補完でも現在の入力をリスペクトしてほしい
 cnoremap <C-p> <Up>
