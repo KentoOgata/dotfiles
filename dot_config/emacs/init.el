@@ -182,7 +182,7 @@
 	    (skk-azik-keyboard-type . "us101")
 	    (skk-jisyo-code . "utf-8")
 	    (skk-jisyo . ,(concat (getenv "XDG_DATA_HOME") "/skk/user-jisyo"))
-	    (skk-large-jisyo . ,(concat (getenv "XDG_DATA_HOME") "/skk/SKK-JISYO.L"))
+	    (skk-large-jisyo . ,(concat (getenv "XDG_DATA_HOME") "/skk-dict/SKK-JISYO.L"))
 	    (skk-jisyo-edit-user-accepts-editing . t)
             (skk-save-jisyo-instantly . t)
             (skk-egg-like-newline . t)))
