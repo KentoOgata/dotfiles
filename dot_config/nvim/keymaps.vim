@@ -29,6 +29,8 @@ nnoremap <Space>fh <Plug>(ff-help_tags)
 nnoremap <Space>fs <Plug>(ff-lines)
 nnoremap <Space>fb <Plug>(ff-buffers)
 nnoremap <Space>fn <Plug>(ff-resume)
+" <Space>f<Esc>の場合に<Space>が実行されるのを回避
+nnoremap <Space>f <Nop>
 
 " ファイルに紐付いているバッファならその親ディレクトリを指定する
 " そうでない場合はcwd
