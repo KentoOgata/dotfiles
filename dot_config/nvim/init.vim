@@ -39,6 +39,23 @@ let g:AlterCommands = []
 " yankした範囲をハイライトする
 autocmd VimRc TextYankPost * silent! lua vim.highlight.on_yank()
 
+lua << EOF
+vim.api.nvim_create_autocmd('VimEnter', {
+  group = 'VimRc',
+  once = true,
+  desc = '起動したときに "$(getcwd())/.env" を読み込んで環境変数を定義する',
+  callback = function()
+    local path = vim.fs.joinpath(vim.fn.getcwd(), '.env')
+    if 1 == vim.fn.filereadable(path) then
+      for line in io.lines(path) do
+        local k, v = line:match('([^=]*)=([^=]*)')
+        vim.env[k] = v
+      end
+    end
+  end
+})
+EOF
+
 let g:dein#inline_vimrcs = [
       \ s:here .. '/global.lua',
       \ s:here .. '/commands.vim',
