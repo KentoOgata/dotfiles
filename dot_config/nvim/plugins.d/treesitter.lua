@@ -50,4 +50,7 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
+
+vim.cmd.highlight { 'link', '@text.diff.add', 'diffAdded' }
+vim.cmd.highlight { 'link', '@text.diff.delete', 'diffRemoved' }
 -- }}}
