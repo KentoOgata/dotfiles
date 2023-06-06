@@ -45,13 +45,25 @@ vim.api.nvim_create_autocmd('VimEnter', {
   once = true,
   desc = '起動したときに "$(getcwd())/.env" を読み込んで環境変数を定義する',
   callback = function()
-    local path = vim.fs.joinpath(vim.fn.getcwd(), '.env')
-    if 1 == vim.fn.filereadable(path) then
-      for line in io.lines(path) do
-        local k, v = line:match('([^=]*)=([^=]*)')
-        vim.env[k] = v
+    vim.uv.new_thread(function()
+      local uv = vim.uv
+      local file = uv.fs_open(
+        vim.fs.joinpath(uv.cwd(), '.env'),
+        'r',
+        438
+      )
+      if file == nil then
+        return
       end
-    end
+      local stats = uv.fs_fstat(file)
+      local data = uv.fs_read(file, stats.size, 0)
+      uv.fs_close(file)
+
+      for line in data:gmatch('[^\r\n]+') do
+        local k, v = line:match('([^=]*)=([^=]*)')
+        uv.os_setenv(k, v)
+      end
+    end)
   end
 })
 EOF
