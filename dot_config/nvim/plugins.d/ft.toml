@@ -108,3 +108,6 @@ hook_add = '''
 
 [[plugins]]
 repo = 'wgwoods/vim-systemd-syntax'
+
+[[plugins]]
+repo = 'hashivim/vim-terraform'

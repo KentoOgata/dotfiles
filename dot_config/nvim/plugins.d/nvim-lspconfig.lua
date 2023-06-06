@@ -233,4 +233,8 @@ if 1 == vim.fn.executable 'pyright' then
     capabilities = capabilities,
   }
 end
+
+if 1 == vim.fn.executable 'terraform-ls' then
+  lspconfig.terraformls.setup {}
+end
 -- }}}
