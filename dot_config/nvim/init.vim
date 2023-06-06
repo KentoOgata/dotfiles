@@ -36,6 +36,9 @@ augroup END
 " [{ char: string, input: string, input_after: string? }]
 let g:AlterCommands = []
 
+" yankした範囲をハイライトする
+autocmd VimRc TextYankPost * silent! lua vim.highlight.on_yank()
+
 let g:dein#inline_vimrcs = [
       \ s:here .. '/global.lua',
       \ s:here .. '/commands.vim',
@@ -43,7 +46,6 @@ let g:dein#inline_vimrcs = [
       \ s:here .. '/keymaps.vim',
       \ s:here .. '/chezmoi.vim',
       \ s:here .. '/nvim-lsp.lua',
-      \ s:here .. '/autocmds.vim',
       \ ]
 
 execute 'source' s:here .. '/dein.vim'
