@@ -31,7 +31,7 @@ hook_add = '''
 [[plugins]]
 repo = 'hrsh7th/vim-searchx'
 on_func = 'searchx#'
-hooks_file = '$DEIN_CONFIG_DIR/vim-searchx.vim'
+hooks_file = '$DEIN_CONFIG_DIR/searchx.vim'
 hook_add = '''
   Keymap nx / <Cmd>call searchx#start(#{ dir: 1 })<CR>
   Keymap nx ? <Cmd>call searchx#start(#{ dir: 0 })<CR>
@@ -233,7 +233,7 @@ hook_add = '''
 repo = 'stevearc/dressing.nvim'
 depends = 'nui.nvim'
 on_event = 'CursorMoved'
-hooks_file = '$DEIN_CONFIG_DIR/dressing.nvim.lua'
+hooks_file = '$DEIN_CONFIG_DIR/dressing.lua'
 
 # 日本語help
 [[plugins]]
@@ -266,7 +266,7 @@ hook_add = '''
   nnoremap gfK <Plug>(gtd:splitabove)
   nnoremap gfL <Plug>(gtd:splitright)
 '''
-hooks_file = '$DEIN_CONFIG_DIR/nvim-gtd.lua'
+hooks_file = '$DEIN_CONFIG_DIR/gtd.lua'
 
 # p で貼り付ける内容をヤンク履歴から選べる
 # 貼り付け位置のインデントに合わせて貼り付けてくれるのが地味に便利
@@ -293,7 +293,7 @@ lua_source = '''
 [[plugins]]
 repo = 'tkmpypy/chowcho.nvim'
 on_lua = 'chowcho'
-hooks_file = '$DEIN_CONFIG_DIR/chowcho.nvim.lua'
+hooks_file = '$DEIN_CONFIG_DIR/chowcho.lua'
 
 [[plugins]]
 repo = 'nvim-tree/nvim-web-devicons'
@@ -313,7 +313,7 @@ lazy = true
 repo = 'rebelot/heirline.nvim'
 depends = 'nvim-web-devicons'
 on_event = ['FileType', 'WinNew']
-hooks_file = '$DEIN_CONFIG_DIR/heirline.nvim.lua'
+hooks_file = '$DEIN_CONFIG_DIR/heirline.lua'
 
 # ファイルの保存履歴とかを作ってくれるやつ
 # 他のプラグインと組み合わせて使ったりする
@@ -405,6 +405,6 @@ hook_source = '''
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
 on_event = ['BufReadPost', 'BufNewFile']
-hooks_file='$DEIN_CONFIG_DIR/nvim-treesitter.lua'
+hooks_file='$DEIN_CONFIG_DIR/treesitter.lua'
 
 # vim:ft=toml expandtab tabstop=2 shiftwidth=2

@@ -2,7 +2,7 @@
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
 on_event = 'FileType'
-hooks_file = '$DEIN_CONFIG_DIR/nvim-lspconfig.lua'
+hooks_file = '$DEIN_CONFIG_DIR/lspconfig.lua'
 
 # lua language serverにneovimのlua apiの情報を渡してくれる
 [[plugins]]

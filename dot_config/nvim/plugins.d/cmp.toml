@@ -4,7 +4,7 @@
 repo = 'hrsh7th/nvim-cmp'
 depends = ['vim-vsnip', 'lspkind-nvim']
 on_event = ['InsertEnter', 'CmdlineEnter']
-hooks_file = '$DEIN_CONFIG_DIR/nvim-cmp.lua'
+hooks_file = '$DEIN_CONFIG_DIR/cmp.lua'
 
 [[plugins]]
 repo = 'hrsh7th/cmp-nvim-lsp'
