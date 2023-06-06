@@ -345,7 +345,7 @@ lua_source = '''
       ccc.picker.css_lch,
       ccc.picker.css_oklab,
       ccc.picker.css_oklch,
-      ccc.picker.trailing_space {
+      ccc.picker.trailing_whitespace {
         enable = true,
         disable = {
           'fzf',
