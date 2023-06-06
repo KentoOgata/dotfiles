@@ -6,7 +6,7 @@ set -eu
 find ~/abs -type f -name PKGBUILD -exec dirname {} \; | while IFS= read -r dir; do
         cd "$dir" || continue;
 
-        if makepkg -si; then
+        if yes | makepkg -si; then
                 chezmoi add PKGBUILD
         else
                 echo "makepkg -si failed in directory ${dir}."
