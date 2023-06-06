@@ -266,7 +266,7 @@ def s:SetupDduFf(): void
   nmap <Plug>(ddu:ff:plugins) <Cmd>call g:DduFfPlugins()<CR>
 enddef
 
-autocmd VimRc VimEnter * ++once call timer_start(10, { -> ddu#start({}) })
+autocmd VimRc User DenopsReady ++once call timer_start(10, { -> ddu#start({}) })
 
 " <Plug>(ddu:ff:で始まるマッピングのどれかを実行したときに
 " マッピング先を定義して実行する(deinのon_mapみたいな)

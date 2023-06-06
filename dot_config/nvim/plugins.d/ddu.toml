@@ -7,7 +7,7 @@ hook_add = '''
   " 初回実行時に待機時間が発生するので微妙かも
   nnoremap <Plug>(ddu- :<C-u>execute 'nunmap' '<Plug>(ddu-'<CR><Cmd>lua require('rc.ddu').setup()<CR><Plug>(ddu-
 
-  autocmd VimRc VimEnter * ++once call timer_start(10, { -> ddu#start({}) })
+  autocmd VimRc User DenopsReady ++once call timer_start(10, { -> ddu#start({}) })
 '''
 
 [[plugins]]
