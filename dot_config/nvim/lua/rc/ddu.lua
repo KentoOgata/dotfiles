@@ -152,9 +152,22 @@ return {
 
     nmap('<Plug>(ddu-buffers)', ddu 'buffer')
     nmap('<Plug>(ddu-files)', ddu 'file_external')
-    nmap('<Plug>(ddu-help_tags)', ddu 'help')
     nmap('<Plug>(ddu-rg)', ddu 'rg')
     nmap('<Plug>(ddu-lines)', ddu 'line')
+
+    nmap(
+      '<Plug>(ddu-help_tags)',
+      ddu {
+        'help',
+        uiParams = {
+          ff = {
+            autoAction = {
+              name = 'preview',
+            },
+          },
+        },
+      }
+    )
 
     nmap(
       '<Plug>(ddu-lsp_implementations)',
