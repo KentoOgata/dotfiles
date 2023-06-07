@@ -107,6 +107,9 @@ return {
         matcher_fzf = {
           highlightMatched = 'Search',
         },
+        matcher_substring = {
+          highlightMatched = 'Search',
+        },
       },
       sourceParams = {
         file_external = {
