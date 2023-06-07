@@ -18,20 +18,6 @@ hook_add = '''
 hooks_file = '$DEIN_CONFIG_DIR/fzf.vim.lua'
 
 [[plugins]]
-repo = 'yuki-yano/fzf-preview.vim'
-if = "executable('node')"
-depends = ['fzf.vim', 'coc.nvim']
-on_cmd = [
-  'FzfPreviewGitActions',
-  'FzfPreviewMruFiles',
-  'FzfPreviewProjectMruFiles',
-  'FzfPreviewProjectFiles',
-]
-hook_add = '''
-  nnoremap <space>af <Cmd>FzfPreviewGitActions<CR>
-'''
-
-[[plugins]]
 repo = 'ibhagwan/fzf-lua'
 if = "executable('fzf')"
 depends = ['nvim-web-devicons', 'nvim-treesitter']
