@@ -8,6 +8,8 @@ hook_add = '''
   nnoremap <Plug>(ff-help_tags) <Plug>(ddu-help_tags)
   nnoremap <Plug>(ff-grep) <Plug>(ddu-rg)
   nnoremap <Plug>(ff-lines) <Plug>(ddu-lines)
+  nnoremap <Plug>(ff-lsp_implementations) <Plug>(ddu-lsp_implementations)
+  nnoremap <Plug>(ff-lsp_references) <Plug>(ddu-lsp_references)
 
   " denopsが立ち上がったときにdduをセットアップする
   autocmd VimRc User DenopsReady ++once call timer_start(10, { -> luaeval("require('rc.ddu').setup()") })
@@ -27,6 +29,9 @@ repo = 'yuki-yano/ddu-filter-fzf'
 
 [[plugins]]
 repo = 'matsui54/ddu-source-file_external'
+
+[[plugins]]
+repo = 'uga-rosa/ddu-source-lsp'
 
 [[plugins]]
 repo = 'uga-rosa/ddu-filter-converter_devicon'

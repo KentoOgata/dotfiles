@@ -126,6 +126,9 @@ return {
         buffer = {
           orderby = 'asc',
         },
+        lsp_references = {
+          includeDeclaration = false,
+        },
       },
     }
 
@@ -134,6 +137,43 @@ return {
     vim.keymap.set('n', '<Plug>(ddu-help_tags)', ddu 'help')
     vim.keymap.set('n', '<Plug>(ddu-rg)', ddu 'rg')
     vim.keymap.set('n', '<Plug>(ddu-lines)', ddu 'line')
+
+    vim.keymap.set('n', '<Plug>(ddu-lsp_implementations)', function()
+      vim.fn['ddu#start'] {
+        uiParams = vim.tbl_deep_extend('error', getUiParamsOfWindowSize(), {
+          ff = {
+            autoAction = {
+              name = 'preview',
+            },
+          },
+        }),
+        sources = {
+          {
+            name = 'lsp_defenition',
+            params = {
+              method = 'textDocument/implementation',
+            },
+          },
+        },
+      }
+    end)
+
+    vim.keymap.set('n', '<Plug>(ddu-lsp_references)', function()
+      vim.fn['ddu#start'] {
+        sources = {
+          {
+            name = 'lsp_references',
+          },
+        },
+        uiParams = vim.tbl_deep_extend('error', getUiParamsOfWindowSize(), {
+          ff = {
+            autoAction = {
+              name = 'preview',
+            },
+          },
+        }),
+      }
+    end)
 
     vim.keymap.set('n', '<Plug>(ddu-resume)', function()
       vim.fn['ddu#start'] {
@@ -178,6 +218,22 @@ return {
             { 'q', uiAction 'quit' },
             { 'd', itemAction 'delete' },
             { '<SPACE>', uiAction 'toggleSelectItem', { nowait = true } },
+            {
+              'p',
+              function()
+                if vim.b[ctx.buf].previewAutocmdId ~= nil then
+                  vim.api.nvim_del_autocmd(vim.b[ctx.buf].previewAutocmdId)
+                else
+                  vim.b[ctx.buf].previewAutocmdId = vim.api.nvim_create_autocmd('CursorMoved', {
+                    buffer = ctx.buf,
+                    group = 'VimRc',
+                    callback = function()
+                      vim.fn['ddu#ui#do_action'] 'preview'
+                    end,
+                  })
+                end
+              end,
+            },
           },
         }
       end,

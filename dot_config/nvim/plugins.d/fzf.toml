@@ -23,8 +23,4 @@ if = "executable('fzf')"
 depends = ['nvim-web-devicons', 'nvim-treesitter']
 on_lua = 'fzf-lua'
 on_cmd = 'FzfLua'
-lua_add = '''
-  vim.keymap.set('n', '<Plug>(ff-lsp_references)', '<Cmd>FzfLua lsp_references<CR>')
-  vim.keymap.set('n', '<Plug>(ff-lsp_implementations)', '<Cmd>FzfLua lsp_implementations<CR>')
-'''
 hooks_file = '$DEIN_CONFIG_DIR/fzf-lua.lua'
