@@ -142,14 +142,21 @@ return {
       },
     }
 
-    vim.keymap.set('n', '<Plug>(ddu-buffers)', ddu 'buffer')
-    vim.keymap.set('n', '<Plug>(ddu-files)', ddu 'file_external')
-    vim.keymap.set('n', '<Plug>(ddu-help_tags)', ddu 'help')
-    vim.keymap.set('n', '<Plug>(ddu-rg)', ddu 'rg')
-    vim.keymap.set('n', '<Plug>(ddu-lines)', ddu 'line')
+    ---A wrapper of vim.keymap.set()
+    ---@param lhs string
+    ---@param rhs string|function
+    ---@param opts? table
+    local function nmap(lhs, rhs, opts)
+      vim.keymap.set('n', lhs, rhs, opts)
+    end
 
-    vim.keymap.set(
-      'n',
+    nmap('<Plug>(ddu-buffers)', ddu 'buffer')
+    nmap('<Plug>(ddu-files)', ddu 'file_external')
+    nmap('<Plug>(ddu-help_tags)', ddu 'help')
+    nmap('<Plug>(ddu-rg)', ddu 'rg')
+    nmap('<Plug>(ddu-lines)', ddu 'line')
+
+    nmap(
       '<Plug>(ddu-lsp_implementations)',
       ddu {
         uiParams = {
@@ -170,8 +177,7 @@ return {
       }
     )
 
-    vim.keymap.set(
-      'n',
+    nmap(
       '<Plug>(ddu-lsp_references)',
       ddu {
         'lsp_references',
@@ -185,8 +191,7 @@ return {
       }
     )
 
-    vim.keymap.set(
-      'n',
+    nmap(
       '<Plug>(ddu-resume)',
       ddu {
         resume = true,
@@ -198,8 +203,7 @@ return {
       }
     )
 
-    vim.keymap.set(
-      'n',
+    nmap(
       '<Plug>(ddu-config_files)',
       ddu {
         'file_external',
