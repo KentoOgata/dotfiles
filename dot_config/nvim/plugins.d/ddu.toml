@@ -10,6 +10,7 @@ hook_add = '''
   nnoremap <Plug>(ff-lines)               <Plug>(ddu-lines)
   nnoremap <Plug>(ff-lsp_implementations) <Plug>(ddu-lsp_implementations)
   nnoremap <Plug>(ff-lsp_references)      <Plug>(ddu-lsp_references)
+  nnoremap <Plug>(ff-mrw)                 <Plug>(ddu-mrw)
 
   " denopsが立ち上がったときにdduをセットアップする
   autocmd VimRc User DenopsReady ++once call timer_start(10, { -> luaeval("require('rc.ddu').setup()") })
@@ -58,3 +59,6 @@ lua_add = '''
     vim.ui.select(...)
   end
 '''
+
+[[plugins]]
+repo = 'kuuote/ddu-source-mr'

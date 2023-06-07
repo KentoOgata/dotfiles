@@ -15,16 +15,6 @@ vim.api.nvim_create_user_command('FzfPlugins', function()
     },
   }
 end, {})
-vim.api.nvim_create_user_command('FzfMrw', function()
-  vim.fn['fzf#run'] {
-    source = vim.fn['mr#mrw#list'](),
-    sink = 'edit',
-    window = {
-      width = 0.9,
-      height = 0.6,
-    },
-  }
-end, {})
 vim.api.nvim_create_user_command('GhqFind', function()
   vim.fn['fzf#run'] {
     source = vim.fn.systemlist { 'ghq', 'list', '--full-path' },

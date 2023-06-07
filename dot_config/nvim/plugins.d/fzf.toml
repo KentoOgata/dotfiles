@@ -8,11 +8,10 @@ build = 'go install'
 repo = 'junegunn/fzf.vim'
 depends = 'fzf'
 on_func = 'fzf#'
-on_cmd = ['FzfPlugins', 'FzfMrw', 'GhqFind']
+on_cmd = ['FzfPlugins', 'GhqFind']
 hook_add = '''
   let g:fzf_command_prefix = 'Fzf'
   call add(g:AlterCommands, #{ char: 'fp', input: 'FzfPlugins' })
-  nnoremap <space>fz <Cmd>FzfMrw<CR>
   call add(g:AlterCommands, #{ char: 'fq', input: 'GhqFind' })
 '''
 hooks_file = '$DEIN_CONFIG_DIR/fzf.vim.lua'

@@ -336,6 +336,7 @@ hooks_file = '$DEIN_CONFIG_DIR/heirline.lua'
 [[plugins]]
 repo = 'lambdalisue/mr.vim'
 on_event = ['BufReadPre', 'BufNewFile']
+on_func = 'mr#'
 
 # カラーピッカー
 # バッファー上のカラーコードをハイライト(こっちがメインで入れてる)

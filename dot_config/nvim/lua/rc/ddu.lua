@@ -115,6 +115,9 @@ return {
           sorters = {},
           converters = {},
         },
+        mr = {
+          sorters = {},
+        },
       },
       kindOptions = {
         _ = {
@@ -154,6 +157,24 @@ return {
     nmap('<Plug>(ddu-files)', ddu 'file_external')
     nmap('<Plug>(ddu-rg)', ddu 'rg')
     nmap('<Plug>(ddu-lines)', ddu 'line')
+    nmap(
+      '<Plug>(ddu-mrw)',
+      ddu {
+        uiParams = {
+          ff = {
+            startFilter = false,
+          },
+        },
+        sources = {
+          {
+            name = 'mr',
+            params = {
+              kind = 'mrw',
+            },
+          },
+        },
+      }
+    )
 
     nmap(
       '<Plug>(ddu-help_tags)',
