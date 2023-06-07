@@ -28,7 +28,7 @@ local defaultStatusLine = {
   space,
   fileIcon,
   fileType,
-  { flexible = 3, { fileEncoding, space }, { provider = '' } },
+  { flexible = 3, { space, fileEncoding, space } },
   space,
   ruler,
   searchCount,
