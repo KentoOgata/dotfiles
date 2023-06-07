@@ -236,6 +236,8 @@ return {
               function()
                 if vim.b[ctx.buf].previewAutocmdId ~= nil then
                   vim.api.nvim_del_autocmd(vim.b[ctx.buf].previewAutocmdId)
+                  vim.fn['ddu#ui#do_action'] 'preview'
+                  vim.api.nvim_buf_del_var(ctx.buf, 'previewAutocmdId')
                 else
                   vim.b[ctx.buf].previewAutocmdId = vim.api.nvim_create_autocmd('CursorMoved', {
                     buffer = ctx.buf,
