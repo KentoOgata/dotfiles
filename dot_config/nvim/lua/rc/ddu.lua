@@ -139,6 +139,9 @@ return {
         dein = {
           defaultAction = 'openProject',
         },
+        ghq = {
+          defaultAction = 'openProject',
+        },
       },
       kindOptions = {
         _ = {
@@ -271,6 +274,7 @@ return {
     )
 
     vim.api.nvim_create_user_command('DduPlugins', ddu 'dein', {})
+    vim.api.nvim_create_user_command('DduGhq', ddu 'ghq', {})
 
     vim.api.nvim_create_autocmd('FileType', {
       group = 'VimRc',
