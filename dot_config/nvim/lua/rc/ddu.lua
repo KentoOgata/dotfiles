@@ -18,6 +18,29 @@ local function itemAction(action, params)
   end
 end
 
+---@param source string|table
+local function ddu(source)
+  if type(source) == 'string' then
+    return function()
+      vim.fn['ddu#start'] {
+        sources = {
+          {
+            name = source,
+          },
+        },
+      }
+    end
+  elseif type(source) == 'table' then
+    return function()
+      vim.fn['ddu#start'] {
+        sources = {
+          source,
+        },
+      }
+    end
+  end
+end
+
 return {
   setup = function()
     local lines = vim.opt.lines:get()
@@ -40,9 +63,9 @@ return {
           splitDirection = 'belowright',
           filterSplitDirection = 'floating',
           filterFloatingPosition = 'top',
-          autoAction = {
-            name = 'preview',
-          },
+          -- autoAction = {
+          --   name = 'preview',
+          -- },
           previewFloating = true,
           previewFloatingBorder = 'single',
           previewSplit = 'vertical',
@@ -56,9 +79,28 @@ return {
       },
       sourceOptions = {
         _ = {
-          matchers = {
-            'matcher_fzf',
-          },
+          matchers = { 'matcher_fzf' },
+          sorters = { 'sorter_fzf' },
+          converters = { 'converter_devicon' },
+        },
+        help = {
+          converters = {},
+        },
+        rg = {
+          matchers = {},
+          sorters = {},
+          converters = {},
+          volatile = true,
+        },
+        line = {
+          matchers = { 'matcher_substring' },
+          sorters = {},
+          converters = {},
+        },
+      },
+      kindOptions = {
+        _ = {
+          defaultAction = 'open',
         },
       },
       filterParams = {
@@ -66,21 +108,43 @@ return {
           highlightMatched = 'Search',
         },
       },
+      sourceParams = {
+        file_external = {
+          cmd = { 'fd', '-t', 'file' },
+        },
+        buffer = {
+          orderby = 'asc',
+        },
+      },
     }
 
-    vim.keymap.set('n', '<Plug>(ddu-buffers)', function()
+    vim.keymap.set('n', '<Plug>(ddu-buffers)', ddu 'buffer')
+    vim.keymap.set('n', '<Plug>(ddu-files)', ddu 'file_external')
+    vim.keymap.set('n', '<Plug>(ddu-help_tags)', ddu 'help')
+    vim.keymap.set('n', '<Plug>(ddu-rg)', ddu 'rg')
+    vim.keymap.set('n', '<Plug>(ddu-lines)', ddu 'line')
+
+    vim.keymap.set('n', '<Plug>(ddu-resume)', function()
+      vim.fn['ddu#start'] {
+        resume = true,
+        uiParams = {
+          ff = {
+            startFilter = false,
+          },
+        },
+      }
+    end)
+
+    vim.keymap.set('n', '<Plug>(ddu-config_files)', function()
       vim.fn['ddu#start'] {
         sources = {
           {
-            name = 'buffer',
-            params = {
-              orderby = 'asc',
-            },
+            name = 'file_external',
           },
         },
         sourceOptions = {
-          buffer = {
-            defaultAction = 'open',
+          file_external = {
+            path = vim.fs.joinpath(vim.env.XDG_DATA_HOME, 'chezmoi'),
           },
         },
       }

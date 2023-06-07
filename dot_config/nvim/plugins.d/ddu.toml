@@ -1,13 +1,16 @@
 [[plugins]]
 repo = 'Shougo/ddu.vim'
 hook_add = '''
-  nnoremap <space>b <Plug>(ddu-buffers)
+  nnoremap <Plug>(ff-buffers) <Plug>(ddu-buffers)
+  nnoremap <Plug>(ff-files) <Plug>(ddu-files)
+  nnoremap <Plug>(ff-resume) <Plug>(ddu-resume)
+  nnoremap <Plug>(ff-config_files) <Plug>(ddu-config_files)
+  nnoremap <Plug>(ff-help_tags) <Plug>(ddu-help_tags)
+  nnoremap <Plug>(ff-grep) <Plug>(ddu-rg)
+  nnoremap <Plug>(ff-lines) <Plug>(ddu-lines)
 
-  " なんかのマッピングが実行されるまでautoload/ddu.vimを読み込まないようにする
-  " 初回実行時に待機時間が発生するので微妙かも
-  nnoremap <Plug>(ddu- :<C-u>execute 'nunmap' '<Plug>(ddu-'<CR><Cmd>lua require('rc.ddu').setup()<CR><Plug>(ddu-
-
-  autocmd VimRc User DenopsReady ++once call timer_start(10, { -> ddu#start({}) })
+  " denopsが立ち上がったときにdduをセットアップする
+  autocmd VimRc User DenopsReady ++once call timer_start(10, { -> luaeval("require('rc.ddu').setup()") })
 '''
 
 [[plugins]]
@@ -23,4 +26,20 @@ repo = 'Shougo/ddu-ui-ff'
 repo = 'yuki-yano/ddu-filter-fzf'
 
 [[plugins]]
-repo = 'uga-rosa/ddu-source-nvim_lsp'
+repo = 'matsui54/ddu-source-file_external'
+
+[[plugins]]
+repo = 'uga-rosa/ddu-filter-converter_devicon'
+
+[[plugins]]
+repo = 'matsui54/ddu-source-help'
+
+[[plugins]]
+repo = 'shun/ddu-source-rg'
+build = 'rm ./plugin/ddu_rg.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-line'
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-matcher_substring'
