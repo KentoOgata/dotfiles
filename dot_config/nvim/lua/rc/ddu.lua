@@ -248,6 +248,7 @@ return {
                   })
                 end
               end,
+              { desc = 'toggle preview' },
             },
           },
         }
