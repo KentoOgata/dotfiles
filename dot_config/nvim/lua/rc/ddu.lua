@@ -34,27 +34,37 @@ local function getUiParamsOfWindowSize()
   }
 end
 
----@param source string|table
-local function ddu(source)
-  if type(source) == 'string' then
+---@param config string|table
+local function ddu(config)
+  -- config is source name
+  if type(config) == 'string' then
     return function()
       vim.fn['ddu#start'] {
         uiParams = getUiParamsOfWindowSize(),
         sources = {
           {
-            name = source,
+            name = config,
           },
         },
       }
     end
-  elseif type(source) == 'table' then
+    -- config is arguments of ddu#start
+  elseif type(config) == 'table' then
+    -- sourceの指定は ddu.start { 'file' } みたいにできるようにする
+    local normalizedConfig = {}
+    for k, v in pairs(config) do
+      if type(k) == 'number' then
+        normalizedConfig.sources = normalizedConfig.sources or {}
+        table.insert(normalizedConfig.sources, { name = v })
+      else
+        normalizedConfig[k] = v
+      end
+    end
+
     return function()
-      vim.fn['ddu#start'] {
+      vim.fn['ddu#start'](vim.tbl_deep_extend('keep', normalizedConfig, {
         uiParams = getUiParamsOfWindowSize(),
-        sources = {
-          source,
-        },
-      }
+      }))
     end
   end
 end
@@ -138,15 +148,17 @@ return {
     vim.keymap.set('n', '<Plug>(ddu-rg)', ddu 'rg')
     vim.keymap.set('n', '<Plug>(ddu-lines)', ddu 'line')
 
-    vim.keymap.set('n', '<Plug>(ddu-lsp_implementations)', function()
-      vim.fn['ddu#start'] {
-        uiParams = vim.tbl_deep_extend('error', getUiParamsOfWindowSize(), {
+    vim.keymap.set(
+      'n',
+      '<Plug>(ddu-lsp_implementations)',
+      ddu {
+        uiParams = {
           ff = {
             autoAction = {
               name = 'preview',
             },
           },
-        }),
+        },
         sources = {
           {
             name = 'lsp_defenition',
@@ -156,51 +168,48 @@ return {
           },
         },
       }
-    end)
+    )
 
-    vim.keymap.set('n', '<Plug>(ddu-lsp_references)', function()
-      vim.fn['ddu#start'] {
-        sources = {
-          {
-            name = 'lsp_references',
-          },
-        },
-        uiParams = vim.tbl_deep_extend('error', getUiParamsOfWindowSize(), {
+    vim.keymap.set(
+      'n',
+      '<Plug>(ddu-lsp_references)',
+      ddu {
+        'lsp_references',
+        uiParams = {
           ff = {
             autoAction = {
               name = 'preview',
             },
           },
-        }),
+        },
       }
-    end)
+    )
 
-    vim.keymap.set('n', '<Plug>(ddu-resume)', function()
-      vim.fn['ddu#start'] {
+    vim.keymap.set(
+      'n',
+      '<Plug>(ddu-resume)',
+      ddu {
         resume = true,
-        uiParams = vim.tbl_deep_extend('force', getUiParamsOfWindowSize(), {
+        uiParams = {
           ff = {
             startFilter = false,
           },
-        }),
-      }
-    end)
-
-    vim.keymap.set('n', '<Plug>(ddu-config_files)', function()
-      vim.fn['ddu#start'] {
-        uiParams = getUiParamsOfWindowSize(),
-        sources = {
-          {
-            name = 'file_external',
-          },
         },
+      }
+    )
+
+    vim.keymap.set(
+      'n',
+      '<Plug>(ddu-config_files)',
+      ddu {
+        'file_external',
         sourceOptions = {
           file_external = {
             path = vim.fs.joinpath(vim.env.XDG_DATA_HOME, 'chezmoi'),
           },
         },
       }
-    end)
+    )
 
     vim.api.nvim_create_autocmd('FileType', {
       group = 'VimRc',
