@@ -180,7 +180,17 @@ path = '$XDG_DATA_HOME/skk-dict'
 lazy = true
 hook_add = '''
   function! g:GetDictPath(dictType) abort
-    return [dein#get('skk-dict').path, 'SKK-JISYO.'..a:dictType]->join('/')
+    if a:dictType->type() ==# v:t_string
+      const dictTypes = [a:dictType]
+    elseif a:dictType->type() ==# v:t_list
+      const dictTypes = a:dictType
+    else
+      throw 'dictType is expected to string or list'
+    endif
+    const base = dein#get('skk-dict').path
+    return dictTypes
+          \ ->map({ _, t -> base..'/SKK-JISYO.'..t })
+          \ ->filter({ _, path -> path->filereadable() })
   endfunction
 '''
 
