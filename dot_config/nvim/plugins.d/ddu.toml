@@ -1,15 +1,15 @@
 [[plugins]]
 repo = 'Shougo/ddu.vim'
 hook_add = '''
-  nnoremap <Plug>(ff-buffers) <Plug>(ddu-buffers)
-  nnoremap <Plug>(ff-files) <Plug>(ddu-files)
-  nnoremap <Plug>(ff-resume) <Plug>(ddu-resume)
-  nnoremap <Plug>(ff-config_files) <Plug>(ddu-config_files)
-  nnoremap <Plug>(ff-help_tags) <Plug>(ddu-help_tags)
-  nnoremap <Plug>(ff-grep) <Plug>(ddu-rg)
-  nnoremap <Plug>(ff-lines) <Plug>(ddu-lines)
+  nnoremap <Plug>(ff-buffers)             <Plug>(ddu-buffers)
+  nnoremap <Plug>(ff-files)               <Plug>(ddu-files)
+  nnoremap <Plug>(ff-resume)              <Plug>(ddu-resume)
+  nnoremap <Plug>(ff-config_files)        <Plug>(ddu-config_files)
+  nnoremap <Plug>(ff-help_tags)           <Plug>(ddu-help_tags)
+  nnoremap <Plug>(ff-grep)                <Plug>(ddu-rg)
+  nnoremap <Plug>(ff-lines)               <Plug>(ddu-lines)
   nnoremap <Plug>(ff-lsp_implementations) <Plug>(ddu-lsp_implementations)
-  nnoremap <Plug>(ff-lsp_references) <Plug>(ddu-lsp_references)
+  nnoremap <Plug>(ff-lsp_references)      <Plug>(ddu-lsp_references)
 
   " denopsが立ち上がったときにdduをセットアップする
   autocmd VimRc User DenopsReady ++once call timer_start(10, { -> luaeval("require('rc.ddu').setup()") })
