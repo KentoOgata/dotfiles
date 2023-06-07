@@ -48,3 +48,13 @@ repo = 'Shougo/ddu-source-line'
 
 [[plugins]]
 repo = 'Shougo/ddu-filter-matcher_substring'
+
+[[plugins]]
+repo = 'matsui54/ddu-vim-ui-select'
+lazy = true
+lua_add = '''
+  vim.ui.select = function(...)
+    vim.fn['dein#source'] 'ddu-vim-ui-select'
+    vim.ui.select(...)
+  end
+'''

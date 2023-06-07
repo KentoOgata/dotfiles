@@ -33,30 +33,7 @@ require('dressing').setup {
     },
   },
   select = {
-    enabled = true,
-    backend = { 'fzf_lua', 'telescope', 'nui', 'builtin' },
-    trim_prompt = true,
-    telescope = nil,
-    builtin = {
-      anchor = 'NW',
-      border = 'single',
-      relative = 'editor',
-      buf_options = {},
-      win_options = {
-        winblend = 10,
-      },
-      width = nil,
-      max_width = { 140, 0.8 },
-      min_width = { 40, 0.2 },
-      height = nil,
-      max_height = 0.9,
-      min_height = { 10, 0.2 },
-      mappings = {
-        ['<Esc>'] = 'Close',
-        ['<C-c>'] = 'Close',
-        ['<CR>'] = 'Confirm',
-      },
-    },
+    enabled = false,
   },
 }
 -- }}}
