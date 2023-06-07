@@ -18,11 +18,28 @@ local function itemAction(action, params)
   end
 end
 
+local function getUiParamsOfWindowSize()
+  local lines = vim.opt.lines:get()
+  local height, row = math.floor(lines * 0.8), math.floor(lines * 0.1)
+  local columns = vim.opt.columns:get()
+  local width, col = math.floor(columns * 0.8), math.floor(columns * 0.1)
+  return {
+    ff = {
+      winHeight = height,
+      winRow = row,
+      winWidth = width,
+      winCol = col,
+      previewWidth = math.floor(width / 2),
+    },
+  }
+end
+
 ---@param source string|table
 local function ddu(source)
   if type(source) == 'string' then
     return function()
       vim.fn['ddu#start'] {
+        uiParams = getUiParamsOfWindowSize(),
         sources = {
           {
             name = source,
@@ -33,6 +50,7 @@ local function ddu(source)
   elseif type(source) == 'table' then
     return function()
       vim.fn['ddu#start'] {
+        uiParams = getUiParamsOfWindowSize(),
         sources = {
           source,
         },
@@ -43,11 +61,6 @@ end
 
 return {
   setup = function()
-    local lines = vim.opt.lines:get()
-    local height, row = math.floor(lines * 0.8), math.floor(lines * 0.1)
-    local columns = vim.opt.columns:get()
-    local width, col = math.floor(columns * 0.8), math.floor(columns * 0.1)
-
     vim.fn['ddu#custom#patch_global'] {
       ui = 'ff',
       uiParams = {
@@ -55,10 +68,6 @@ return {
           startFilter = true,
           prompt = '> ',
           split = 'floating',
-          winHeight = height,
-          winRow = row,
-          winWidth = width,
-          winCol = col,
           floatingBorder = 'single',
           splitDirection = 'belowright',
           filterSplitDirection = 'floating',
@@ -70,7 +79,6 @@ return {
           previewFloatingBorder = 'single',
           previewSplit = 'vertical',
           previewFloatingTitle = 'Preview',
-          previewWidth = math.floor(width / 2),
           highlights = {
             floating = 'Normal',
             floatingBorder = 'Normal',
@@ -130,16 +138,17 @@ return {
     vim.keymap.set('n', '<Plug>(ddu-resume)', function()
       vim.fn['ddu#start'] {
         resume = true,
-        uiParams = {
+        uiParams = vim.tbl_deep_extend('force', getUiParamsOfWindowSize(), {
           ff = {
             startFilter = false,
           },
-        },
+        }),
       }
     end)
 
     vim.keymap.set('n', '<Plug>(ddu-config_files)', function()
       vim.fn['ddu#start'] {
+        uiParams = getUiParamsOfWindowSize(),
         sources = {
           {
             name = 'file_external',
