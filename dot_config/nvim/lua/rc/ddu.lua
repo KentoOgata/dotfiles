@@ -71,6 +71,24 @@ end
 
 return {
   setup = function()
+    vim.fn['ddu#custom#action']('kind', 'file', 'openProject', function(dduContext)
+      vim.fn['ddu#ui#do_action'] 'quit'
+      local path = dduContext.items[1].action.path
+      vim.fn['ddu#start'] {
+        uiParams = getUiParamsOfWindowSize(),
+        sources = {
+          {
+            name = 'file_external',
+          },
+        },
+        sourceOptions = {
+          file_external = {
+            path = path,
+          },
+        },
+      }
+    end)
+
     vim.fn['ddu#custom#patch_global'] {
       ui = 'ff',
       uiParams = {
@@ -117,6 +135,9 @@ return {
         },
         mr = {
           sorters = {},
+        },
+        dein = {
+          defaultAction = 'openProject',
         },
       },
       kindOptions = {
@@ -248,6 +269,8 @@ return {
         },
       }
     )
+
+    vim.api.nvim_create_user_command('DduPlugins', ddu 'dein', {})
 
     vim.api.nvim_create_autocmd('FileType', {
       group = 'VimRc',

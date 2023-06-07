@@ -11,7 +11,6 @@ on_func = 'fzf#'
 on_cmd = ['FzfPlugins', 'GhqFind']
 hook_add = '''
   let g:fzf_command_prefix = 'Fzf'
-  call add(g:AlterCommands, #{ char: 'fp', input: 'FzfPlugins' })
   call add(g:AlterCommands, #{ char: 'fq', input: 'GhqFind' })
 '''
 hooks_file = '$DEIN_CONFIG_DIR/fzf.vim.lua'

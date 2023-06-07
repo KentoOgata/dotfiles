@@ -12,6 +12,8 @@ hook_add = '''
   nnoremap <Plug>(ff-lsp_references)      <Plug>(ddu-lsp_references)
   nnoremap <Plug>(ff-mrw)                 <Plug>(ddu-mrw)
 
+  call add(g:AlterCommands, #{ char: 'fp', input: 'DduPlugins' })
+
   " denopsが立ち上がったときにdduをセットアップする
   autocmd VimRc User DenopsReady ++once call timer_start(10, { -> luaeval("require('rc.ddu').setup()") })
 '''
