@@ -194,6 +194,7 @@ return {
             name = 'mr',
             params = {
               kind = 'mrw',
+              current = true,
             },
           },
         },
