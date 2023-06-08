@@ -34,7 +34,11 @@ augroup END
 
 " cmdlineにおけるエイリアスを定義する
 " [{ char: string, input: string, input_after: string? }]
-let g:AlterCommands = []
+let g:_alterCommands = []
+function g:AlterCommand(char, input, input_after = v:null) abort
+  call add(g:_alterCommands, #{ char: a:char, input: a:input, input_after: a:input_after })
+endfunction
+command -nargs=+ AlterCmd call g:AlterCommand(<f-args>)
 
 " yankした範囲をハイライトする
 autocmd VimRc TextYankPost * silent! lua vim.highlight.on_yank()

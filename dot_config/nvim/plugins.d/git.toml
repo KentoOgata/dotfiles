@@ -24,11 +24,9 @@ hook_add = '''
   nnoremap <space>ac <Cmd>Gin commit -v<CR>
   nnoremap <space>aC <Cmd>Gin commit -v --amend<CR>
   nnoremap <space>ab <Cmd>GinBranch<CR>
-  call extend(g:AlterCommands, [
-        \   #{ char: 'gs', input: 'GinStatus' },
-        \   #{ char: 'gp', input: 'Gin<space>push' },
-        \   #{ char: 'gc', input: 'Gin<space>commit' },
-        \ ])
+
+  AlterCmd gs GinStatus
+  AlterCmd gp Gin<Space>push
 '''
 hooks_file = '$DEIN_CONFIG_DIR/gin.vim'
 [plugins.ftplugin]

@@ -50,4 +50,4 @@ function! s:OpenRazor(command, fname, bang) abort
   execute a:command fname
 endfunction
 command EditRazor call s:OpenRazor('edit', expand('%:p'), '<bang>' ==# '!')
-call add(g:AlterCommands, #{ char: 'er', input: 'EditRazor' })
+AlterCmd er EditRazor
