@@ -23,6 +23,16 @@ local function getUiParamsOfWindowSize()
   local height, row = math.floor(lines * 0.8), math.floor(lines * 0.1)
   local columns = vim.opt.columns:get()
   local width, col = math.floor(columns * 0.8), math.floor(columns * 0.1)
+
+  local previewSplit, previewHeight
+  if columns < 200 then
+    previewSplit = 'horizontal'
+    previewHeight = math.floor(height / 2)
+  else
+    previewSplit = 'vertical'
+    previewHeight = height
+  end
+
   return {
     ff = {
       winHeight = height,
@@ -30,6 +40,8 @@ local function getUiParamsOfWindowSize()
       winWidth = width,
       winCol = col,
       previewWidth = math.floor(width / 2),
+      previewHeight = previewHeight,
+      previewSplit = previewSplit,
     },
   }
 end
@@ -100,12 +112,8 @@ return {
           splitDirection = 'belowright',
           filterSplitDirection = 'floating',
           filterFloatingPosition = 'top',
-          -- autoAction = {
-          --   name = 'preview',
-          -- },
           previewFloating = true,
           previewFloatingBorder = 'single',
-          previewSplit = 'vertical',
           previewFloatingTitle = 'Preview',
           highlights = {
             floating = 'Normal',
