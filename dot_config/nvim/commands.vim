@@ -1,3 +1,11 @@
+" cmdlineにおけるエイリアスを定義する
+" [{ char: string, input: string, input_after: string? }]
+let g:_alterCommands = []
+function g:AlterCommand(char, input, input_after = v:null) abort
+  call add(g:_alterCommands, #{ char: a:char, input: a:input, input_after: a:input_after })
+endfunction
+command -nargs=+ AlterCmd call g:AlterCommand(<f-args>)
+
 " ORIGINAL SOURCE: https://github.com/yuki-yano/dotfiles/blob/main/.vimrc
 function! s:DefKeymap(forceMap, args) abort
   const modes = a:args[0]
