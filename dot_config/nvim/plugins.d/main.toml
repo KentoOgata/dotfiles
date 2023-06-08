@@ -424,4 +424,9 @@ repo = 'nvim-treesitter/nvim-treesitter'
 on_event = ['BufReadPost', 'BufNewFile']
 hooks_file='$DEIN_CONFIG_DIR/treesitter.lua'
 
+# 非ASCIIな文字に適当な文字幅を与えてくれる
+[[plugins]]
+repo = 'rbtnn/vim-ambiwidth'
+# なぜかvim_startupで読み込まないと動作しないようにしてある 謎
+
 # vim:ft=toml expandtab tabstop=2 shiftwidth=2
