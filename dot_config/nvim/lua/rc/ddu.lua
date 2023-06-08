@@ -296,24 +296,43 @@ return {
             {
               'p',
               function()
-                if vim.b[ctx.buf].previewAutocmdId ~= nil then
-                  vim.api.nvim_del_autocmd(vim.b[ctx.buf].previewAutocmdId)
-                  vim.fn['ddu#ui#do_action'] 'preview'
-                  vim.api.nvim_buf_del_var(ctx.buf, 'previewAutocmdId')
+                if not vim.b[ctx.buf].previewEnabled then
+                  vim.b[ctx.buf].previewEnabled = true
                 else
-                  vim.b[ctx.buf].previewAutocmdId = vim.api.nvim_create_autocmd('CursorMoved', {
-                    buffer = ctx.buf,
-                    group = 'VimRc',
-                    callback = function()
-                      vim.fn['ddu#ui#do_action'] 'preview'
-                    end,
-                  })
+                  vim.b[ctx.buf].previewEnabled = false
+                  vim.fn['ddu#ui#do_action'] 'preview'
                 end
               end,
               { desc = 'toggle preview' },
             },
           },
         }
+
+        if vim.b[ctx.buf].autoPreviewAuId == nil then
+          vim.b[ctx.buf].autoPreviewAuId = vim.api.nvim_create_autocmd('CursorMoved', {
+            group = 'VimRc',
+            buffer = ctx.buf,
+            desc = 'b:previewEnabled -> preview',
+            callback = function()
+              if vim.b[ctx.buf].previewEnabled then
+                vim.fn['ddu#ui#do_action'] 'preview'
+              end
+            end,
+          })
+        end
+
+        if vim.b[ctx.buf].previewDisableAuId == nil then
+          vim.b[ctx.buf].previewDisableAuId = vim.api.nvim_create_autocmd('WinLeave', {
+            group = 'VimRc',
+            buffer = ctx.buf,
+            desc = 'Disable auto preview',
+            callback = function()
+              if vim.b[ctx.buf].previewEnabled then
+                vim.b[ctx.buf].previewEnabled = false
+              end
+            end,
+          })
+        end
       end,
     })
 
