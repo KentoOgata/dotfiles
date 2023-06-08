@@ -364,16 +364,9 @@ lua_source = '''
       ccc.picker.css_oklch,
       ccc.picker.trailing_whitespace {
         enable = true,
-        disable = {
-          'fzf',
-          'gin-diff',
-          'gitcommit',
-          'diff',
-          'gina-log',
-          'help',
-          'mason',
-          '',
-        },
+        disable = function(bufnr)
+          return vim.fn.empty(vim.bo[bufnr].buftype)
+        end,
       },
     },
   }
