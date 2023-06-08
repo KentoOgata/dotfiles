@@ -131,7 +131,7 @@ function! g:AlterCommand(char, input, input_after = v:null) abort
 endfunction
 
 for altercmd in g:_alterCommands
-  execute 'AlterCmd' altercmd.char altercmd.input altercmd.input_after ?? ''
+  call g:AlterCommand(altercmd.char, altercmd.input, altercmd.input_after)
 endfor
 unlet g:_alterCommands
 
