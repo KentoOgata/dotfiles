@@ -13,8 +13,16 @@ hook_add = '''
   nnoremap <space>ac <Cmd>Gin commit -v<CR>
   nnoremap <space>aC <Cmd>Gin commit -v --amend<CR>
   nnoremap <space>ab <Cmd>GinBranch<CR>
-  nnoremap <Space>ah <Cmd>GinLog --graph --oneline --all --max-count=100<CR>
-  nnoremap <expr> <Space>aH '<Cmd>GinLog --graph --oneline --max-count=100 -- ' .. expand('%:p') .. '<CR>'
+  nnoremap <Space>ah <Cmd>GinLog --all<CR>
+  nnoremap <Space>aH <Cmd>GinLog -- %:p<CR>
+
+  let g:gin_log_default_args = [
+        \ '--graph',
+        \ '--pretty=oneline',
+        \ '--abbrev-commit',
+        \ '--max-count=100',
+        \ '--decorate=short',
+        \ ]
 
   AlterCmd gs GinStatus
   AlterCmd gp Gin<Space>push
