@@ -1,13 +1,3 @@
-# Gitクライアント
-# Gina logの機能だけgin.vimに移行できてないのでまだ入れてる
-[[plugins]]
-repo = 'lambdalisue/gina.vim'
-on_cmd = 'Gina'
-hook_add = '''
-  nnoremap <space>ah <Cmd>Gina log --graph --all --max-count=100<CR>
-  nnoremap <expr> <space>aH $'<Cmd>Gina log --graph --max-count=100 {nvim_buf_get_name(nvim_get_current_buf())}<CR>'
-'''
-
 # denops製のGitクライアント
 # 良いところを上手く説明できない Chaperonは競合解決するときに便利
 [[plugins]]
@@ -24,17 +14,19 @@ hook_add = '''
   nnoremap <space>ac <Cmd>Gin commit -v<CR>
   nnoremap <space>aC <Cmd>Gin commit -v --amend<CR>
   nnoremap <space>ab <Cmd>GinBranch<CR>
+  nnoremap <Space>ah <Cmd>GinLog --graph --oneline --all --max-count=100<CR>
+  nnoremap <expr> <Space>aH '<Cmd>GinLog --graph --oneline --max-count=100 -- ' .. expand('%:p') .. '<CR>'
 
   AlterCmd gs GinStatus
   AlterCmd gp Gin<Space>push
+
+  " bufferlineするときにリストにあるとだいたいパースできなくて死ぬので
+  autocmd VimRc FileType gin* setl nobuflisted
 '''
 hooks_file = '$DEIN_CONFIG_DIR/gin.vim'
 [plugins.ftplugin]
 gin-branch = '''
   nnoremap <buffer> N <Plug>(gin-action-new)
-'''
-gin-diff = '''
-  setl nobuflisted
 '''
 
 # 現在編集しているバッファーについて、git関連の操作や表示を提供する。
