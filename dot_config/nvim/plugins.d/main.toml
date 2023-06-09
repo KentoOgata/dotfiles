@@ -421,5 +421,7 @@ hooks_file='$DEIN_CONFIG_DIR/treesitter.lua'
 [[plugins]]
 repo = 'rbtnn/vim-ambiwidth'
 # なぜかvim_startupで読み込まないと動作しないようにしてある 謎
+# :terminalで文字がずれるのが辛かったので無効化
+if = false
 
 # vim:ft=toml expandtab tabstop=2 shiftwidth=2
