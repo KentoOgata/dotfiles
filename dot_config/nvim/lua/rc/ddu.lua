@@ -18,6 +18,15 @@ local function itemAction(action, params)
   end
 end
 
+---@enum dduActionFlags
+local actionFlags = {
+  None = 0,
+  RefreshItems = 1,
+  Redraw = 2,
+  Persist = 4,
+  RestoreCursor = 8,
+}
+
 local function getUiParamsOfWindowSize()
   local lines = vim.opt.lines:get()
   local height, row = math.floor(lines * 0.8), math.floor(lines * 0.1)
@@ -83,9 +92,9 @@ end
 
 return {
   setup = function()
-    vim.fn['ddu#custom#action']('kind', 'file', 'openProject', function(dduContext)
-      vim.fn['ddu#ui#do_action'] 'quit'
-      local path = dduContext.items[1].action.path
+    ---@param args any
+    ---@return dduActionFlags
+    vim.fn['ddu#custom#action']('kind', 'file', 'openProject', function(args)
       vim.fn['ddu#start'] {
         uiParams = getUiParamsOfWindowSize(),
         sources = {
@@ -95,10 +104,11 @@ return {
         },
         sourceOptions = {
           file_external = {
-            path = path,
+            path = args.items[1].action.path,
           },
         },
       }
+      return actionFlags.None
     end)
 
     vim.fn['ddu#custom#patch_global'] {
