@@ -162,8 +162,17 @@ return {
         },
       },
       kindOptions = {
-        _ = {
+        file = {
           defaultAction = 'open',
+        },
+        help = {
+          defaultAction = 'open',
+        },
+        lsp = {
+          defaultAction = 'open',
+        },
+        ui_select = {
+          defaultAction = 'select',
         },
       },
       filterParams = {
