@@ -18,15 +18,6 @@ local function itemAction(action, params)
   end
 end
 
----@enum dduActionFlags
-local actionFlags = {
-  None = 0,
-  RefreshItems = 1,
-  Redraw = 2,
-  Persist = 4,
-  RestoreCursor = 8,
-}
-
 local function getUiParamsOfWindowSize()
   local lines = vim.opt.lines:get()
   local height, row = math.floor(lines * 0.8), math.floor(lines * 0.1)
@@ -55,61 +46,86 @@ local function getUiParamsOfWindowSize()
   }
 end
 
----@param config string|table
-local function ddu(config)
-  -- config is source name
-  if type(config) == 'string' then
-    return function()
-      vim.fn['ddu#start'] {
-        uiParams = getUiParamsOfWindowSize(),
-        sources = {
-          {
-            name = config,
+---@enum DduActionFlags
+local actionFlags = {
+  None = 0,
+  RefreshItems = 1,
+  Redraw = 2,
+  Persist = 4,
+  RestoreCursor = 8,
+}
+
+---@class DduCustomActionDefinition
+---@field type 'kind'|'source'|'ui'
+---@field name string
+---@field actionName string
+---@field func fun(args: any): DduActionFlags
+
+local ddu = {
+  ---@param def DduCustomActionDefinition
+  ---@return nil
+  customAction = function(def)
+    vim.fn['ddu#custom#action'](def.type, def.name, def.actionName, def.func)
+  end,
+  ---@param config string|table
+  start = function(config)
+    -- config is source name
+    if type(config) == 'string' then
+      return function()
+        vim.fn['ddu#start'] {
+          uiParams = getUiParamsOfWindowSize(),
+          sources = {
+            {
+              name = config,
+            },
           },
-        },
-      }
-    end
-    -- config is arguments of ddu#start
-  elseif type(config) == 'table' then
-    -- sourceの指定は ddu.start { 'file' } みたいにできるようにする
-    local normalizedConfig = {}
-    for k, v in pairs(config) do
-      if type(k) == 'number' then
-        normalizedConfig.sources = normalizedConfig.sources or {}
-        table.insert(normalizedConfig.sources, { name = v })
-      else
-        normalizedConfig[k] = v
+        }
+      end
+      -- config is arguments of ddu#start
+    elseif type(config) == 'table' then
+      -- sourceの指定は ddu.start { 'file' } みたいにできるようにする
+      local normalizedConfig = {}
+      for k, v in pairs(config) do
+        if type(k) == 'number' then
+          normalizedConfig.sources = normalizedConfig.sources or {}
+          table.insert(normalizedConfig.sources, { name = v })
+        else
+          normalizedConfig[k] = v
+        end
+      end
+
+      return function()
+        vim.fn['ddu#start'](vim.tbl_deep_extend('keep', normalizedConfig, {
+          uiParams = getUiParamsOfWindowSize(),
+        }))
       end
     end
-
-    return function()
-      vim.fn['ddu#start'](vim.tbl_deep_extend('keep', normalizedConfig, {
-        uiParams = getUiParamsOfWindowSize(),
-      }))
-    end
-  end
-end
+  end,
+}
 
 return {
   setup = function()
-    ---@param args any
-    ---@return dduActionFlags
-    vim.fn['ddu#custom#action']('kind', 'file', 'openProject', function(args)
-      vim.fn['ddu#start'] {
-        uiParams = getUiParamsOfWindowSize(),
-        sources = {
-          {
-            name = 'file_external',
+    ddu.customAction {
+      type = 'kind',
+      name = 'file',
+      actionName = 'openProject',
+      func = function(args)
+        vim.fn['ddu#start'] {
+          uiParams = getUiParamsOfWindowSize(),
+          sources = {
+            {
+              name = 'file_external',
+            },
           },
-        },
-        sourceOptions = {
-          file_external = {
-            path = args.items[1].action.path,
+          sourceOptions = {
+            file_external = {
+              path = args.items[1].action.path,
+            },
           },
-        },
-      }
-      return actionFlags.None
-    end)
+        }
+        return actionFlags.None
+      end,
+    }
 
     vim.fn['ddu#custom#patch_global'] {
       ui = 'ff',
@@ -204,13 +220,13 @@ return {
       vim.keymap.set('n', lhs, rhs, opts)
     end
 
-    nmap('<Plug>(ddu-buffers)', ddu 'buffer')
-    nmap('<Plug>(ddu-files)', ddu 'file_external')
-    nmap('<Plug>(ddu-rg)', ddu 'rg')
-    nmap('<Plug>(ddu-lines)', ddu 'line')
+    nmap('<Plug>(ddu-buffers)', ddu.start 'buffer')
+    nmap('<Plug>(ddu-files)', ddu.start 'file_external')
+    nmap('<Plug>(ddu-rg)', ddu.start 'rg')
+    nmap('<Plug>(ddu-lines)', ddu.start 'line')
     nmap(
       '<Plug>(ddu-mrw)',
-      ddu {
+      ddu.start {
         uiParams = {
           ff = {
             startFilter = false,
@@ -228,11 +244,11 @@ return {
       }
     )
 
-    nmap('<Plug>(ddu-help_tags)', ddu 'help')
+    nmap('<Plug>(ddu-help_tags)', ddu.start 'help')
 
     nmap(
       '<Plug>(ddu-lsp_implementations)',
-      ddu {
+      ddu.start {
         uiParams = {
           ff = {
             autoAction = {
@@ -253,7 +269,7 @@ return {
 
     nmap(
       '<Plug>(ddu-lsp_references)',
-      ddu {
+      ddu.start {
         'lsp_references',
         uiParams = {
           ff = {
@@ -267,7 +283,7 @@ return {
 
     nmap(
       '<Plug>(ddu-resume)',
-      ddu {
+      ddu.start {
         resume = true,
         uiParams = {
           ff = {
@@ -279,7 +295,7 @@ return {
 
     nmap(
       '<Plug>(ddu-config_files)',
-      ddu {
+      ddu.start {
         'file_external',
         sourceOptions = {
           file_external = {
@@ -289,8 +305,8 @@ return {
       }
     )
 
-    vim.api.nvim_create_user_command('DduPlugins', ddu 'dein', {})
-    vim.api.nvim_create_user_command('DduGhq', ddu 'ghq', {})
+    vim.api.nvim_create_user_command('DduPlugins', ddu.start 'dein', {})
+    vim.api.nvim_create_user_command('DduGhq', ddu.start 'ghq', {})
 
     vim.api.nvim_create_autocmd('FileType', {
       group = 'VimRc',
