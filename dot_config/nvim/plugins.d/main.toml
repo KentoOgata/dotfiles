@@ -365,7 +365,7 @@ lua_source = '''
       ccc.picker.trailing_whitespace {
         enable = true,
         disable = function(bufnr)
-          return vim.fn.empty(vim.bo[bufnr].buftype)
+          return not vim.bool_fn.empty(vim.bo[bufnr].buftype)
         end,
       },
     },
