@@ -49,6 +49,22 @@ require('nvim-treesitter.configs').setup {
       'yaml',
     },
   },
+  rainbow = {
+    enable = true,
+    query = {
+      'rainbow-parens',
+    },
+    strategy = require('ts-rainbow').strategy.global,
+    hlgroups = {
+      'TSRainbowRed',
+      'TSRainbowYellow',
+      'TSRainbowBlue',
+      'TSRainbowOrange',
+      'TSRainbowGreen',
+      'TSRainbowViolet',
+      'TSRainbowCyan',
+    },
+  },
 }
 
 vim.cmd.highlight { 'link', '@text.diff.add', 'diffAdded' }
