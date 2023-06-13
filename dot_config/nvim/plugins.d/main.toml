@@ -424,4 +424,44 @@ repo = 'rbtnn/vim-ambiwidth'
 # :terminalで文字がずれるのが辛かったので無効化
 if = false
 
+[[plugins]]
+repo = 'stevearc/aerial.nvim'
+on_cmd = [
+  'AerialOpen',
+  'AerialToggle',
+]
+hook_add = '''
+  nnoremap <Space>t <Cmd>AerialOpen!<CR>
+  nnoremap <Space>i <Cmd>AerialOpen<CR>
+'''
+lua_source = '''
+  require('aerial').setup {
+    backends = { 'treesitter', 'lsp', 'markdown', 'man' },
+    layout = {
+      max_width = { 80, 0.5 },
+      width = nil,
+      min_width = 20,
+      win_opts = {
+        winblend = 30,
+      },
+      default_direction = 'float',
+      placement = 'edge',
+    },
+    close_automatic_events = { 'unfocus', 'switch_buffer' },
+    float = {
+      border = 'rounded',
+      relative = 'win',
+      max_height = 0.9,
+      height = nil,
+      min_height = { 8, 0.1 },
+      override = function(conf, source_winid)
+        conf.anchor = 'NE'
+        conf.col = vim.fn.winwidth(source_winid)
+        conf.row = 0
+        return conf
+      end,
+    }
+  }
+'''
+
 # vim:ft=toml expandtab tabstop=2 shiftwidth=2
