@@ -6,8 +6,7 @@ hook_add = '''
         \ execute 'colorscheme' $COLOR_SCHEME
         \ ?? { items -> items[rand(srand()) % items->len()] }(g:themeSetupModules->keys())
   " カラースキームが設定されたとき、`g:themeSetupModules`に名前が登録されていれば実行する。
-  " OptionSet background のautocmdを実行したいのでnestedを指定する
-  autocmd VimRc ColorSchemePre * ++nested
+  autocmd VimRc ColorSchemePre *
         \ :if !get(g:themeSetupModules, expand('<amatch>'), '')->empty()
         \ |  call luaeval(
         \      g:themeSetupModules[expand('<amatch>')]

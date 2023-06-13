@@ -37,11 +37,12 @@ if executable('rg')
   set grepformat=%f:%l:%m,%f:%l%m,%f\ \ %l%m
 endif
 
-" set bg=light されたとき、cursorlineとcursorcolumnを有効にする
-" TUIだとカーソルの位置を見失うことが多いので
-autocmd VimRc OptionSet background
-      \ : if v:option_new ==# 'light'
-      \ |   set cursorline cursorcolumn
-      \ | else
-      \ |   set nocursorline nocursorcolumn
-      \ | endif
+exec 'set' 'guicursor=' .. [
+     \ 'n-v-c:block',
+     \ 'i-ci-ve:ver25',
+     \ 'r-cr:hor20',
+     \ 'o:hor50',
+     \ 'a:Cursor/lCursor',
+     \ 'i-ci-ve:blinkwait700-blinkoff400-blinkon250',
+     \ 'sm:block-blinkwait175-blinkoff150-blinkon175',
+     \ ]->join(',')
