@@ -117,6 +117,11 @@ return {
               name = 'file_external',
             },
           },
+          sourceParams = {
+            file_external = {
+              cmd = { 'git', 'ls-files', '-co', '--exclude-standard' },
+            },
+          },
           sourceOptions = {
             file_external = {
               path = args.items[1].action.path,
