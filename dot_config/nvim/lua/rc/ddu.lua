@@ -263,7 +263,7 @@ return {
         },
         sources = {
           {
-            name = 'lsp_defenition',
+            name = 'lsp_definition',
             params = {
               method = 'textDocument/implementation',
             },
