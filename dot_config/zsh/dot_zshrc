@@ -5,6 +5,7 @@ source "${ZDOTDIR}/ensure-zinit.zsh"
 source "${ZDOTDIR}/history.zsh"
 source "${ZDOTDIR}/zeno.d/init.zsh"
 source "${ZDOTDIR}/aliases.zsh"
+source "${ZDOTDIR}/functions.zsh"
 
 autoload -U compinit
 compinit
