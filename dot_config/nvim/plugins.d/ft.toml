@@ -50,6 +50,12 @@ css = '''
 xml = '''
   setl expandtab tabstop=2 shiftwidth=2
 '''
+sh = '''
+  setl expandtab tabstop=2 shiftwidth=2
+'''
+zsh = '''
+  setl expandtab tabstop=2 shiftwidth=2
+'''
 
 [[plugins]]
 repo = 'nvim-orgmode/orgmode'
