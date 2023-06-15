@@ -125,3 +125,9 @@ repo = 'marko-cerovac/material.nvim'
 hook_add = '''
   let g:themeSetupModules.material = ''
 '''
+
+[[plugins]]
+repo = 'olivercederborg/poimandres.nvim'
+hook_add = '''
+  let g:themeSetupModules.poimandres = 'poimandres'
+'''
