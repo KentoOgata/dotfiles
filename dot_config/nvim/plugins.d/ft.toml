@@ -1,60 +1,10 @@
 [ftplugin]
-lua = '''
-  setl expandtab
-  setl tabstop=2
-  setl shiftwidth=2
-'''
-vim = '''
-  setl expandtab
-  setl tabstop=2
-  setl shiftwidth=2
-'''
-toml = '''
-  setl expandtab
-  setl tabstop=2
-  setl shiftwidth=2
-
-  " setl foldmethod=expr
-  " setl foldexpr=<SID>fold_expr(v:lnum)
-  " 
-  " function! s:fold_expr(lnum) abort
-  "   return getline(a:lnum) =~# '^\s\+\S'
-  " endfunction
-'''
 cs = '''
   compiler dotnet
   setl indentkeys-=<>>
-  setl expandtab tabstop=4 shiftwidth=4
 '''
 razor = '''
   compiler dotnet
-  setl expandtab tabstop=4 shiftwidth=4
-'''
-go = '''
-  setl noexpandtab
-  setl tabstop=4
-  setl shiftwidth=4
-'''
-json = '''
-  setl expandtab tabstop=2 shiftwidth=2
-'''
-javascript = '''
-  setl expandtab tabstop=2 shiftwidth=2
-'''
-typescript = '''
-  setl expandtab tabstop=2 shiftwidth=2
-'''
-css = '''
-  setl expandtab tabstop=2 shiftwidth=2
-'''
-xml = '''
-  setl expandtab tabstop=2 shiftwidth=2
-'''
-sh = '''
-  setl expandtab tabstop=2 shiftwidth=2
-'''
-zsh = '''
-  setl expandtab tabstop=2 shiftwidth=2
 '''
 
 [[plugins]]
