@@ -259,6 +259,7 @@ return {
             autoAction = {
               name = 'preview',
             },
+            startFilter = false,
           },
         },
         sources = {
@@ -281,6 +282,7 @@ return {
             autoAction = {
               name = 'preview',
             },
+            startFilter = false,
           },
         },
       }
