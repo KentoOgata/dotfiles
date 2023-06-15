@@ -4,6 +4,7 @@ bindkey -e
 source "${ZDOTDIR}/ensure-zinit.zsh"
 source "${ZDOTDIR}/history.zsh"
 source "${ZDOTDIR}/zeno.d/init.zsh"
+source "${ZDOTDIR}/aliases.zsh"
 
 autoload -U compinit
 compinit
@@ -12,11 +13,6 @@ autoload -U select-word-style
 select-word-style bash
 
 zinit load zdharma-continuum/fast-syntax-highlighting
-
-if which exa &> /dev/null; then
-  alias ls="exa --icons"
-fi
-alias emacs='emacs -nw'
 
 if which starship &> /dev/null; then
   eval "$(starship init zsh)"
