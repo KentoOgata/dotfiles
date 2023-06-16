@@ -469,4 +469,12 @@ lua_source = '''
   }
 '''
 
+[[plugins]]
+repo = 'skanehira/denops-docker.vim'
+depends = 'denops.vim'
+
+[[plugins]]
+repo = 'skanehira/k8s.vim'
+depends = 'denops.vim'
+
 # vim:ft=toml expandtab tabstop=2 shiftwidth=2
