@@ -53,6 +53,7 @@ hook_add = '''
 [[plugins]]
 repo = 'andymass/vim-matchup'
 on_map = '<Plug>(matchup-%)'
+on_event = 'FileType'
 hook_add = '''
   let g:loaded_matchit = v:true
   let g:loaded_matchparen = v:true
