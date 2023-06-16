@@ -1,3 +1,7 @@
-local pick = require('rc.utils').pick
+return {
+  setup = function()
+    local pick = require('rc.utils').pick
 
-vim.go.background = pick { 'dark', 'light' }
+    vim.go.background = pick { 'dark', 'light' }
+  end,
+}
