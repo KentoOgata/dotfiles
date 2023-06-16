@@ -11,10 +11,17 @@ vim.bool_fn = setmetatable({}, {
 ---@param config { mode: string|table, maps: table, opts: table|nil }
 ---@diagnostic disable-next-line: duplicate-set-field
 function vim.keymap.set_table(config)
+  local u = require 'rc.utils'
   for _, map in ipairs(config.maps) do
-    local lhs, rhs, opts =
-      map[1], map[2], ((map[3] and config.opts) and vim.tbl_deep_extend('error', config.opts, map[3])) or map[3]
+    local lhs, rhs = map[1], map[2]
 
-    vim.keymap.set(config.mode, lhs, rhs, opts or config.opts)
+    local opts
+    if (map[3] ~= nil) and (config.opts ~= nil) then
+      opts = vim.tbl_deep_extend('error', config.opts, map[3])
+    else
+      opts = config.opts or map[3]
+    end
+
+    vim.keymap.set(config.mode, lhs, rhs, opts)
   end
 end
