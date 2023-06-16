@@ -8,26 +8,18 @@ local win_keymap_set = function(key, callback)
 end
 
 win_keymap_set('w', function()
-  local wins = 0
+  local wins = #vim
+    .iter(vim.api.nvim_tabpage_list_wins(0))
+    :filter(function(winnr)
+      local conf = vim.api.nvim_win_get_config(winnr)
+      return conf.focusable
+    end)
+    :totable()
 
-  -- 全ウィンドウをループ
-  for i = 1, vim.fn.winnr '$' do
-    local win_id = vim.fn.win_getid(i)
-    local conf = vim.api.nvim_win_get_config(win_id)
-
-    -- focusableなウィンドウをカウント
-    if conf.focusable then
-      wins = wins + 1
-
-      -- ウィンドウ数が3以上ならchowchoを起動
-      if wins > 2 then
-        require('chowcho').run()
-        return
-      end
-    end
+  if wins > 2 then
+    require('chowcho').run()
+  else
+    vim.cmd.wincmd 'w'
   end
-
-  -- ウィンドウが少なければ標準の<C-w><C-w>を実行
-  vim.cmd.wincmd 'w'
 end)
 -- }}}
