@@ -6,4 +6,11 @@ return {
   nilOrEmpty = function(string)
     return string == nil or string == ''
   end,
+  iif = function(condition, ifTrue, ifFalse)
+    if condition then
+      return ifTrue
+    else
+      return ifFalse
+    end
+  end,
 }

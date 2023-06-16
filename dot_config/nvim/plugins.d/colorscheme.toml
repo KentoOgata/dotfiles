@@ -7,12 +7,14 @@ lua_add = '''
     once = true,
     nested = true,
     callback = function()
-      local utils = require('rc.utils')
-      if utils.nilOrEmpty(vim.env.COLOR_SCHEME) then
-        vim.cmd.colorscheme(utils.pick(vim.g.Themes))
-      else
-        vim.cmd.colorscheme(vim.env.COLOR_SCHEME)
-      end
+      local u = require('rc.utils')
+      vim.cmd.colorscheme(
+        u.iif(
+          not u.nilOrEmpty(vim.env.COLOR_SCHEME),
+          vim.env.COLOR_SCHEME,
+          u.pick(vim.g.Themes)
+        )
+      )
     end,
   })
 
