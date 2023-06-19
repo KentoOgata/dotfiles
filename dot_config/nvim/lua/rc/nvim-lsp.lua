@@ -78,7 +78,7 @@ return {
         { 'K', vim.lsp.buf.hover, { desc = 'textDocument/hover' } },
         { 'gd', vim.lsp.buf.definition, { desc = 'textDocument/definition' } },
         { 'gD', vim.lsp.buf.type_definition, { desc = 'textDocument/typeDefinition' } },
-        { 'ma', vim.lsp.buf.code_action, { desc = 'textDocument/codeAction' } },
+        { 'ma', '<Plug>(lsp-codeAction)', { desc = 'textDocument/codeAction' } },
         { 'mr', vim.lsp.buf.rename, { desc = 'textDocument/rename' } },
         {
           'mf',

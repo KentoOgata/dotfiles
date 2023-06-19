@@ -96,6 +96,7 @@ local ddu = {
 
       return function()
         vim.fn['ddu#start'](vim.tbl_deep_extend('keep', normalizedConfig, {
+          resume = false,
           uiParams = getUiParamsOfWindowSize(),
         }))
       end
@@ -191,6 +192,9 @@ return {
         },
         lsp = {
           defaultAction = 'open',
+        },
+        lsp_codeAction = {
+          defaultAction = 'apply',
         },
         ui_select = {
           defaultAction = 'select',
@@ -387,5 +391,21 @@ return {
         vim.keymap.set('n', 'q', uiAction 'quit', { buffer = ctx.buf })
       end,
     })
+
+    vim.keymap.set(
+      'n',
+      '<Plug>(lsp-codeAction)',
+      ddu.start {
+        'lsp_codeAction',
+        uiParams = {
+          ff = {
+            autoAction = {
+              name = 'preview',
+            },
+            startFilter = false,
+          },
+        },
+      }
+    )
   end,
 }
