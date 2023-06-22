@@ -24,19 +24,6 @@ hook_add = '''
   let g:eft_ignorecase = v:true
 '''
 
-# 検索をeasymotion的に使えるようにしてくれるやつ
-# 検索の入力文字列->クエリを変換するための関数を自分で定義できるので
-# 便利かもしれない
-# n/Nの動作が怪しい
-[[plugins]]
-repo = 'hrsh7th/vim-searchx'
-on_func = 'searchx#'
-hooks_file = '$DEIN_CONFIG_DIR/searchx.vim'
-hook_add = '''
-  Keymap nx / <Cmd>call searchx#start(#{ dir: 1 })<CR>
-  Keymap nx ? <Cmd>call searchx#start(#{ dir: 0 })<CR>
-'''
-
 # * でジャンプしないようにしてくれるやつ
 [[plugins]]
 repo = 'haya14busa/vim-asterisk'
@@ -476,5 +463,27 @@ depends = 'denops.vim'
 [[plugins]]
 repo = 'skanehira/k8s.vim'
 depends = 'denops.vim'
+
+[[plugins]]
+repo = 'folke/flash.nvim'
+on_event = 'CmdlineEnter'
+lua_source = '''
+  require('flash').setup {
+    labels = 'ASDFGHJKLQWERTYUIOPZXCVBNM',
+    search = {
+      multi_window = true,
+      forward = true,
+      wrap = true,
+      mode = 'exact',
+      incremental = true,
+      autojump = false,
+    },
+    modes = {
+      char = {
+        enabled = false,
+      },
+    },
+  }
+'''
 
 # vim:ft=toml expandtab tabstop=2 shiftwidth=2
