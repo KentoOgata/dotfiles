@@ -490,4 +490,16 @@ lua_source = '''
 repo = 'RRethy/vim-illuminate'
 on_event = 'FileType'
 
+[[plugins]]
+repo = 'lewis6991/satellite.nvim'
+lua_add = '''
+  vim.api.nvim_create_autocmd('FileType', {
+    group = 'VimRc',
+    once = true,
+    callback = function()
+      require('satellite').setup()
+    end
+  })
+'''
+
 # vim:ft=toml expandtab tabstop=2 shiftwidth=2
