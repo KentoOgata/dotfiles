@@ -34,8 +34,9 @@ autocmd VimRc OptionSet buftype
 " rgが$PATHにあるときは`:grep`でrgを使う
 if executable('rg')
   set grepprg=rg\ --vimgrep\ --ignore-case
-  set grepformat=%f:%l:%m,%f:%l%m,%f\ \ %l%m
+  set grepformat=%f:%l:%c:%m
 endif
+AlterCmd grep silent!<Space>grep
 
 exec 'set' 'guicursor=' .. [
      \ 'n-v-c:block',
