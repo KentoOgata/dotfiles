@@ -336,6 +336,7 @@ return {
             { 'q', uiAction 'quit' },
             { 'd', itemAction 'delete' },
             { '<SPACE>', uiAction 'toggleSelectItem', { nowait = true } },
+            { 'a', uiAction 'chooseAction' },
             {
               'p',
               function()
