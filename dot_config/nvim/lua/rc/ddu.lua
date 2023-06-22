@@ -296,6 +296,7 @@ return {
       '<Plug>(ddu-resume)',
       ddu.start {
         resume = true,
+        name = 'default',
         uiParams = {
           ff = {
             startFilter = false,
@@ -397,6 +398,7 @@ return {
       '<Plug>(lsp-codeAction)',
       ddu.start {
         'lsp_codeAction',
+        name = '_',
         uiParams = {
           ff = {
             autoAction = {
