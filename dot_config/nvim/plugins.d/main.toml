@@ -486,4 +486,8 @@ lua_source = '''
   }
 '''
 
+[[plugins]]
+repo = 'RRethy/vim-illuminate'
+on_event = 'FileType'
+
 # vim:ft=toml expandtab tabstop=2 shiftwidth=2
