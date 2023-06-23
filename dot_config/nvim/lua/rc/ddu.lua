@@ -111,6 +111,25 @@ return {
       name = 'file',
       actionName = 'openProject',
       func = function(args)
+        vim.api.nvim_create_autocmd('FileType', {
+          pattern = 'ddu-ff',
+          once = true,
+          callback = function(ctx)
+            local wins = vim
+              .iter(vim.api.nvim_tabpage_list_wins(0))
+              :filter(function(win)
+                return vim.api.nvim_win_get_buf(win) == ctx.buf
+              end)
+              :totable()
+
+            if #wins == 0 then
+              return
+            end
+            local win = wins[1]
+
+            vim.wo[win].winbar = args.items[1].action.path
+          end,
+        })
         vim.fn['ddu#start'] {
           uiParams = getUiParamsOfWindowSize(),
           sources = {
