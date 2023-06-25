@@ -71,3 +71,6 @@ repo = '4513ECHO/ddu-source-ghq'
 
 [[plugins]]
 repo = 'Shougo/ddu-source-action'
+
+[[plugins]]
+repo = 'kyoh86/ddu-filter-converter_hl_dir'

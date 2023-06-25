@@ -199,7 +199,7 @@ return {
         rg = {
           matchers = {},
           sorters = {},
-          converters = {},
+          converters = { 'converter_hl_dir' },
           volatile = true,
         },
         line = {
@@ -209,12 +209,16 @@ return {
         },
         mr = {
           sorters = {},
+          converters = { 'converter_hl_dir' },
         },
         dein = {
           defaultAction = 'openProject',
         },
         ghq = {
           defaultAction = 'openProject',
+        },
+        file_external = {
+          converters = { 'converter_hl_dir' },
         },
       },
       kindOptions = {
@@ -240,6 +244,9 @@ return {
         },
         matcher_substring = {
           highlightMatched = 'Search',
+        },
+        converter_hl_dir = {
+          hlGroup = 'String',
         },
       },
       sourceParams = {
