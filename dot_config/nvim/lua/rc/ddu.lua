@@ -18,6 +18,21 @@ local function itemAction(action, params)
   end
 end
 
+local function multiActions(actions)
+  return function()
+    vim.fn['ddu#ui#multi_actions'](vim
+      .iter(actions)
+      :map(function(action)
+        if type(action) == 'table' then
+          return action
+        else
+          return { action }
+        end
+      end)
+      :totable())
+  end
+end
+
 local function getUiParamsOfWindowSize()
   local lines = vim.opt.lines:get()
   local height, row = math.floor(lines * 0.8), math.floor(lines * 0.1)
@@ -356,6 +371,8 @@ return {
             { 'd', itemAction 'delete' },
             { '<SPACE>', uiAction 'toggleSelectItem', { nowait = true } },
             { 'a', uiAction 'chooseAction' },
+            { '<C-Space>', uiAction 'toggleAllItems' },
+            { 'c', multiActions { 'toggleAllItems', { 'itemAction', { name = 'quickfix' } } } },
             {
               'p',
               function()
