@@ -423,7 +423,7 @@ on_cmd = [
   'AerialToggle',
 ]
 hook_add = '''
-  nnoremap <Space>t <Cmd>AerialOpen!<CR>
+  nnoremap <Space>I <Cmd>AerialOpen!<CR>
   nnoremap <Space>i <Cmd>AerialOpen<CR>
 '''
 lua_source = '''

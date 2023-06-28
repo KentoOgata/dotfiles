@@ -81,10 +81,10 @@ gitsigns.setup {
         { '<Space>hu', '<cmd>Gitsigns reset_hunk<CR>' },
         { '<Space>hp', '<cmd>Gitsigns preview_hunk<CR>' },
         { '<Space>hb', '<cmd>lua require"gitsigns".blame_line{full=true}<CR>' },
-        { '<Space>tb', '<cmd>Gitsigns toggle_current_line_blame<CR>' },
+        { '<Space>hB', '<cmd>Gitsigns toggle_current_line_blame<CR>' },
         { '<Space>hd', '<cmd>Gitsigns diffthis<CR>' },
         { '<Space>hD', '<cmd>lua require"gitsigns".diffthis("~")<CR>' },
-        { '<Space>td', '<cmd>Gitsigns toggle_deleted<CR>' },
+        { '<C-t>', '<cmd>Gitsigns toggle_deleted<CR>' },
       },
     }
 
