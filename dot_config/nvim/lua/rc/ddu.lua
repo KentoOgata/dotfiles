@@ -33,7 +33,7 @@ local function multiActions(actions)
   end
 end
 
-local function getUiParamsOfWindowSize()
+local function notifyWindowSizeToDdu()
   local lines = vim.opt.lines:get()
   local height, row = math.floor(lines * 0.8), math.floor(lines * 0.1)
   local columns = vim.opt.columns:get()
@@ -48,15 +48,17 @@ local function getUiParamsOfWindowSize()
     previewHeight = height
   end
 
-  return {
-    ff = {
-      winHeight = height,
-      winRow = row,
-      winWidth = width,
-      winCol = col,
-      previewWidth = math.floor(width / 2),
-      previewHeight = previewHeight,
-      previewSplit = previewSplit,
+  vim.fn['ddu#custom#patch_global'] {
+    uiParams = {
+      ff = {
+        winHeight = height,
+        winRow = row,
+        winWidth = width,
+        winCol = col,
+        previewWidth = math.floor(width / 2),
+        previewHeight = previewHeight,
+        previewSplit = previewSplit,
+      },
     },
   }
 end
@@ -88,7 +90,6 @@ local ddu = {
     if type(config) == 'string' then
       return function()
         vim.fn['ddu#start'] {
-          uiParams = getUiParamsOfWindowSize(),
           sources = {
             {
               name = config,
@@ -112,7 +113,6 @@ local ddu = {
       return function()
         vim.fn['ddu#start'](vim.tbl_deep_extend('keep', normalizedConfig, {
           resume = false,
-          uiParams = getUiParamsOfWindowSize(),
         }))
       end
     end
@@ -146,7 +146,6 @@ return {
           end,
         })
         vim.fn['ddu#start'] {
-          uiParams = getUiParamsOfWindowSize(),
           sources = {
             {
               name = 'file_external',
@@ -168,6 +167,13 @@ return {
     }
 
     vim.fn['ddu#custom#load_config'](vim.fs.joinpath(vim.env.DEIN_CONFIG_DIR, 'ddu.ts'))
+
+    vim.api.nvim_create_autocmd('VimResized', {
+      group = 'VimRc',
+      callback = notifyWindowSizeToDdu,
+    })
+
+    notifyWindowSizeToDdu()
 
     ---A wrapper of vim.keymap.set()
     ---@param lhs string
