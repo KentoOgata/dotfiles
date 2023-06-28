@@ -67,3 +67,13 @@ lazy = true
 repo = 'uga-rosa/dotfiles'
 name = 'uga-rosa'
 lazy = true
+
+[[plugins]]
+repo = 'folke/dot'
+name = 'folke'
+lazy = true
+
+[[plugins]]
+repo = 'akinsho/dotfiles'
+name = 'akinsho'
+lazy = true

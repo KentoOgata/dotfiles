@@ -13,4 +13,7 @@ return {
   nilOrEmpty = function(string)
     return string == nil or string == ''
   end,
+  leximaExpand = function(mode, keys)
+    return vim.fn.keytrans(vim.fn['lexima#expand'](keys, mode))
+  end,
 }

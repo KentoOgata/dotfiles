@@ -353,7 +353,7 @@ lua_source = '''
       ccc.picker.trailing_whitespace {
         enable = true,
         disable = function(bufnr)
-          return not vim.bool_fn.empty(vim.bo[bufnr].buftype)
+          return vim.bo[bufnr].buftype ~= ''
         end,
       },
     },
@@ -465,6 +465,10 @@ repo = 'skanehira/k8s.vim'
 depends = 'denops.vim'
 
 [[plugins]]
+repo = 'jremmen/vim-ripgrep'
+on_cmd = 'Rg'
+
+[[plugins]]
 repo = 'folke/flash.nvim'
 on_event = 'CmdlineEnter'
 lua_source = '''
@@ -475,8 +479,22 @@ lua_source = '''
       forward = true,
       wrap = true,
       mode = 'exact',
-      incremental = true,
+      incremental = false,
       autojump = false,
+    },
+    jump = {
+      jumplist = true,
+      pos = 'start',
+      history = true,
+      register = true,
+      nohlsearch = true,
+      autojump = false,
+    },
+    highlight = {
+      label = {
+        after = false,
+        before = true,
+      }
     },
     modes = {
       char = {
@@ -501,6 +519,10 @@ lua_add = '''
     end
   })
 '''
+
+[[plugins]]
+repo = 'lambdalisue/suda.vim'
+on_cmd = ['SudaRead', 'SudaWrite']
 
 [[plugins]]
 repo = 'Shougo/deol.nvim'

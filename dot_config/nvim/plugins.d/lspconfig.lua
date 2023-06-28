@@ -1,4 +1,8 @@
 -- lua_source {{{
+if vim.env.NO_LSP then
+  return
+end
+
 local lspconfig = require 'lspconfig'
 
 local function ensure_capabilities()
@@ -33,13 +37,13 @@ end
 if 1 == vim.fn.executable 'deno' then
   lspconfig.denols.setup {
     capabilities = capabilities,
-    root_dir = require('lspconfig.util').root_pattern {
-      'deno.json',
-      'deno.jsonc',
-      'denops',
-      'tsnip',
-      'deps.ts',
-    },
+    -- root_dir = require('lspconfig.util').root_pattern {
+    --   'deno.json',
+    --   'deno.jsonc',
+    --   'denops',
+    --   'tsnip',
+    --   'deps.ts',
+    -- },
     init_options = {
       unstable = true,
     },

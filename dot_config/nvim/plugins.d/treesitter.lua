@@ -41,7 +41,7 @@ require('nvim-treesitter.configs').setup {
   parser_install_dir = parser_dir,
   highlight = {
     enable = true,
-    disable = {},
+    disable = { 'sql' },
   },
   indent = {
     enable = true,

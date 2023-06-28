@@ -60,7 +60,6 @@ call s:add_rules(
       \   },
       \   #{ char: '<Space>', at: '\.\w\+(\%([^)]\+,\s\)*\<\%(new\|out\)\@!\w\+\%#)', input: '<Space>=><Space>' },
       \   #{ char: '$', except: '\%#"', input: '$"', input_after: '"' },
-      \   #{ char: '<Space>', at: '\<pp\%#', input: '<BS><BS>Console.WriteLine(', input_after: ')' },
       \ ]
       \ )
 

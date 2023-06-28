@@ -50,9 +50,12 @@ depends = 'plenary.nvim'
 on_event = ['BufReadPost', 'BufNewFile']
 lua_source = '''
   local null_ls = require 'null-ls'
+  local null_ls_utils = require('null-ls.utils').make_conditional_utils()
   null_ls.setup {
     sources = {
-      null_ls.builtins.formatting.stylua,
+      null_ls.builtins.formatting.stylua.with {
+        root_dir = null_ls_utils.root_has_file { 'stylua.toml', '.stylua.toml' },
+      },
       null_ls.builtins.formatting.csharpier,
       null_ls.builtins.diagnostics.shellcheck.with {
         extra_args = function(params)

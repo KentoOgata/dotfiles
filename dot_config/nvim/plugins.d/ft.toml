@@ -27,3 +27,6 @@ repo = 'wgwoods/vim-systemd-syntax'
 
 [[plugins]]
 repo = 'hashivim/vim-terraform'
+
+[[plugins]]
+repo = 'neovimhaskell/haskell-vim'

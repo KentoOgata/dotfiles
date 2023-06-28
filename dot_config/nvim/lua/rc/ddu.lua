@@ -113,6 +113,7 @@ local ddu = {
       return function()
         vim.fn['ddu#start'](vim.tbl_deep_extend('keep', normalizedConfig, {
           resume = false,
+          name = 'default',
         }))
       end
     end
