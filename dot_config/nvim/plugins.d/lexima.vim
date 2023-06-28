@@ -102,6 +102,7 @@ call s:add_rules(
       \ [
       \   #{ except: '\%#(', input: '(', input_after: ')' },
       \   #{ input: '', priority: -1 },
+      \   #{ filetype: 'haskell', input: '' },
       \ ]
       \ )
 
