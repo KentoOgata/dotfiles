@@ -502,4 +502,24 @@ lua_add = '''
   })
 '''
 
+[[plugins]]
+repo = 'Shougo/deol.nvim'
+on_cmd = 'Deol'
+lua_add = '''
+  vim.keymap.set(
+    'n',
+    '<Space>t',
+    function()
+      vim.cmd.Deol {
+        '-split=floating',
+        '-winwidth=' .. tostring(vim.go.columns - 8),
+        '-winheight=' .. tostring(vim.go.lines - 8),
+      }
+    end
+  )
+'''
+hook_source = '''
+  let g:deol#floating_border = 'single'
+'''
+
 # vim:ft=toml expandtab tabstop=2 shiftwidth=2
