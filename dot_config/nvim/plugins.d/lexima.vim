@@ -98,6 +98,14 @@ call s:add_rules(
       \ )
 
 call s:add_rules(
+      \ #{ filetype: 'markdown' },
+      \ [
+      \   #{ char: '<Space>', at: '\[\%#]', input: '<Space>' },
+      \   #{ char: '<CR>', at: '^- \[ ] .\+\%#', input: '<CR>- [ ] ' },
+      \ ]
+      \ )
+
+call s:add_rules(
       \ #{ char: '<Plug>(post-complete-function-symbol)' },
       \ [
       \   #{ except: '\%#(', input: '(', input_after: ')' },
