@@ -89,6 +89,9 @@ snippets:
   - name: git switch
     keyword: gsw
     snippet: git switch {{branch}}
+  - name: git add
+    keyword: ga
+    snippet: git add {{file}}
 
 completions:
   - name: dotnet add reference
