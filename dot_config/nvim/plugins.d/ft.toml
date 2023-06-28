@@ -2,9 +2,11 @@
 cs = '''
   compiler dotnet
   setl indentkeys-=<>>
+  setl colorcolumn=130
 '''
 razor = '''
   compiler dotnet
+  setl colorcolumn=130
 '''
 
 [[plugins]]
