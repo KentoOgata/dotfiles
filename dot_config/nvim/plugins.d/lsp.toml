@@ -27,13 +27,50 @@ repo = 'williamboman/mason.nvim'
 on_cmd = ['Mason', 'MasonInstall']
 on_source = 'nvim-lspconfig'
 lua_source = '''
-  -- ~/.cache/nvim/ が存在しないとエラーになる
+  -- NOTE: ~/.cache/nvim/ が存在しないとエラーになる
   local cache_dir = vim.fn.stdpath 'cache'
   if 0 == vim.fn.isdirectory(cache_dir) then
     os.execute(('mkdir %s'):format(cache_dir))
   end
   require('mason').setup()
+
+  local ensure_installed = {
+    'omnisharp',
+    'vtsls',
+    'json-lsp',
+    'clangd',
+    'lua-language-server',
+    'gopls',
+    'yaml-language-server',
+    'rust-analyzer',
+    'pyright',
+    'terraform-ls',
+    'css-lsp',
+    'dockerfile-language-server',
+    'eslint-lsp',
+    'markdownlint',
+    'stylua',
+    'shellcheck',
+  }
+
+  local package = require 'mason-core.package'
+  local registry = require 'mason-registry'
+  for _, name in ipairs(ensure_installed) do
+    local package_name, version = package.Parse(name)
+    local ok, pkg = pcall(registry.get_package, package_name)
+    if ok then
+      if not pkg:is_installed() then
+        pkg:install { version = version }
+      end
+    end
+  end
 '''
+
+[[plugins]]
+repo = 'williamboman/mason-lspconfig.nvim'
+on_source = 'nvim-lspconfig'
+depends = 'mason.nvim'
+hooks_file = '$DEIN_CONFIG_DIR/mason-lspconfig.lua'
 
 # LSのプログレスを格好良く表示してくれる
 [[plugins]]
@@ -56,7 +93,6 @@ lua_source = '''
       null_ls.builtins.formatting.stylua.with {
         root_dir = null_ls_utils.root_has_file { 'stylua.toml', '.stylua.toml' },
       },
-      null_ls.builtins.formatting.csharpier,
       null_ls.builtins.diagnostics.shellcheck.with {
         extra_args = function(params)
           return params.ft == 'PKGBUILD' and { '--exclude', 'SC2148,SC2034,SC2154,SC2155,SC2164' } or {}
