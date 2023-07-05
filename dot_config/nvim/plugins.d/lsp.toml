@@ -51,6 +51,7 @@ lua_source = '''
     'markdownlint',
     'stylua',
     'shellcheck',
+    'taplo',
   }
 
   local package = require 'mason-core.package'

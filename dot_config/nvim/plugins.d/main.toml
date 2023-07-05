@@ -148,7 +148,7 @@ hook_add = '''
 
 # denops製のskkプラグイン
 [[plugins]]
-repo  = 'vim-skk/skkeleton'
+repo = 'vim-skk/skkeleton'
 depends = 'denops.vim'
 # 初期化を待機しない
 # 本当は遅延読み込みにしたくないけど plugin/ ディレクトリが存在するので仕方なく遅延してる
@@ -403,7 +403,7 @@ hook_source = '''
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
 on_event = ['BufReadPost', 'BufNewFile']
-hooks_file='$DEIN_CONFIG_DIR/treesitter.lua'
+hooks_file = '$DEIN_CONFIG_DIR/treesitter.lua'
 
 [[plugins]]
 repo = 'HiPhish/nvim-ts-rainbow2'
@@ -418,10 +418,7 @@ if = false
 
 [[plugins]]
 repo = 'stevearc/aerial.nvim'
-on_cmd = [
-  'AerialOpen',
-  'AerialToggle',
-]
+on_cmd = ['AerialOpen', 'AerialToggle']
 hook_add = '''
   nnoremap <Space>I <Cmd>AerialOpen!<CR>
   nnoremap <Space>i <Cmd>AerialOpen<CR>
