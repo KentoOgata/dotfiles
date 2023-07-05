@@ -21,6 +21,9 @@ export class Config extends BaseConfig {
             floating: "Normal",
             floatingBorder: "Normal",
           },
+          autoAction: {
+            name: "preview",
+          },
         } satisfies Partial<FfParams>,
       },
       sourceOptions: {
@@ -71,6 +74,9 @@ export class Config extends BaseConfig {
         },
         action: {
           defaultAction: "do",
+        },
+        deno_module: {
+          defaultAction: "openReadMe",
         },
       },
       filterParams: {
