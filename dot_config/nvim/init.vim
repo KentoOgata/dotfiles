@@ -58,13 +58,14 @@ vim.uv.new_thread(function()
 end)
 EOF
 
+lua require('rc.nvim-lsp').setup()
+
 let g:dein#inline_vimrcs = [
       \ s:here .. '/global.lua',
       \ s:here .. '/commands.vim',
       \ s:here .. '/options.vim',
       \ s:here .. '/keymaps.vim',
       \ s:here .. '/chezmoi.vim',
-      \ s:here .. '/nvim-lsp.lua',
       \ s:here .. '/tabstop.lua',
       \ ]
 
