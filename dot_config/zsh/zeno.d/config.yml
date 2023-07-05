@@ -68,6 +68,9 @@ snippets:
   - name: git push --set-upstream
     keyword: gpu
     snippet: git push --set-upstream origin {{branch}}
+  - name: git push force
+    keyword: gpf
+    snippet: git push --force-if-includes --force-with-lease
   - name: dotnet build
     keyword: db
     snippet: dotnet build --nologo --no-restore
