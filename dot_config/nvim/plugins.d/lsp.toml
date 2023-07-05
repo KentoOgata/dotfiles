@@ -54,17 +54,17 @@ lua_source = '''
     'taplo',
   }
 
-  local package = require 'mason-core.package'
   local registry = require 'mason-registry'
-  for _, name in ipairs(ensure_installed) do
-    local package_name, version = package.Parse(name)
-    local ok, pkg = pcall(registry.get_package, package_name)
-    if ok then
-      if not pkg:is_installed() then
-        pkg:install { version = version }
+  registry.refresh(function()
+    for _, name in ipairs(ensure_installed) do
+      local ok, pkg = pcall(registry.get_package, name)
+      if ok then
+        if not pkg:is_installed() then
+          pkg:install()
+        end
       end
     end
-  end
+  end)
 '''
 
 [[plugins]]
