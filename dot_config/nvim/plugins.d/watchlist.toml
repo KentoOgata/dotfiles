@@ -72,8 +72,3 @@ lazy = true
 repo = 'folke/dot'
 name = 'folke'
 lazy = true
-
-[[plugins]]
-repo = 'akinsho/dotfiles'
-name = 'akinsho'
-lazy = true
