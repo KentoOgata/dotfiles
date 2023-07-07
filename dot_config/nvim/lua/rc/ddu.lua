@@ -333,9 +333,7 @@ local function setup()
       name = '_',
       uiParams = {
         ff = {
-          autoAction = {
-            name = 'preview',
-          },
+          startAutoAction = true,
           startFilter = false,
         },
       },
