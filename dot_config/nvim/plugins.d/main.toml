@@ -487,11 +487,9 @@ lua_source = '''
       nohlsearch = true,
       autojump = false,
     },
-    highlight = {
-      label = {
-        after = false,
-        before = true,
-      }
+    label = {
+      after = false,
+      before = true,
     },
     modes = {
       char = {
