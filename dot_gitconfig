@@ -10,3 +10,5 @@
 	defaultBranch = main
 [ghq]
 	root = ~/repos
+[commit]
+        verbose = true
