@@ -258,7 +258,7 @@ cmp.event:on('confirm_done', function(event)
     return (item.kind == kind.Method) or (item.kind == kind.Function) or (item.kind == kind.Constructor)
   end
   local item = event.entry:get_completion_item()
-  if is_function_symbol(item) then
+  if ((item.textEdit == nil) or (item.textEdit.newText == item.label)) and is_function_symbol(item) then
     feedkeys(leximaExpand('i', snippetTrigger))
   end
 end)
