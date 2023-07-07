@@ -6,6 +6,11 @@ local function on_attach(context)
     { buffer = context.buf, desc = 'textDocument/signatureHelp' }
   )
 
+  local function on_list(options)
+    vim.fn.setloclist(vim.api.nvim_get_current_win(), {}, ' ', options)
+    vim.cmd.lfirst()
+  end
+
   vim.keymap.set_table {
     mode = 'n',
     opts = {
@@ -14,7 +19,13 @@ local function on_attach(context)
     },
     maps = {
       { 'K', vim.lsp.buf.hover, { desc = 'textDocument/hover' } },
-      { 'gd', vim.lsp.buf.definition, { desc = 'textDocument/definition' } },
+      {
+        'gd',
+        function()
+          vim.lsp.buf.definition { on_list = on_list }
+        end,
+        { desc = 'textDocument/definition' },
+      },
       { 'gD', vim.lsp.buf.type_definition, { desc = 'textDocument/typeDefinition' } },
       { 'ma', '<Plug>(lsp-codeAction)', { desc = 'textDocument/codeAction' } },
       { 'mr', vim.lsp.buf.rename, { desc = 'textDocument/rename' } },
