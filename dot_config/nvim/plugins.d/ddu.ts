@@ -55,6 +55,10 @@ export class Config extends BaseConfig {
         file_external: {
           converters: ["converter_hl_dir"],
         },
+        deno_module: {
+          volatile: true,
+          columns: ["filename"],
+        },
       },
       kindOptions: {
         file: {
@@ -76,7 +80,7 @@ export class Config extends BaseConfig {
           defaultAction: "do",
         },
         deno_module: {
-          defaultAction: "openReadMe",
+          defaultAction: "resolve",
         },
       },
       filterParams: {
