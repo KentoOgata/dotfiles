@@ -222,6 +222,36 @@ vim.api.nvim_create_autocmd('User', {
   end,
 })
 
+local snippetTrigger = '<Plug>(expand-bracket)'
+
+local function addLeximaRules()
+  local rules = {
+    { except = [[\%#(]], input = '(', input_after = ')' },
+    { input = '', priority = -1 },
+    { filetype = 'haskell', input = '' },
+  }
+  for _, rule in ipairs(rules) do
+    vim.fn['lexima#add_rule'](vim.tbl_deep_extend('error', rule, { char = snippetTrigger }))
+  end
+end
+
+--[[
+if nil ~= vim.go.rtp:match 'lexima.vim' then
+  addLeximaRules()
+else
+  vim.api.nvim_create_autocmd('SourcePost', {
+    once = true,
+    group = 'VimRc',
+    pattern = 'lexima.vim',
+    callback = addLeximaRules,
+  })
+end
+--]]
+-- NOTE: なぜか実行しても問題ない
+addLeximaRules()
+
+local leximaExpand = require('rc.utils').leximaExpand
+
 cmp.event:on('confirm_done', function(event)
   local function is_function_symbol(item)
     local kind = cmp.lsp.CompletionItemKind
@@ -229,9 +259,7 @@ cmp.event:on('confirm_done', function(event)
   end
   local item = event.entry:get_completion_item()
   if is_function_symbol(item) then
-    feedkeys '<Plug>(post-complete-function-symbol)'
+    feedkeys(leximaExpand('i', snippetTrigger))
   end
 end)
--- どこかでハンドルしない限りは何もしない
-vim.keymap.set('i', '<Plug>(post-complete-function-symbol)', '<Nop>')
 --- }}}

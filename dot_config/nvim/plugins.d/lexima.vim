@@ -104,15 +104,6 @@ call s:add_rules(
       \ ]
       \ )
 
-call s:add_rules(
-      \ #{ char: '<Plug>(post-complete-function-symbol)' },
-      \ [
-      \   #{ except: '\%#(', input: '(', input_after: ')' },
-      \   #{ input: '', priority: -1 },
-      \   #{ filetype: 'haskell', input: '' },
-      \ ]
-      \ )
-
 " input: >>, effect: `if (\%#)condition` -> `if (condition)`
 call lexima#add_rule(#{ char: '>', at: '(>\%#)', input: '<BS><DEL><End>)' })
 
