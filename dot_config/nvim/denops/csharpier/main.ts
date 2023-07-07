@@ -3,10 +3,8 @@ import * as fn from "https://deno.land/x/denops_std@v5.0.1/function/mod.ts";
 import is from "https://deno.land/x/unknownutil@v3.0.0/is.ts";
 import * as autocmd from "https://deno.land/x/denops_std@v5.0.1/autocmd/mod.ts";
 import { exists } from "https://deno.land/std@0.192.0/fs/exists.ts";
-import {
-  echo,
-  echoerr,
-} from "https://deno.land/x/denops_std@v5.0.1/helper/echo.ts";
+import { echoerr } from "https://deno.land/x/denops_std@v5.0.1/helper/echo.ts";
+import { CSharpierProcess } from "./CShapierProcess.ts";
 
 const readToEof = async (stream: ReadableStream<Uint8Array>) => {
   const reader = stream.getReader();
@@ -23,17 +21,12 @@ const readToEof = async (stream: ReadableStream<Uint8Array>) => {
     }
     return content;
   } finally {
-    await reader.cancel();
     reader.releaseLock();
   }
 };
 
-const getCsharpierFormatBufContent = async (
-  denops: Denops,
-  bufname: string,
-) => {
-  const bufcontent = (await fn.getbufline(denops, bufname, 1, "$")).join("\n");
-  return new TextEncoder().encode(bufname + "\u0003" + bufcontent + "\u0003");
+type Context = {
+  process: CSharpierProcess;
 };
 
 export async function main(denops: Denops): Promise<void> {
@@ -41,22 +34,18 @@ export async function main(denops: Denops): Promise<void> {
     return Promise.resolve();
   }
 
-  const csharpier = new Deno.Command("dotnet", {
-    args: ["csharpier", "--pipe-multiple-files"],
-    stdin: "piped",
-    stdout: "piped",
-    cwd: await fn.getcwd(denops),
-    env: {
-      DOTNET_NOLOGO: "1",
-    },
-  }).spawn();
-
-  csharpier.status.then(async (status) => {
-    if (!status.success) {
-      return echoerr(denops, await readToEof(csharpier.stderr));
-    }
-    return echo(denops, "csharpier is down");
-  });
+  denops.context[denops.name] = {
+    process: new CSharpierProcess(
+      await fn.getcwd(denops),
+      async (status, stderr) => {
+        if (!status.success) {
+          return echoerr(denops, await readToEof(stderr));
+        } else {
+          return denops.cmd('echomsg "csharpier is down"');
+        }
+      },
+    ),
+  } satisfies Context;
 
   denops.dispatcher = {
     "format": async (bufnr: unknown) => {
@@ -66,24 +55,25 @@ export async function main(denops: Denops): Promise<void> {
 
       const bufinfo = await fn.getbufinfo(denops, bufnr);
       if (bufinfo.length === 0) {
-        return Promise.resolve();
+        return echoerr(denops, `${denops.name}: BufNr ${bufnr} is invalid.`);
       }
 
-      const path = await fn.fnamemodify(denops, bufinfo[0].name, ":p");
+      const context = denops.context[denops.name] as {
+        process: CSharpierProcess;
+      };
 
-      const stdin = csharpier.stdin.getWriter();
-      try {
-        await stdin.write(await getCsharpierFormatBufContent(denops, path));
-      } finally {
-        await stdin.close();
-        stdin.releaseLock();
-      }
-      const contents = (await readToEof(csharpier.stdout)).split("\n");
+      const contents = await context.process.formatFile(
+        (await fn.getbufline(denops, bufinfo[0].bufnr, 1, "$")).join("\n"),
+        bufinfo[0].name,
+      );
       await fn.deletebufline(denops, bufnr, 1, "$");
       await fn.setbufline(denops, bufnr, 1, contents);
     },
-    "dispose": () => {
-      csharpier.kill();
+    "dispose": async () => {
+      const context = denops.context[denops.name] as {
+        process: CSharpierProcess;
+      };
+      await context.process.dispose();
     },
   };
 
@@ -93,10 +83,13 @@ export async function main(denops: Denops): Promise<void> {
       "*",
       `call denops#notify("${denops.name}", "dispose", [])`,
     );
-    helper.define(
-      "BufWritePre",
-      "*.cs",
-      `call denops#request("${denops.name}", "format", [expand("<abuf>")->str2nr()])`,
-    );
+    /* helper.define(                                                                     */
+    /*   "BufWritePre",                                                                   */
+    /*   "*.cs",                                                                          */
+    /*   `call denops#request("${denops.name}", "format", [expand("<abuf>")->str2nr()])`, */
+    /* );                                                                                 */
   });
+  denops.cmd(
+    `command CshapierFmt call denops#request("${denops.name}", "format", [expand("<abuf>")->str2nr()])`,
+  );
 }
