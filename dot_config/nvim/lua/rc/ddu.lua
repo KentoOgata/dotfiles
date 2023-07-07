@@ -306,6 +306,8 @@ local function setup()
           { '<C-Space>', uiAction 'toggleAllItems' },
           { 'c', multiActions { 'toggleAllItems', { 'itemAction', { name = 'quickfix' } } } },
           { 'p', uiAction 'toggleAutoAction' },
+          { 'l', uiAction 'expandItem' },
+          { 'h', uiAction 'collapseItem' },
         },
       }
     end,
