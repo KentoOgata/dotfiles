@@ -46,7 +46,7 @@ if 1 == vim.fn.executable 'deno' then
         upward = true,
       })
       if #root == 0 then
-        return
+        return vim.fs.dirname(startpath)
       end
       return vim.fs.dirname(root[1])
     end,
