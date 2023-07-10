@@ -131,7 +131,7 @@ require('mason-lspconfig').setup_handlers {
   ['vtsls'] = function()
     lspconfig.vtsls.setup {
       capabilities = capabilities,
-      root_dir = require('lspconfig.util').root_pattern { 'tsconfig.json', 'jsconfig.json', 'package.json' },
+      root_dir = require('lspconfig.util').root_pattern { 'tsconfig.json', 'jsconfig.json', 'node_modules' },
       single_file_support = false,
     }
   end,

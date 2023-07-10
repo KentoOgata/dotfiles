@@ -33,7 +33,7 @@ if 1 == vim.fn.executable 'deno' then
   lspconfig.denols.setup {
     capabilities = capabilities,
     root_dir = function(startpath)
-      local node_modules = vim.fs.find('node_modules', {
+      local node_modules = vim.fs.find({ 'node_modules', 'tsconfig.json', 'jsconfig.json' }, {
         path = startpath,
         upward = true,
         type = 'directory',
