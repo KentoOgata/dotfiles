@@ -29,11 +29,7 @@ function! skkeleton_azik#setup(config = {}) abort
   call skkeleton#register_kanatable('azik', { ':': 'henkanPoint' })
   augroup _skkeleton_azik_
     autocmd!
-    autocmd User skkeleton-enable-post lnoremap <buffer> : <Cmd>call skkeleton#handle('handleKey', { 'key': ':' })<CR><Cmd>call skkeleton#handle('handleKey', { 'key': ';' })<CR>
-    autocmd User skkeleton-initialize-post lunmap :
-    " NOTE: lunmapするとskkeleton-enable一回でひらがな入力モードに入ることができなくなる
-    " TODO: <C-j>決め打ちでやるのをやめて、ユーザーがskkeleton-enable,skkeleton-toggleを割り当ててるキーを特定して上書きするように変更する
-    autocmd User skkeleton-enable-post ++once inoremap <C-j> <Plug>(skkeleton-enable)<Plug>(skkeleton-enable)
+    autocmd User skkeleton-enable-post inoremap <buffer> : <Cmd>call skkeleton#handle('handleKey', { 'key': ':' })<CR><Cmd>call skkeleton#handle('handleKey', { 'key': ';' })<CR>
   augroup END
 endfunction
 
