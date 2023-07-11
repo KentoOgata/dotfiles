@@ -84,6 +84,8 @@ local function normalizeConfig(config)
   -- config is source name
   if type(config) == 'string' then
     return {
+      resume = false,
+      name = 'default',
       sources = {
         {
           name = config,
