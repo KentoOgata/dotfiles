@@ -20,6 +20,8 @@ set fileencodings=utf-8,cp932
 set fileformats=unix,dos,mac
 set expandtab
 set nowrap
+let &completeopt = ['menu', 'menuone', 'longest', 'noinsert']->join(',')
+let &wildoptions = ['fuzzy','pum','tagfile']->join(',')
 
 set number relativenumber
 " terminal以外ではnumber,relativenumberを有効化する

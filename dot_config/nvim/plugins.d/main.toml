@@ -150,14 +150,9 @@ hook_add = '''
 [[plugins]]
 repo = 'vim-skk/skkeleton'
 depends = 'denops.vim'
-# 初期化を待機しない
-# 本当は遅延読み込みにしたくないけど plugin/ ディレクトリが存在するので仕方なく遅延してる
-denops_wait = false
-on_map = { ic = '<Plug>(skkeleton-enable)' }
 hook_add = '''
-  Keymap ic <C-j> <Plug>(skkeleton-enable)
+  lua require 'rc.plugin-setups.skkeleton'
 '''
-hooks_file = '$DEIN_CONFIG_DIR/skkeleton.lua'
 
 # skkの辞書
 # deinで管理するアイディアはkuuさんがslackで言及してたやつ
@@ -305,12 +300,10 @@ lazy = true
 
 [[plugins]]
 repo = 'MunifTanjim/nui.nvim'
-lazy = true
 
 # LSのkind(補完するitemの種類 classとかmethod)に応じたアイコンを提供する
 [[plugins]]
 repo = 'onsails/lspkind-nvim'
-lazy = true
 
 # tabline/winbar/statusline を格好よくする
 [[plugins]]

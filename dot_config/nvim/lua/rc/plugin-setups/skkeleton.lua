@@ -1,9 +1,9 @@
--- lua_source {{{
 vim.api.nvim_create_autocmd('User', {
   group = 'VimRc',
   once = true,
   pattern = 'DenopsPluginPost:skkeleton',
   callback = function()
+    vim.keymap.set({ 'i', 'c' }, '<C-j>', '<Plug>(skkeleton-enable)')
     vim.fn['skkeleton_azik#setup'] {
       keys = {
         katakana = '[',
@@ -22,4 +22,3 @@ vim.api.nvim_create_autocmd('User', {
     }
   end,
 })
--- }}}
